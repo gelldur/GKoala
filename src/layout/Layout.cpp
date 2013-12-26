@@ -41,6 +41,22 @@ bool Layout::initWithConfiguration ( LayoutConfiguration* pConfiguration )
 	return true;
 }
 
+void Layout::onEnter()
+{
+	inherited::onEnter();
+
+	cocos2d::CCNotificationCenter::sharedNotificationCenter()->addObserver ( this,
+			static_cast<cocos2d::SEL_CallFuncO> ( &Layout::onUpdateStructureCallback ),
+			getNotificationUpdateStructure(), nullptr );
+}
+
+void Layout::onExit()
+{
+	inherited::onExit();
+	cocos2d::CCNotificationCenter::sharedNotificationCenter()->removeObserver (
+		this, getNotificationUpdateStructure() );
+}
+
 void Layout::addChild ( cocos2d::CCNode* pChild, int zOrder, int tag )
 {
 	GKoala_assert ( pChild != nullptr, "pChild can't be null" );
@@ -49,11 +65,11 @@ void Layout::addChild ( cocos2d::CCNode* pChild, int zOrder, int tag )
 	pChild->setZOrder ( zOrder );
 	pChild->setTag ( tag );
 
-	addChild ( pChild, m_pLayoutConfiguration->getDefaultLayoutParameter() );
+	addChildWith ( pChild, m_pLayoutConfiguration->getDefaultLayoutParameter() );
 }
 
-void Layout::addChild ( cocos2d::CCNode* pChild,
-						LayoutParameter* pLayoutParameter )
+void Layout::addChildWith ( cocos2d::CCNode* pChild,
+							LayoutParameter* pLayoutParameter )
 {
 	GKoala_assert ( pChild != nullptr, "pChild can't be null" );
 	GKoala_assert ( pLayoutParameter != nullptr, "pLayoutParameter can't be null" );
@@ -62,10 +78,7 @@ void Layout::addChild ( cocos2d::CCNode* pChild,
 	inherited::addChild ( pChild, pChild->getZOrder(), pChild->getTag() );
 	m_pLayoutConfiguration->addView ( pChild, pLayoutParameter );
 
-	if ( isRunning() )
-	{
-		m_pLayoutConfiguration->updateStructure();
-	}
+	updateStructure();
 }
 
 void Layout::removeChild ( CCNode* pChild, bool cleanup )
@@ -73,10 +86,22 @@ void Layout::removeChild ( CCNode* pChild, bool cleanup )
 	GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
 	inherited::removeChild ( pChild, cleanup );
 
+	updateStructure();
+}
+
+void Layout::updateStructure()
+{
 	if ( isRunning() )
 	{
+		GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
 		m_pLayoutConfiguration->updateStructure();
 	}
 }
+
+void Layout::onUpdateStructureCallback ( CCObject* pCaller )
+{
+	updateStructure();
+}
+
 
 } /* namespace GKoala */

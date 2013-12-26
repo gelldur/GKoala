@@ -12,13 +12,36 @@ namespace GKoala
 
 RelativeConfiguration::RelativeConfiguration()
 {
-	// TODO Auto-generated constructor stub
-
 }
 
 RelativeConfiguration::~RelativeConfiguration()
 {
-	// TODO Auto-generated destructor stub
+}
+
+void RelativeConfiguration::addView ( cocos2d::CCNode* pChild,
+									  LayoutParameter* pLayoutParameter )
+{
+}
+
+void RelativeConfiguration::removeChild ( cocos2d::CCNode* pChild )
+{
+}
+
+LayoutParameter* RelativeConfiguration::getDefaultLayoutParameter()
+{
+	return nullptr;
+}
+
+void RelativeConfiguration::updateStructure()
+{
+}
+
+void RelativeConfiguration::onMeasure()
+{
+}
+
+void RelativeConfiguration::onLayout()
+{
 }
 
 } /* namespace GKoala */

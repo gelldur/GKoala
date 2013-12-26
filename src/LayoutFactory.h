@@ -26,11 +26,11 @@ class LayoutFactory : public LayoutFactoryInterface
 public:
 	virtual ~LayoutFactory() {}
 
-	virtual cocos2d::CCNode* createLinearLayout()
+	virtual LayoutInterface* createLinearLayout() override
 	{
 		return Layout::createWithConfiguration ( LinearConfiguration::create() );
 	}
-	virtual cocos2d::CCNode* createRelativeLayout()
+	virtual LayoutInterface* createRelativeLayout() override
 	{
 		return Layout::createWithConfiguration ( RelativeConfiguration::create() );
 	}

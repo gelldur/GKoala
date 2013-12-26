@@ -19,10 +19,10 @@
 namespace GKoala
 {
 
-class Layout : public cocos2d::CCNode , public LayoutInterface
+class Layout : public LayoutInterface
 {
 private:
-	typedef CCNode inherited;
+	typedef LayoutInterface inherited;
 
 public:
 	static Layout* createWithConfiguration ( LayoutConfiguration* pConfiguration )
@@ -43,17 +43,28 @@ public:
 
 	virtual bool initWithConfiguration ( LayoutConfiguration* pConfiguration );
 
+	virtual void onEnter() override;
+	virtual void onExit() override;
+
 	virtual void addChild ( cocos2d::CCNode* pChild, int zOrder, int tag ) override;
-	virtual void addChild ( cocos2d::CCNode* pChild,
-							LayoutParameter* pLayoutParameter ) override;
+	virtual void addChildWith ( cocos2d::CCNode* pChild,
+								LayoutParameter* pLayoutParameter ) override;
 
 	virtual void removeChild ( CCNode* pChild, bool cleanup ) override;
+	virtual void updateStructure() override;
 
 protected:
 	Layout();
 
 private:
 	LayoutConfiguration* m_pLayoutConfiguration;
+
+	void onUpdateStructureCallback ( CCObject* pCaller );
+
+	const char* getNotificationUpdateStructure() const
+	{
+		return "_notify_update_structure";
+	}
 };
 
 } /* namespace GKoala */

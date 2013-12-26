@@ -16,26 +16,45 @@ class SizePolicy
 public:
 	/**
 	 * SP - scaled pixels value in scaled pixels eg. 25.5 scaled pixels
-	 * PERCENT_X - percent  of width of screen eg. 0.05F means 5% of width of screen
-	 * PERCENT_Y - percent  of height of screen eg. 1.15F means 115% of height of screen
+	 * PSW - percent  of width of screen eg. 0.05F means 5% of width of screen
+	 * PSH - percent  of height of screen eg. 1.15F means 115% of height of screen
 	 * PP - parent percent of width/height eg. parent is 100 X 400 when we set it to 0.5 we get 50 (50% of parent width) or 200 (50% of parent height)
 	 */
-	enum Policy
+	enum class Policy
 	{
-		SP, PERCENT_X, PERCENT_Y, PP
+		SP, PSW, PSH, PP, WRAP_CONTENT, MATCH_PARENT
 	};
 
-	enum Const
-	{
-		WRAP_CONTENT = -1122, MATCH_PARENT = -3344
-	};
-
-	SizePolicy ( Policy type, const float& value );
-	SizePolicy ( Const value = WRAP_CONTENT );
+	explicit SizePolicy ( Policy type, const float& value = 1 );
 	~SizePolicy();
 
+	static SizePolicy sp ( float value )
+	{
+		return SizePolicy ( Policy::SP, value );
+	}
+	static SizePolicy psw ( float value )
+	{
+		return SizePolicy ( Policy::PSW, value );
+	}
+	static SizePolicy psh ( float value )
+	{
+		return SizePolicy ( Policy::PSH, value );
+	}
+	static SizePolicy pp ( float value )
+	{
+		return SizePolicy ( Policy::PP, value );
+	}
+	static SizePolicy wrapContent()
+	{
+		return SizePolicy ( Policy::WRAP_CONTENT );
+	}
+	static SizePolicy matchParent()
+	{
+		return SizePolicy ( Policy::MATCH_PARENT );
+	}
+
 	float getValue() const;
-	void setValue ( const float value );
+	void setValue ( float value );
 
 	Policy getType() const;
 
@@ -44,9 +63,9 @@ public:
 private:
 	float m_value;
 	Policy m_type;
-
-	void init ( Policy type, const float& value );
 };
+
+typedef SizePolicy SP;
 
 } /* namespace GKoala */
 #endif /* SIZEPOLICY_H_ */

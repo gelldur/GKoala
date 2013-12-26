@@ -8,18 +8,22 @@
 #ifndef LAYOUTINTERFACE_H_
 #define LAYOUTINTERFACE_H_
 
-#include "layout/LayoutParameter.h"
+#include "Config.h"
 
 namespace GKoala
 {
 
-class LayoutInterface
+class LayoutParameter;
+
+class LayoutInterface : public cocos2d::CCNode
 {
 public:
 	virtual ~LayoutInterface() {};
 
-	virtual void addChild ( cocos2d::CCNode* pNode,
-							LayoutParameter* pLayoutParameter ) = 0;
+	virtual void addChildWith ( cocos2d::CCNode* pNode,
+								LayoutParameter* pLayoutParameter ) = 0;
+
+	virtual void updateStructure() = 0;
 };
 
 } /* namespace GKoala */

@@ -9,6 +9,7 @@
 #define LAYOUTFACTORYINTERFACE_H_
 
 #include "Config.h"
+#include "interface/LayoutInterface.h"
 
 namespace GKoala
 {
@@ -21,8 +22,8 @@ class LayoutFactoryInterface
 public:
 	virtual ~LayoutFactoryInterface() {}
 
-	virtual cocos2d::CCNode* createLinearLayout() = 0;
-	virtual cocos2d::CCNode* createRelativeLayout() = 0;
+	virtual LayoutInterface* createLinearLayout() = 0;
+	virtual LayoutInterface* createRelativeLayout() = 0;
 };
 
 } /* namespace GKoala */

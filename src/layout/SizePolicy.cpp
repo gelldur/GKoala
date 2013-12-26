@@ -10,14 +10,17 @@
 namespace GKoala
 {
 
-SizePolicy::SizePolicy ( Policy type, const float& value )
+SizePolicy::SizePolicy ( Policy type, const float& value ) :
+	m_value ( value ),
+	m_type ( type )
 {
-	init ( type, value );
-}
+	//We can't make it negative because what mean -500 width or -20 margin left?
+	GKoala_assert ( value >= 0, "value must be >= 0" );
 
-SizePolicy::SizePolicy ( Const value )
-{
-	init ( Policy::SP, value );
+	if ( type != Policy::MATCH_PARENT && type != Policy::WRAP_CONTENT )
+	{
+		setValue ( value );
+	}
 }
 
 SizePolicy::~SizePolicy()
@@ -29,23 +32,9 @@ float SizePolicy::getValue() const
 	return m_value;
 }
 
-void SizePolicy::setValue ( const float value )
+void SizePolicy::setValue ( float value )
 {
 	m_value = convert ( m_type, value );
-}
-
-void SizePolicy::init ( Policy type, const float& value )
-{
-	assert ( value >= 0 || value == MATCH_PARENT || value == WRAP_CONTENT );
-
-	//When we have match parent or wrap content we change it to SP
-	if ( value == MATCH_PARENT || value == WRAP_CONTENT )
-	{
-		type = Policy::SP;
-	}
-
-	m_type = type;
-	setValue ( value );
 }
 
 SizePolicy::Policy SizePolicy::getType() const
@@ -57,18 +46,24 @@ float SizePolicy::convert ( Policy type, const float& value )
 {
 	switch ( type )
 	{
-		case PP:
-		case SP:
+		case Policy::WRAP_CONTENT:
+		case Policy::MATCH_PARENT:
+			GKoala_assert ( type != Policy::WRAP_CONTENT &&
+							type != Policy::MATCH_PARENT, "we can't convert value with this type" );
+			return 1;
+
+		case Policy::PP:
+		case Policy::SP:
 		{
 			return value;
 		}
 
-		case PERCENT_X:
+		case Policy::PSW:
 		{
 			return cocos2d::CCDirector::sharedDirector()->getWinSize().width * value;
 		}
 
-		case PERCENT_Y:
+		case Policy::PSH:
 		{
 			return cocos2d::CCDirector::sharedDirector()->getWinSize().height * value;
 		}

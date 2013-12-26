@@ -12,13 +12,10 @@ namespace GKoala
 
 LayoutConfiguration::LayoutConfiguration()
 {
-	// TODO Auto-generated constructor stub
-
 }
 
 LayoutConfiguration::~LayoutConfiguration()
 {
-	// TODO Auto-generated destructor stub
 }
 
 } /* namespace GKoala */

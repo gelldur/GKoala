@@ -19,6 +19,20 @@ public:
 	GK_CREATE ( RelativeConfiguration )
 	virtual ~RelativeConfiguration();
 
+	virtual void addView ( cocos2d::CCNode* pChild,
+						   LayoutParameter* pLayoutParameter ) override;
+	virtual void removeChild ( cocos2d::CCNode* pChild ) override;
+
+	//Abstract method factory
+	virtual LayoutParameter* getDefaultLayoutParameter() override;
+
+	virtual void updateStructure() override;
+
+protected:
+
+	virtual void onMeasure() override;
+	virtual void onLayout() override;
+
 private:
 	RelativeConfiguration();
 };

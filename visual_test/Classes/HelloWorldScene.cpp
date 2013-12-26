@@ -2,6 +2,7 @@
 USING_NS_CC;
 
 #include "LayoutFactory.h"
+using namespace GKoala;
 
 CCScene* HelloWorld::scene()
 {
@@ -77,7 +78,18 @@ bool HelloWorld::init()
 	this->addChild ( pSprite, 0 );
 
 	GKoala::LayoutFactory factory;
-	addChild ( factory.createLinearLayout() );
+
+	LayoutInterface* pLayout = factory.createLinearLayout();
+
+	CCNode* pNode = CCNode::create();
+	{
+		LinearLayoutParameter* pParameter = LinearLayoutParameter::createWrapWrap();
+		pParameter->setWidth ( SP::sp ( 22 ) )->setHeight ( SP::psh ( 0.5F ) );
+
+		pLayout->addChildWith ( pNode, pParameter );
+	}
+
+	addChild ( pLayout );
 
 	return true;
 }
