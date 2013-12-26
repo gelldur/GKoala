@@ -41,4 +41,42 @@ bool Layout::initWithConfiguration ( LayoutConfiguration* pConfiguration )
 	return true;
 }
 
+void Layout::addChild ( cocos2d::CCNode* pChild, int zOrder, int tag )
+{
+	GKoala_assert ( pChild != nullptr, "pChild can't be null" );
+	GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
+
+	pChild->setZOrder ( zOrder );
+	pChild->setTag ( tag );
+
+	addChild ( pChild, m_pLayoutConfiguration->getDefaultLayoutParameter() );
+}
+
+void Layout::addChild ( cocos2d::CCNode* pChild,
+						LayoutParameter* pLayoutParameter )
+{
+	GKoala_assert ( pChild != nullptr, "pChild can't be null" );
+	GKoala_assert ( pLayoutParameter != nullptr, "pLayoutParameter can't be null" );
+	GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
+
+	inherited::addChild ( pChild, pChild->getZOrder(), pChild->getTag() );
+	m_pLayoutConfiguration->addView ( pChild, pLayoutParameter );
+
+	if ( isRunning() )
+	{
+		m_pLayoutConfiguration->updateStructure();
+	}
+}
+
+void Layout::removeChild ( CCNode* pChild, bool cleanup )
+{
+	GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
+	inherited::removeChild ( pChild, cleanup );
+
+	if ( isRunning() )
+	{
+		m_pLayoutConfiguration->updateStructure();
+	}
+}
+
 } /* namespace GKoala */

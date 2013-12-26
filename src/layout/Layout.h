@@ -11,6 +11,10 @@
 #include "Config.h"
 #include "interface/LayoutInterface.h"
 #include "layout/configuration/LayoutConfiguration.h"
+#include <vector>
+
+//TODO
+// 1. should layouts update while running? I mean we run CCScaleAction on child
 
 namespace GKoala
 {
@@ -38,6 +42,12 @@ public:
 	virtual ~Layout();
 
 	virtual bool initWithConfiguration ( LayoutConfiguration* pConfiguration );
+
+	virtual void addChild ( cocos2d::CCNode* pChild, int zOrder, int tag ) override;
+	virtual void addChild ( cocos2d::CCNode* pChild,
+							LayoutParameter* pLayoutParameter ) override;
+
+	virtual void removeChild ( CCNode* pChild, bool cleanup ) override;
 
 protected:
 	Layout();

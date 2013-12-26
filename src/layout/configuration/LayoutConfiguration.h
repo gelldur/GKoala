@@ -18,6 +18,17 @@ class LayoutConfiguration : public cocos2d::CCObject
 public:
 	LayoutConfiguration();
 	virtual ~LayoutConfiguration();
+
+	virtual void addView ( cocos2d::CCNode* pChild,
+						   LayoutParameter* pLayoutParameter ) = 0;
+
+	//Abstract method factory
+	virtual LayoutParameter* getDefaultLayoutParameter() = 0;
+
+	virtual void updateStructure() = 0;
+
+	virtual void onMeasure() = 0;
+	virtual void onLayout() = 0;
 };
 
 } /* namespace GKoala */
