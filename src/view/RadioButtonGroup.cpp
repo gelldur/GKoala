@@ -8,7 +8,6 @@
 #include "view/RadioButtonGroup.h"
 #include "view/layout/Positioner.h"
 #include "utils/Utils.h"
-#include "assets/FontManager.h"
 using namespace KoalaGui;
 
 const char* RadioButtonGroup::notificationName =
@@ -68,8 +67,9 @@ bool RadioButtonGroup::init ( const vector<string>& textRows,
 			pLayoutHorizontal->addView ( pButton, params );
 		}
 
-		CCLabelTTF* pLabel = FontManager::getInstance()->getStandardLabel (
-								 textRows[i] );
+		//TODO FIX
+		CCLabelTTF* pLabel = nullptr;// FontManager::getInstance()->getStandardLabel (
+		//	 textRows[i] );
 		{
 			pLabel->setTag ( ID::LABEL );
 

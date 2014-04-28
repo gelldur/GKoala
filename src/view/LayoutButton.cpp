@@ -6,7 +6,6 @@
  */
 
 #include "view/LayoutButton.h"
-#include "assets/FontManager.h"
 #include "utils/TouchManager.h"
 
 namespace KoalaGui
@@ -56,7 +55,8 @@ bool LayoutButton::initWithButtonAndText ( const string& buttonFileName,
 {
 	KKImageButton* pButton = KKImageButton::createWithBackground (
 								 buttonFileName.c_str() );
-	CCLabelTTF* pLabel = FontManager::getInstance()->getStandardLabel ( text );
+	//TODO FIX
+	CCLabelTTF* pLabel = nullptr; //FontManager::getInstance()->getStandardLabel ( text );
 
 	if ( initWithButtonAndText ( pButton, pLabel ) == false )
 	{

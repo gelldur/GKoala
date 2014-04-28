@@ -6,7 +6,6 @@
  */
 
 #include "view/KKImageButton.h"
-#include "assets/FontManager.h"
 
 namespace KoalaGui
 {
@@ -33,7 +32,8 @@ bool KoalaGui::KKImageButton::initWithLabelAndBackground ( const string& text,
 		pSprite = CCSprite::create ( pSpriteName );
 	}
 
-	CCLabelTTF* pLabel = FontManager::getInstance()->getStandardLabel ( text );
+	//TODO FIX
+	CCLabelTTF* pLabel = nullptr;//FontManager::getInstance()->getStandardLabel ( text );
 
 	return initWithLabelAndBackgroundSprite ( pLabel, pSprite );
 }
@@ -57,8 +57,9 @@ bool KKImageButton::initWithLabelAndBackgroundSprite ( CCNode* pNodeLabel,
 
 bool KKImageButton::initWithBackgroundSprite ( CCNode* pNodeBackground )
 {
+	//TODO FIX FontManager::getInstance()->getStandardLabel ( "" )
 	return initWithLabelAndBackgroundSprite (
-			   FontManager::getInstance()->getStandardLabel ( "" ), pNodeBackground );
+			   nullptr , pNodeBackground );
 }
 
 bool KKImageButton::initWithBackgroundSprite ( const char* pSpriteName,

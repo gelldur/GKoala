@@ -7,7 +7,6 @@
 
 #include "view/list/ListView.h"
 #include <algorithm>
-#include "assets/FontManager.h"
 #include "view/layout/relative/RelativeLayout.h"
 #include "utils/TouchManager.h"
 
@@ -609,8 +608,9 @@ CCNode* ListView::getEmptyView()
 {
 	RelativeLayout* pLayout = RelativeLayout::create ( EMPTY_VIEW );
 
-	CCLabelTTF* pLabel = FontManager::getInstance()->getStandardLabel (
-							 tr ( "No items in list" ) );
+	//TODO FIX
+	CCLabelTTF* pLabel = nullptr;//FontManager::getInstance()->getStandardLabel (
+	//	 "No items in list" );
 	{
 		RelativeLayoutParams params ( LayoutParamsWrapWrap );
 		params.addRule (

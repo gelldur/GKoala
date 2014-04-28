@@ -6,7 +6,7 @@
  */
 
 #include "view/ScreenButton.h"
-#include "dictionaries/language/Utf8.h"
+#include "utils/string/Utf8.h"
 
 namespace KoalaGui
 {
