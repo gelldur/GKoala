@@ -32,8 +32,7 @@ bool KoalaGui::KKImageButton::initWithLabelAndBackground ( const string& text,
 		pSprite = CCSprite::create ( pSpriteName );
 	}
 
-	//TODO FIX
-	CCLabelTTF* pLabel = nullptr;//FontManager::getInstance()->getStandardLabel ( text );
+	CCLabelTTF* pLabel =  CCLabelTTF::create ( "", "Arial", 18 );
 
 	return initWithLabelAndBackgroundSprite ( pLabel, pSprite );
 }
@@ -57,9 +56,8 @@ bool KKImageButton::initWithLabelAndBackgroundSprite ( CCNode* pNodeLabel,
 
 bool KKImageButton::initWithBackgroundSprite ( CCNode* pNodeBackground )
 {
-	//TODO FIX FontManager::getInstance()->getStandardLabel ( "" )
 	return initWithLabelAndBackgroundSprite (
-			   nullptr , pNodeBackground );
+			   CCLabelTTF::create ( "", "Arial", 18 ) , pNodeBackground );
 }
 
 bool KKImageButton::initWithBackgroundSprite ( const char* pSpriteName,
