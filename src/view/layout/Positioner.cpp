@@ -279,4 +279,12 @@ void Positioner::toCenterVerticalOf ( CCNode* pToCenterVertical, CCNode* pOf,
 									  CCPoint ( corner.x, Positioner::getCenterPoint ( pOf ).origin.y + margin ) );
 }
 
+void Positioner::toCenterOf ( CCNode* pToCenter, CCNode* pOf )
+{
+	assert ( pToCenter );
+	assert ( pOf );
+	Positioner::toCenterHorizontalOf ( pToCenter, pOf, 0.0f );
+	Positioner::toCenterVerticalOf ( pToCenter, pOf, 0.0f );
+}
+
 } /* namespace KoalaGui */

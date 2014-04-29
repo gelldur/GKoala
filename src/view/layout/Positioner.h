@@ -48,6 +48,7 @@ void toCenterHorizontalOf ( CCNode* pToCenterHorizontal, CCNode* pOf,
 							const float margin = 0 );
 void toCenterVerticalOf ( CCNode* pToCenterVertical, CCNode* pOf,
 						  const float margin = 0 );
+void toCenterOf ( CCNode* pToCenter, CCNode* pOf );
 
 }
 
