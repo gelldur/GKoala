@@ -202,6 +202,22 @@ void RelativeLayout::applyYPosition ( View* pView, const View* pRelativeTo,
 										  ccp ( 0,
 												Positioner::getCenterPoint ( pRelativeTo->getNode() ).origin.y ) );
 	}
+	else if ( align & RelativeLayoutParams::TO_TOP )
+	{
+		CCAssert ( pRelativeTo, "Can't be null?" );
+		Positioner::setCornerToPosition ( pView->getNode(),
+										  pView->getMarginLeftTopCorner(),
+										  ccp ( pView->getMarginLeftTopCorner().x,
+												pRelativeTo->getMarginLeftTopCorner().y ) );
+	}
+	else if ( align & RelativeLayoutParams::TO_BOTTOM )
+	{
+		CCAssert ( pRelativeTo, "Can't be null?" );
+		Positioner::setCornerToPosition ( pView->getNode(),
+										  pView->getMarginLeftBottomCorner(),
+										  ccp ( pView->getMarginLeftBottomCorner().x,
+												pRelativeTo->getMarginLeftBottomCorner().y ) );
+	}
 }
 
 CCSize RelativeLayout::onMeasure ( float CCSize::* pValue,

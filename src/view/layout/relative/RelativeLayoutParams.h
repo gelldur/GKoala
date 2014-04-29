@@ -39,8 +39,7 @@ public:
 	 * TO_RIGHT - right side to right side of other
 	 * TO_LEFT - left side to left side of other
 	 */
-	enum AlignType
-	: unsigned short
+	enum AlignType : unsigned short
 	{
 		ABOVE = 1,
 		BELOW = 2,
@@ -58,6 +57,8 @@ public:
 		CENTER = CENTER_HORIZONTAL | CENTER_VERTICAL,
 		TO_RIGHT = 4096,
 		TO_LEFT = 8192,
+		TO_TOP = 16384,
+		TO_BOTTOM = 32768
 	};
 
 	struct Align
@@ -80,8 +81,8 @@ public:
 
 	void addRule (
 		const unsigned short alignType = RelativeLayoutParams::PARENT_TOP
-										 | RelativeLayoutParams::PARENT_LEFT, const int tag =
-			kCCNodeTagInvalid );
+										 | RelativeLayoutParams::PARENT_LEFT, const int tag
+		= kCCNodeTagInvalid );
 
 	const vector<RelativeLayoutParams::Align>& getRules() const;
 

@@ -33,7 +33,7 @@ RelativeLayoutParams::~RelativeLayoutParams()
 void RelativeLayoutParams::addRule ( const unsigned short alignType,
 									 const int tag /*= kCCNodeTagInvalid*/ )
 {
-	CCAssert ( alignType & 16383, "Align must be in range 1 - 16383!" );
+	CCAssert ( alignType & 65535, "Align must be in range 1 - 65535!" );
 	vector<RelativeLayoutParams::Align>::iterator it = getIteratorByTag ( tag );
 
 	if ( it != m_params.end() )
