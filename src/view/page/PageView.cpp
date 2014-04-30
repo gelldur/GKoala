@@ -11,13 +11,13 @@
 namespace KoalaGui
 {
 
-PageView::PageView ( const int tag ) :
-	ListView ( tag ),
-	m_pPageIndicator ( nullptr ),
-	m_isIgnoring ( false ),
-	m_checkOnce ( true ),
-	m_startMovePage ( 0 ),
-	m_currentPage ( 0 )
+PageView::PageView( const int tag ) :
+	ListView( tag ),
+	m_pPageIndicator( nullptr ),
+	m_isIgnoring( false ),
+	m_checkOnce( true ),
+	m_startMovePage( 0 ),
+	m_currentPage( 0 )
 {
 }
 
@@ -26,38 +26,38 @@ PageView::~PageView()
 	m_pPageIndicator = nullptr;
 }
 
-bool PageView::init ( const Orientation& orientation )
+bool PageView::init( const Orientation& orientation )
 {
-	if ( ListView::init ( Orientation::HORIZONTAL ) == false )
+	if( ListView::init( Orientation::HORIZONTAL ) == false )
 	{
-		assert ( false );
+		assert( false );
 		return false;
 	}
 
-	setTouchPriority ( INT_MIN );
+	setTouchPriority( INT_MIN );
 
 	return true;
 }
 
-PageView* PageView::create ( const Orientation& orientation, int tag )
+PageView* PageView::create( const Orientation& orientation, int tag )
 {
-	PageView* pRet = new PageView ( tag );
+	PageView* pRet = new PageView( tag );
 
-	if ( pRet && pRet->init ( orientation ) )
+	if( pRet && pRet->init( orientation ) )
 	{
 		pRet->autorelease();
 		return pRet;
 	}
 	else
 	{
-		CC_SAFE_DELETE ( pRet );
+		CC_SAFE_DELETE( pRet );
 		return nullptr;
 	}
 }
 
-void PageView::update ( float delta )
+void PageView::update( float delta )
 {
-	ListView::update ( delta );
+	ListView::update( delta );
 }
 
 void PageView::registerWithTouchDispatcher()
@@ -65,21 +65,21 @@ void PageView::registerWithTouchDispatcher()
 	CCTouchDispatcher* pDispatcher =
 		CCDirector::sharedDirector()->getTouchDispatcher();
 
-	if ( getTouchMode() == kCCTouchesAllAtOnce )
+	if( getTouchMode() == kCCTouchesAllAtOnce )
 	{
-		pDispatcher->addStandardDelegate ( this, 0 );
+		pDispatcher->addStandardDelegate( this, 0 );
 	}
 	else
 	{
-		pDispatcher->addTargetedDelegate ( this, getTouchPriority(), false );
+		pDispatcher->addTargetedDelegate( this, getTouchPriority(), false );
 	}
 }
 
-bool PageView::ccTouchBegan ( CCTouch* pTouch, CCEvent* pEvent )
+bool PageView::ccTouchBegan( CCTouch* pTouch, CCEvent* pEvent )
 {
-	bool isTouched = ListView::ccTouchBegan ( pTouch, pEvent );
+	bool isTouched = ListView::ccTouchBegan( pTouch, pEvent );
 
-	if ( !isTouched )
+	if( !isTouched )
 	{
 		return false;
 	}
@@ -92,70 +92,70 @@ bool PageView::ccTouchBegan ( CCTouch* pTouch, CCEvent* pEvent )
 	return true;
 }
 
-void PageView::ccTouchMoved ( CCTouch* pTouch, CCEvent* pEvent )
+void PageView::ccTouchMoved( CCTouch* pTouch, CCEvent* pEvent )
 {
-	if ( m_isIgnoring )
+	if( m_isIgnoring )
 	{
 		return;
 	}
 
-	if ( m_checkOnce )
+	if( m_checkOnce )
 	{
 		m_checkOnce = false;
-		float xDifference = abs (
+		float xDifference = abs(
 								( float ) pTouch->getPreviousLocation().x - pTouch->getLocation().x );
-		float yDifference = abs (
+		float yDifference = abs(
 								pTouch->getPreviousLocation().y - pTouch->getLocation().y );
 
-		if ( xDifference < yDifference || xDifference < 1.5F * getScaleForValues() )
+		if( xDifference < yDifference || xDifference < 1.5F * getScaleForValues() )
 		{
 			m_isIgnoring = true;
-			ccTouchEnded ( pTouch, pEvent );
+			ccTouchEnded( pTouch, pEvent );
 			return;
 		}
 	}
 
-	ListView::ccTouchMoved ( pTouch, pEvent );
+	ListView::ccTouchMoved( pTouch, pEvent );
 
 	const float previous = getCurrentPage();
-	setCurrentPage ( calculatePage() );
-	LOG ( "Current Page changed: %u", m_currentPage );
+	setCurrentPage( calculatePage() );
+	LOG( "Current Page changed: %u", m_currentPage );
 
-	if ( previous != m_currentPage )
+	if( previous != m_currentPage )
 	{
-		LOG ( "Current page %u", m_currentPage );
+		LOG( "Current page %u", m_currentPage );
 
-		if ( m_pPageIndicator != nullptr )
+		if( m_pPageIndicator != nullptr )
 		{
-			m_pPageIndicator->setCurrentPage ( getCurrentPage() );
+			m_pPageIndicator->setCurrentPage( getCurrentPage() );
 		}
 	}
 
 	//LOG ( "Position on move end %f", getContentView()->getPositionX() );
 
 	//We need do it twice :)
-	pTouch->setTouchInfo ( pTouch->getID(), pTouch->getLocation().x, 0 );
-	pTouch->setTouchInfo ( pTouch->getID(), pTouch->getLocation().x, 0 );
+	pTouch->setTouchInfo( pTouch->getID(), pTouch->getLocation().x, 0 );
+	pTouch->setTouchInfo( pTouch->getID(), pTouch->getLocation().x, 0 );
 }
 
-void PageView::ccTouchEnded ( CCTouch* pTouch, CCEvent* pEvent )
+void PageView::ccTouchEnded( CCTouch* pTouch, CCEvent* pEvent )
 {
-	setTouched ( false );
+	setTouched( false );
 
-	if (  m_isIgnoring == true )
+	if( m_isIgnoring == true )
 	{
 		return;
 	}
 
 	m_startMovePage = pTouch->getLocationInView().x - m_startMovePage;
 	float offset = getContentView()->getPositionX()
-				   / getContentView()->getFirstRowsSize ( 1 ).width;
+				   / getContentView()->getFirstRowsSize( 1 ).width;
 
-	if ( offset > 0 )
+	if( offset > 0 )
 	{
 		offset = 0;
 	}
-	else if ( -offset > ( int ) getCachedRows() + 1 )
+	else if( -offset > ( int ) getCachedRows() + 1 )
 	{
 		offset = - ( int ) getCachedRows();
 	}
@@ -163,9 +163,9 @@ void PageView::ccTouchEnded ( CCTouch* pTouch, CCEvent* pEvent )
 	const float part = offset - ( int ) offset;
 
 	//To Right
-	if ( m_startMovePage > 0 )
+	if( m_startMovePage > 0 )
 	{
-		if ( part > -0.8F )
+		if( part > -0.8F )
 		{
 			offset = ( int ) offset;
 		}
@@ -176,9 +176,9 @@ void PageView::ccTouchEnded ( CCTouch* pTouch, CCEvent* pEvent )
 	}
 
 	//To left
-	if ( m_startMovePage < 0 )
+	if( m_startMovePage < 0 )
 	{
-		if ( part < -0.2F )
+		if( part < -0.2F )
 		{
 			offset = ( int ) offset - 1;
 		}
@@ -189,39 +189,39 @@ void PageView::ccTouchEnded ( CCTouch* pTouch, CCEvent* pEvent )
 	}
 
 	CCPoint point = getContentView()->getPosition();
-	point.x = getContentView()->getFirstRowsSize ( 1 ).width * offset;
-	movePageTo ( point );
+	point.x = getContentView()->getFirstRowsSize( 1 ).width * offset;
+	movePageTo( point );
 }
 
-void PageView::setPage ( unsigned index )
+void PageView::setPage( unsigned index )
 {
-	LOG ( "method: %s::%s is called.", __FILE__, __func__ );
-	assert ( index < getItemsCount() );
+	LOG( "method: %s::%s is called.", __FILE__, __func__ );
+	assert( index < getItemsCount() );
 
-	if ( index == m_currentPage )
+	if( index == m_currentPage )
 	{
 		return;
 	}
 
 	//We are probably moving page now
-	assert ( getContentView() );
+	assert( getContentView() );
 
-	if ( getMovingTo().x != getContentView()->getPosition().x )
+	if( getMovingTo().x != getContentView()->getPosition().x )
 	{
 		getContentView()->stopAllActions();
-		getContentView()->setPosition ( getMovingTo() );
-		update ( 0 );
+		getContentView()->setPosition( getMovingTo() );
+		update( 0 );
 	}
 
 	//Assert for moving correctly pages
-	assert ( ( int ) getContentView()->getFirstRowsSize ( 1 ).width );
-	assert ( ( ( int ) fabs ( getContentView()->getPositionX() ) )
-			 % ( ( int ) getContentView()->getFirstRowsSize ( 1 ).width ) == 0 );
+	assert( ( int ) getContentView()->getFirstRowsSize( 1 ).width );
+	assert( ( ( int ) fabs( getContentView()->getPositionX() ) )
+			% ( ( int ) getContentView()->getFirstRowsSize( 1 ).width ) == 0 );
 
 	float offset = getContentView()->getPositionX()
-				   / getContentView()->getFirstRowsSize ( 1 ).width;
+				   / getContentView()->getFirstRowsSize( 1 ).width;
 
-	if ( index > m_currentPage )
+	if( index > m_currentPage )
 	{
 		offset -= 1;
 	}
@@ -232,24 +232,24 @@ void PageView::setPage ( unsigned index )
 	}
 
 	CCPoint point = getContentView()->getPosition();
-	point.x = getContentView()->getFirstRowsSize ( 1 ).width * offset;
+	point.x = getContentView()->getFirstRowsSize( 1 ).width * offset;
 
-	setCurrentPage ( index );
+	setCurrentPage( index );
 
-	LOG ( "Current page %u", m_currentPage );
+	LOG( "Current page %u", m_currentPage );
 
-	if ( m_pPageIndicator != nullptr )
+	if( m_pPageIndicator != nullptr )
 	{
-		m_pPageIndicator->setCurrentPage ( getCurrentPage() );
+		m_pPageIndicator->setCurrentPage( getCurrentPage() );
 	}
 
-	movePageTo ( point );
+	movePageTo( point );
 }
 
-void PageView::setPageIndicator ( PageIndicatorController* pPageIndicator )
+void PageView::setPageIndicator( PageIndicatorController* pPageIndicator )
 {
 	m_pPageIndicator = pPageIndicator; //TODO retain?
-	assert ( m_pPageIndicator );
+	assert( m_pPageIndicator );
 }
 
 unsigned PageView::getCurrentPage()
@@ -261,26 +261,26 @@ string PageView::getCurrentPageTitle()
 {
 	const PageViewAdapter* pAdapter = dynamic_cast<const PageViewAdapter*>
 									  ( getAdapter() );
-	assert ( pAdapter );
-	return pAdapter->getPage ( getCurrentPage() )->getTitle();
+	assert( pAdapter );
+	return pAdapter->getPage( getCurrentPage() )->getTitle();
 }
 
 void PageView::onFinishPageMoveCallback()
 {
-	LOG ( "onFinishPageMoveCallback" );
+	LOG( "onFinishPageMoveCallback" );
 
 	const float previous = m_currentPage;
-	setCurrentPage ( calculatePage() );
+	setCurrentPage( calculatePage() );
 
-	LOG ( "Current Page changed: %u", m_currentPage );
+	LOG( "Current Page changed: %u", m_currentPage );
 
-	if ( previous != m_currentPage )
+	if( previous != m_currentPage )
 	{
-		LOG ( "Current page %u", m_currentPage );
+		LOG( "Current page %u", m_currentPage );
 
-		if ( m_pPageIndicator != nullptr )
+		if( m_pPageIndicator != nullptr )
 		{
-			m_pPageIndicator->setCurrentPage ( getCurrentPage() );
+			m_pPageIndicator->setCurrentPage( getCurrentPage() );
 		}
 	}
 }
@@ -288,13 +288,13 @@ void PageView::onFinishPageMoveCallback()
 unsigned PageView::calculatePage()
 {
 	float offset = ( -getContentView()->getPositionX()
-					 / getContentView()->getFirstRowsSize ( 1 ).width );
+					 / getContentView()->getFirstRowsSize( 1 ).width );
 
-	if ( offset < 0 )
+	if( offset < 0 )
 	{
 		offset = 0;
 	}
-	else if ( offset > ( int ) getCachedRows() + 1 )
+	else if( offset > ( int ) getCachedRows() + 1 )
 	{
 		offset = - ( int ) getCachedRows();
 	}
@@ -302,33 +302,33 @@ unsigned PageView::calculatePage()
 	return getIndex() + ( unsigned ) offset;
 }
 
-void PageView::movePageTo ( const CCPoint& point )
+void PageView::movePageTo( const CCPoint& point )
 {
-	LOG ( "method: %s::%s is called.", __FILE__, __func__ );
+	LOG( "method: %s::%s is called.", __FILE__, __func__ );
 	//We want to wait for update, at least once call.
-	CCAction* pAction = getMovingAction ( point );
+	CCAction* pAction = getMovingAction( point );
 
 	getContentView()->stopAllActions();
-	getContentView()->runAction ( pAction );
-	setMovingTo ( point );
+	getContentView()->runAction( pAction );
+	setMovingTo( point );
 }
 
-void PageView::setAdapter ( ListAdapter* pAdapter )
+void PageView::setAdapter( ListAdapter* pAdapter )
 {
-	assert ( pAdapter->getItemsCount() > 0 );
-	ListView::setAdapter ( pAdapter );
-	setPage ( 0 );
+	assert( pAdapter->getItemsCount() > 0 );
+	ListView::setAdapter( pAdapter );
+	setPage( 0 );
 }
 
-CCAction* PageView::getMovingAction ( const CCPoint& moveTo,
-									  float duration )
+CCAction* PageView::getMovingAction( const CCPoint& moveTo,
+									 float duration )
 {
-	CCAction* pAction = CCSequence::createWithTwoActions (
-							CCEaseSineOut::create ( CCMoveTo::create ( 0.15F, moveTo ) ),
-							CCCallFunc::create ( this,
-									callfunc_selector ( PageView::onFinishPageMoveCallback ) ) );
+	CCAction* pAction = CCSequence::createWithTwoActions(
+							CCEaseSineOut::create( CCMoveTo::create( 0.15F, moveTo ) ),
+							CCCallFunc::create( this,
+									callfunc_selector( PageView::onFinishPageMoveCallback ) ) );
 
-	pAction->setTag ( getActionScrollTag() );
+	pAction->setTag( getActionScrollTag() );
 	return pAction;
 }
 

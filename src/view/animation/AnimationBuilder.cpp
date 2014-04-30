@@ -10,8 +10,8 @@
 namespace KoalaLib
 {
 
-AnimationBuilder::AnimationBuilder () :
-	m_pAnimation ( nullptr )
+AnimationBuilder::AnimationBuilder() :
+	m_pAnimation( nullptr )
 {
 	m_pAnimation = Animation::create();
 }
@@ -20,9 +20,9 @@ AnimationBuilder::~AnimationBuilder()
 {
 }
 
-AnimationBuilder AnimationBuilder::build ()
+AnimationBuilder AnimationBuilder::build()
 {
-	return AnimationBuilder ();
+	return AnimationBuilder();
 }
 
 Animation* AnimationBuilder::finish()
@@ -30,31 +30,31 @@ Animation* AnimationBuilder::finish()
 	return m_pAnimation;
 }
 
-AnimationBuilder& AnimationBuilder::addSpriteFrame ( CCSpriteFrame* pFrame,
+AnimationBuilder& AnimationBuilder::addSpriteFrame( CCSpriteFrame* pFrame,
 		float duration )
 {
-	m_pAnimation->addSpriteFrame ( pFrame, duration );
+	m_pAnimation->addSpriteFrame( pFrame, duration );
 	return *this;
 }
 
-AnimationBuilder& AnimationBuilder::addSpriteFrameWithFileName (
+AnimationBuilder& AnimationBuilder::addSpriteFrameWithFileName(
 	const char* pFileName, float duration )
 {
-	m_pAnimation->addSpriteFrameWithFileName ( pFileName, duration );
+	m_pAnimation->addSpriteFrameWithFileName( pFileName, duration );
 	return *this;
 }
 
-AnimationBuilder& KoalaLib::AnimationBuilder::addAnimationFrame (
+AnimationBuilder& KoalaLib::AnimationBuilder::addAnimationFrame(
 	AnimationFrame* pFrame )
 {
-	m_pAnimation->addAnimationFrame ( pFrame );
+	m_pAnimation->addAnimationFrame( pFrame );
 	return *this;
 }
 
-AnimationBuilder& AnimationBuilder::addAnimationFrames (
+AnimationBuilder& AnimationBuilder::addAnimationFrames(
 	vector<AnimationFrame*>& frames )
 {
-	m_pAnimation->addAnimationFrames ( frames );
+	m_pAnimation->addAnimationFrames( frames );
 	return *this;
 }
 

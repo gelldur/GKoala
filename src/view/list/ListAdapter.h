@@ -30,7 +30,7 @@ public:
 	 * @param index
 	 * @return new row
 	 */
-	virtual View* getNewRow ( const unsigned index ) = 0;
+	virtual View* getNewRow( const unsigned index ) = 0;
 
 	/**
 	 *
@@ -38,16 +38,16 @@ public:
 	 * @param pConvertView
 	 * @return new holder that has pointers to all needed data in view
 	 */
-	virtual CCObject* getNewHolder ( const unsigned index,
-									 View* pConvertView ) = 0;
+	virtual CCObject* getNewHolder( const unsigned index,
+									View* pConvertView ) = 0;
 
 	/**
 	 * Simply call on all pointers setters what you want
 	 * @param index
 	 * @param pHolder
 	 */
-	virtual void initializeHolder ( const unsigned index,
-									CCObject* pHolderObject ) = 0;
+	virtual void initializeHolder( const unsigned index,
+								   CCObject* pHolderObject ) = 0;
 
 protected:
 	ListAdapter();
@@ -59,7 +59,7 @@ private:
 	 * @param pConvertView can be null
 	 * @return new inflated view
 	 */
-	View* getRow ( const unsigned index, View* pConvertView );
+	View* getRow( const unsigned index, View* pConvertView );
 };
 
 } /* namespace KoalaGui */

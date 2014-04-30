@@ -18,7 +18,7 @@ namespace KoalaGui
 
 class ContentView;
 
-typedef void ( CCObject::*OnRowClick ) ( unsigned index, CCNode* pRow );
+typedef void ( CCObject::*OnRowClick )( unsigned index, CCNode* pRow );
 
 #define on_row_selector(_OnRowClick) (OnRowClick)(&_OnRowClick)
 
@@ -26,12 +26,12 @@ class ListView: public LinearLayout, private ScissorHelper
 {
 public:
 
-	static ListView* create ( const Orientation& orientation = Orientation::VERTICAL,
-							  int tag = kViewTagUnusedLayout );
+	static ListView* create( const Orientation& orientation = Orientation::VERTICAL,
+							 int tag = kViewTagUnusedLayout );
 
 	virtual ~ListView();
 
-	virtual void setAdapter ( ListAdapter* pAdapter );
+	virtual void setAdapter( ListAdapter* pAdapter );
 	ListAdapter* getAdapter()
 	{
 		return m_pAdapter;
@@ -39,65 +39,65 @@ public:
 
 	unsigned getItemsCount() const
 	{
-		assert ( m_pAdapter );
+		assert( m_pAdapter );
 		return m_pAdapter->getItemsCount();
 	}
 
-	virtual void setContentSize ( const CCSize& size );
+	virtual void setContentSize( const CCSize& size );
 
-	virtual bool init ( const Orientation& orientation );
+	virtual bool init( const Orientation& orientation );
 
 	virtual void visit();
 
-	void setCachedRows ( unsigned count );
+	void setCachedRows( unsigned count );
 	unsigned getCachedRows() const;
 
 
-	virtual bool ccTouchBegan ( CCTouch* pTouch, CCEvent* pEvent );
-	virtual void ccTouchMoved ( CCTouch* pTouch, CCEvent* pEvent );
-	virtual void ccTouchEnded ( CCTouch* pTouch, CCEvent* pEvent );
-	virtual void ccTouchCancelled ( CCTouch* pTouch, CCEvent* pEvent );
+	virtual bool ccTouchBegan( CCTouch* pTouch, CCEvent* pEvent );
+	virtual void ccTouchMoved( CCTouch* pTouch, CCEvent* pEvent );
+	virtual void ccTouchEnded( CCTouch* pTouch, CCEvent* pEvent );
+	virtual void ccTouchCancelled( CCTouch* pTouch, CCEvent* pEvent );
 
 	virtual void onEnter();
 	virtual void onExit();
 
-	virtual void update ( float delta );
+	virtual void update( float delta );
 
-	void setOnItemClickCallback ( CCObject* pObject, OnRowClick onRowClick )
+	void setOnItemClickCallback( CCObject* pObject, OnRowClick onRowClick )
 	{
-		assert ( pObject );
-		assert ( onRowClick );
+		assert( pObject );
+		assert( onRowClick );
 		m_pOnRowClickObject = pObject;
 		m_pOnRowClickCallback = onRowClick;
 	}
-	virtual void setColor ( const ccColor3B& color );
-	virtual void setOpacity ( GLubyte opacity );
-	void setOffset ( float offset );
+	virtual void setColor( const ccColor3B& color );
+	virtual void setOpacity( GLubyte opacity );
+	void setOffset( float offset );
 	float getOffset();
 
-	virtual void setGravity ( const unsigned short gravity );
+	virtual void setGravity( const unsigned short gravity );
 
 	void reloadData();
 
 protected:
 
-	GET (  int, ActionBounceTag, 0x23 );
-	GET (  int, ActionScrollTag, 0x22 );
+	GET( int, ActionBounceTag, 0x23 );
+	GET( int, ActionScrollTag, 0x22 );
 
-	ListView ( const int tag );
+	ListView( const int tag );
 	ContentView* getContentView()
 	{
 		return m_pContent;
 	}
 
-	void setTouched ( bool isTouched )
+	void setTouched( bool isTouched )
 	{
 		m_isTouched = isTouched;
 	}
 
 	unsigned getIndex() const;
 
-	void setIndex ( unsigned index )
+	void setIndex( unsigned index )
 	{
 		m_index = index;
 	}
@@ -107,14 +107,14 @@ protected:
 		return m_movingTo;
 	}
 
-	void setMovingTo ( const CCPoint& point )
+	void setMovingTo( const CCPoint& point )
 	{
 		LOG_FUNCTION_CALL();
 		m_movingTo = point;
 	}
 
-	virtual CCAction* getMovingAction ( const CCPoint& moveTo,
-										float duration = 0.3f );
+	virtual CCAction* getMovingAction( const CCPoint& moveTo,
+									   float duration = 0.3f );
 
 	const float getScaleForValues() const
 	{
@@ -139,7 +139,7 @@ private:
 	float CCSize::* m_pValue;
 	float m_factor;
 
-	void ( CCObject::*m_pOnRowClickCallback ) ( unsigned index, CCNode* pRow );
+	void ( CCObject::*m_pOnRowClickCallback )( unsigned index, CCNode* pRow );
 	CCObject* m_pOnRowClickObject;
 
 	CCNode* m_pTocuhedRow;
@@ -150,7 +150,7 @@ private:
 
 	bool m_isReloadOnEnter;
 
-	CCNode* getCellForTouch ( CCTouch* pTouch, unsigned* const pPosition );
+	CCNode* getCellForTouch( CCTouch* pTouch, unsigned* const pPosition );
 	void getMoreCelss();
 	CCNode* getEmptyView();
 
@@ -175,18 +175,18 @@ private:
 class ContentView: public LinearLayout
 {
 public:
-	static ContentView* create ( const Orientation& orientation, int tag =
-									 kViewTagUnusedLayout );
+	static ContentView* create( const Orientation& orientation, int tag =
+									kViewTagUnusedLayout );
 
 	//	virtual bool init ( const Orientation& orientation );
 
-	CCSize getFirstRowsSize ( unsigned rowsCount )
+	CCSize getFirstRowsSize( unsigned rowsCount )
 	{
 		CCSize size;
 		vector<View*>& views = getViews();
-		assert ( rowsCount <= views.size() );
+		assert( rowsCount <= views.size() );
 
-		for ( size_t i = 0; i < rowsCount; ++i )
+		for( size_t i = 0; i < rowsCount; ++i )
 		{
 			size = size + views[i]->getFullSize();
 		}
@@ -194,13 +194,13 @@ public:
 		return size;
 	}
 
-	CCSize getLastRowsSize ( unsigned rowsCount )
+	CCSize getLastRowsSize( unsigned rowsCount )
 	{
 		CCSize size;
 		vector<View*>& views = getViews();
-		assert ( rowsCount < views.size() );
+		assert( rowsCount < views.size() );
 
-		for ( vector<View*>::reverse_iterator it = views.rbegin();
+		for( vector<View*>::reverse_iterator it = views.rbegin();
 				it != views.rbegin() + rowsCount; ++it )
 		{
 			size = size + ( *it )->getFullSize();
@@ -211,13 +211,13 @@ public:
 
 	CCPoint getFirsRowPositionLewftTop()
 	{
-		return Positioner::getLeftTopCorner ( getViews() [0]->getNode() ).origin;
+		return Positioner::getLeftTopCorner( getViews() [0]->getNode() ).origin;
 	}
 
 	CCPoint getLastRowPositionRightBottom()
 	{
-		assert ( getViewsCount() > 0 );
-		return Positioner::getRightBottomCorner (
+		assert( getViewsCount() > 0 );
+		return Positioner::getRightBottomCorner(
 				   getViews() [getViewsCount() - 1]->getNode() ).origin;
 	}
 
@@ -226,7 +226,7 @@ public:
 		return getViews().size();
 	}
 
-	View* getView ( unsigned index )
+	View* getView( unsigned index )
 	{
 		return getViews() [index];
 	}
@@ -235,19 +235,19 @@ public:
 	bool moveRowToBottom();
 
 protected:
-	ContentView ( const int tag );
+	ContentView( const int tag );
 
 private:
-	void updateCell ( View* pView )
+	void updateCell( View* pView )
 	{
-		AbstractLayout* pLayout = dynamic_cast<AbstractLayout*> ( pView->getNode() );
+		AbstractLayout* pLayout = dynamic_cast<AbstractLayout*>( pView->getNode() );
 
 		//For performance its better to update 1 view than all list
-		if ( pLayout != nullptr )
+		if( pLayout != nullptr )
 		{
 			pLayout->updateStructure();
-			applySizeRuleForLayout ( KK_WIDTH, pLayout, *pView->getLayoutParams() );
-			applySizeRuleForLayout ( KK_HEIGHT, pLayout, *pView->getLayoutParams() );
+			applySizeRuleForLayout( KK_WIDTH, pLayout, *pView->getLayoutParams() );
+			applySizeRuleForLayout( KK_HEIGHT, pLayout, *pView->getLayoutParams() );
 		}
 	}
 };

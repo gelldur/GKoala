@@ -21,17 +21,17 @@ public:
 
 	virtual ~PageIndicatorController();
 
-	void setPageView ( PageView* pPageView );
+	void setPageView( PageView* pPageView );
 
 	bool nextPage();
 	bool previousPage();
 
-	virtual void setCurrentPage ( unsigned index );
+	virtual void setCurrentPage( unsigned index );
 
 protected:
 	PageView* getPageView() const
 	{
-		assert ( m_pPageView );
+		assert( m_pPageView );
 		return m_pPageView;
 	}
 

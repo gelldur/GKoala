@@ -18,11 +18,11 @@ class AnimationFrame : public CCObject
 {
 public:
 
-	static AnimationFrame* create ( CCSpriteFrame* pSpriteFrame, float duration )
+	static AnimationFrame* create( CCSpriteFrame* pSpriteFrame, float duration )
 	{
 		AnimationFrame* pRet = new AnimationFrame();
 
-		if ( pRet && pRet->init ( pSpriteFrame, duration ) )
+		if( pRet && pRet->init( pSpriteFrame, duration ) )
 		{
 			pRet->autorelease();
 			return pRet;
@@ -46,7 +46,7 @@ public:
 		return m_duration;
 	}
 
-	virtual bool init ( CCSpriteFrame* pSpriteFrame, float duration );
+	virtual bool init( CCSpriteFrame* pSpriteFrame, float duration );
 
 protected:
 	AnimationFrame();

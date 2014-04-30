@@ -35,28 +35,28 @@ private:
 	float m_value;
 	Policy m_type;
 
-	bool init ( const Policy& type, const float& value );
+	bool init( const Policy& type, const float& value );
 
 public:
-	SizePolicy ( const Policy& type, const float& value );
-	SizePolicy ( const Const& value );
+	SizePolicy( const Policy& type, const float& value );
+	SizePolicy( const Const& value );
 	virtual ~SizePolicy();
 
 	float getValue() const;
-	void setValue ( const float value );
+	void setValue( const float value );
 
 	Policy getType() const;
 
-	static float convert ( const Policy& type, const float& value );
+	static float convert( const Policy& type, const float& value );
 };
 
 typedef SizePolicy::Policy Policy;
 typedef SizePolicy::Const Const;
 
 
-const SizePolicy SizePolicyWrapContent ( Const::WRAP_CONTENT );
-const SizePolicy SizePolicyMatchContent ( Const::MATCH_PARENT );
-const SizePolicy SizePolicyZero ( Policy::SP, 0 );
+const SizePolicy SizePolicyWrapContent( Const::WRAP_CONTENT );
+const SizePolicy SizePolicyMatchContent( Const::MATCH_PARENT );
+const SizePolicy SizePolicyZero( Policy::SP, 0 );
 
 } /* namespace KoalaGui */
 #endif /* SIZEPOLICY_H_ */

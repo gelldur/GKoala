@@ -12,27 +12,27 @@
 namespace KoalaGui
 {
 
-View::View ( CCNode* pNode, LayoutParams* pLayoutParams ) :
-	m_pNode ( pNode ),
-	m_pLayoutParams ( pLayoutParams ),
-	m_touched ( false ),
-	m_pClickCallback ( nullptr ),
-	m_pTouchCallback ( nullptr ),
-	m_pTouchReleaseInsideCallback ( nullptr )
+View::View( CCNode* pNode, LayoutParams* pLayoutParams ) :
+	m_pNode( pNode ),
+	m_pLayoutParams( pLayoutParams ),
+	m_touched( false ),
+	m_pClickCallback( nullptr ),
+	m_pTouchCallback( nullptr ),
+	m_pTouchReleaseInsideCallback( nullptr )
 {
-	assert ( pNode );
-	assert ( pLayoutParams );
+	assert( pNode );
+	assert( pLayoutParams );
 	m_pNode->retain();
-	assert ( m_pNode->retainCount() >= 2 );
+	assert( m_pNode->retainCount() >= 2 );
 }
 
 View::~View()
 {
-	CC_SAFE_DELETE ( m_pLayoutParams );
-	CC_SAFE_RELEASE_NULL ( m_pNode );
-	CC_SAFE_RELEASE_NULL ( m_pClickCallback );
-	CC_SAFE_RELEASE_NULL ( m_pTouchCallback );
-	CC_SAFE_RELEASE_NULL ( m_pTouchReleaseInsideCallback );
+	CC_SAFE_DELETE( m_pLayoutParams );
+	CC_SAFE_RELEASE_NULL( m_pNode );
+	CC_SAFE_RELEASE_NULL( m_pClickCallback );
+	CC_SAFE_RELEASE_NULL( m_pTouchCallback );
+	CC_SAFE_RELEASE_NULL( m_pTouchReleaseInsideCallback );
 }
 
 CCNode* View::getNode() const
@@ -45,15 +45,15 @@ LayoutParams* View::getLayoutParams() const
 	return m_pLayoutParams;
 }
 
-void View::updateLayoutParams ( LayoutParams* pLayoutParams )
+void View::updateLayoutParams( LayoutParams* pLayoutParams )
 {
-	CC_SAFE_DELETE ( m_pLayoutParams );
+	CC_SAFE_DELETE( m_pLayoutParams );
 	m_pLayoutParams = pLayoutParams;
 }
 
 CCSize View::getFullSize() const
 {
-	CCSize size = Positioner::getScaledSize ( m_pNode );
+	CCSize size = Positioner::getScaledSize( m_pNode );
 
 	size.width += m_pLayoutParams->getMarginLeft().getValue();
 	size.width += m_pLayoutParams->getMarginRight().getValue();
@@ -64,7 +64,7 @@ CCSize View::getFullSize() const
 
 CCPoint View::getMarginLeftBottomCorner() const
 {
-	CCRect rect = Positioner::getLeftBottomCorner ( m_pNode );
+	CCRect rect = Positioner::getLeftBottomCorner( m_pNode );
 
 	rect.origin.x -= m_pLayoutParams->getMarginLeft().getValue();
 	rect.origin.y -= m_pLayoutParams->getMarginBottom().getValue();
@@ -73,7 +73,7 @@ CCPoint View::getMarginLeftBottomCorner() const
 
 CCPoint View::getMarginLeftTopCorner() const
 {
-	CCRect rect = Positioner::getLeftTopCorner ( m_pNode );
+	CCRect rect = Positioner::getLeftTopCorner( m_pNode );
 
 	rect.origin.x -= m_pLayoutParams->getMarginLeft().getValue();
 	rect.origin.y += m_pLayoutParams->getMarginTop().getValue();
@@ -82,7 +82,7 @@ CCPoint View::getMarginLeftTopCorner() const
 
 CCPoint View::getMarginRightTopCorner() const
 {
-	CCRect rect = Positioner::getRightTopCorner ( m_pNode );
+	CCRect rect = Positioner::getRightTopCorner( m_pNode );
 
 	rect.origin.x += m_pLayoutParams->getMarginRight().getValue();
 	rect.origin.y += m_pLayoutParams->getMarginTop().getValue();
@@ -91,7 +91,7 @@ CCPoint View::getMarginRightTopCorner() const
 
 CCPoint View::getMarginRightBottomCorner() const
 {
-	CCRect rect = Positioner::getRightBottomCorner ( m_pNode );
+	CCRect rect = Positioner::getRightBottomCorner( m_pNode );
 
 	rect.origin.x += m_pLayoutParams->getMarginRight().getValue();
 	rect.origin.y -= m_pLayoutParams->getMarginBottom().getValue();

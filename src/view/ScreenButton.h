@@ -28,11 +28,11 @@ struct ScreenButtonSettings
 class ScreenButton: public KoalaGui::RelativeLayout
 {
 public:
-	static ScreenButton* create ( const ScreenButtonSettings& settings )
+	static ScreenButton* create( const ScreenButtonSettings& settings )
 	{
 		ScreenButton* pRet = new ScreenButton();
 
-		if ( pRet && pRet->init ( settings ) )
+		if( pRet && pRet->init( settings ) )
 		{
 			pRet->autorelease();
 			return pRet;
@@ -44,15 +44,15 @@ public:
 		return nullptr;
 	}
 
-	bool init ( const ScreenButtonSettings& settings );
+	bool init( const ScreenButtonSettings& settings );
 
-	virtual void setColor ( const ccColor3B& color );
+	virtual void setColor( const ccColor3B& color );
 
-	void setWordVisibility ( float value );
+	void setWordVisibility( float value );
 
-	void setScreenVisibility ( bool value );
+	void setScreenVisibility( bool value );
 
-	void setText ( const string& text );
+	void setText( const string& text );
 
 	virtual void onEnter();
 	virtual void onExit();

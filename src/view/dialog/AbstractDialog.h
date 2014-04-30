@@ -19,11 +19,11 @@ namespace KoalaGui
 class AbstractDialog: public LinearLayout
 {
 public:
-	static AbstractDialog* create ( int tag = kViewTagUnusedLayout )
+	static AbstractDialog* create( int tag = kViewTagUnusedLayout )
 	{
-		AbstractDialog* pRet = new AbstractDialog ( tag );
+		AbstractDialog* pRet = new AbstractDialog( tag );
 
-		if ( pRet && pRet->init() )
+		if( pRet && pRet->init() )
 		{
 			pRet->autorelease();
 			return pRet;
@@ -38,8 +38,8 @@ public:
 
 	virtual bool init();
 
-	virtual bool ccTouchBegan ( CCTouch* pTouch, CCEvent* pEvent );
-	virtual void ccTouchEnded ( CCTouch* pTouch, CCEvent* pEvent );
+	virtual bool ccTouchBegan( CCTouch* pTouch, CCEvent* pEvent );
+	virtual void ccTouchEnded( CCTouch* pTouch, CCEvent* pEvent );
 	virtual bool onLayout();
 
 	virtual void onEnter();
@@ -49,40 +49,40 @@ public:
 	{
 		KKScene* pScene = dynamic_cast<KKScene*>
 						  ( CCDirector::sharedDirector()->getRunningScene() );
-		assert ( pScene );
+		assert( pScene );
 		return pScene;
 	}
 
-	virtual void show ( KKScene* pScene = getCurrentScene() );
-	virtual void dismiss ( bool showAnimation = true );
+	virtual void show( KKScene* pScene = getCurrentScene() );
+	virtual void dismiss( bool showAnimation = true );
 	bool isShown();
 
 	bool getDismissOnTouch() const;
-	void setDismissOnTouch ( const bool& isDismissable );
+	void setDismissOnTouch( const bool& isDismissable );
 
 	bool getDismissOnBack() const;
-	void setDismissOnBack ( const bool& isDismissable );
+	void setDismissOnBack( const bool& isDismissable );
 
-	void setOnDismissCallback ( Utils::CallbackOld* pDismissCallback );
-	void onDismissClickCallback ( CCObject* pObject, CCControlEvent event );
+	void setOnDismissCallback( Utils::CallbackOld* pDismissCallback );
+	void onDismissClickCallback( CCObject* pObject, CCControlEvent event );
 
 	virtual void keyBackClicked();
 
 protected:
-	AbstractDialog ( int tag );
+	AbstractDialog( int tag );
 
 	static const SizePolicy HEADER_HEIGHT;
 
 	/**
 	 * Here you should run your custom animation for showing dialog
 	 */
-	virtual void showAnimation ( KKScene* pShowingScene );
+	virtual void showAnimation( KKScene* pShowingScene );
 
 	/**
 	 * Look at showAnimation :)
 	 * @param pShowingScene
 	 */
-	virtual void dismissAnimation ( KKScene* pShowingScene );
+	virtual void dismissAnimation( KKScene* pShowingScene );
 
 	CCLayerColor* getDialogBackground()
 	{
@@ -107,7 +107,7 @@ private:
 		dismiss();
 	}
 
-	void sheduledDismiss ( float dt )
+	void sheduledDismiss( float dt )
 	{
 		defaultDismiss();
 	}

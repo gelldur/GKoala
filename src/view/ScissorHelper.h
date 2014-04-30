@@ -19,11 +19,11 @@ class ScissorHelper
 public:
 	virtual ~ScissorHelper();
 
-	void beforeDraw ( const CCRect& nodeRect );
-	void beforeDraw ( const CCRect& nodeRect , const CCRect& parentRect );
+	void beforeDraw( const CCRect& nodeRect );
+	void beforeDraw( const CCRect& nodeRect , const CCRect& parentRect );
 	void afterDraw();
 
-	CCRect getViewRect ( CCNode* pNodeObject );
+	CCRect getViewRect( CCNode* pNodeObject );
 protected:
 	ScissorHelper();
 private:

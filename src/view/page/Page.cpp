@@ -10,8 +10,8 @@
 namespace KoalaGui
 {
 
-Page::Page ( const std::string& title ) :
-	m_pContent ( nullptr )
+Page::Page( const std::string& title ) :
+	m_pContent( nullptr )
 {
 	m_title = title;
 }

@@ -24,19 +24,19 @@ public:
 	~Animate();
 
 	/** initializes the action with an Animation and will restore the original frame when the animation is over */
-	bool initWithAnimation ( Animation* pAnimation );
+	bool initWithAnimation( Animation* pAnimation );
 
-	virtual void startWithTarget ( CCNode* pTarget );
-	virtual void update ( float t );
-	virtual void step ( float dt );
-	virtual CCActionInterval* reverse ( void );
+	virtual void startWithTarget( CCNode* pTarget );
+	virtual void update( float t );
+	virtual void step( float dt );
+	virtual CCActionInterval* reverse( void );
 
 	/** creates the action with an Animation and will restore the original frame when the animation is over */
-	static Animate* create ( Animation* pAnimation )
+	static Animate* create( Animation* pAnimation )
 	{
 		Animate* pRet = new Animate();
 
-		if ( pRet && pRet->initWithAnimation ( pAnimation ) )
+		if( pRet && pRet->initWithAnimation( pAnimation ) )
 		{
 			pRet->autorelease();
 			return pRet;

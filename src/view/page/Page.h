@@ -21,7 +21,7 @@ private:
 	CCNode* m_pContent;
 
 protected:
-	Page ( const std::string& title );
+	Page( const std::string& title );
 
 public:
 
@@ -34,9 +34,9 @@ public:
 		return m_pContent;
 	}
 
-	virtual void setContentSize ( const CCSize& size ) = 0;
+	virtual void setContentSize( const CCSize& size ) = 0;
 
-	void setContent ( CCNode* pContent )
+	void setContent( CCNode* pContent )
 	{
 		m_pContent = pContent;
 	}
@@ -46,7 +46,7 @@ public:
 		return m_title;
 	}
 
-	void setTitle ( const std::string title )
+	void setTitle( const std::string title )
 	{
 		m_title = title;
 	}

@@ -24,7 +24,7 @@ public:
 		return m_isKeypadEnabled;
 	}
 
-	void setKeypadEnabled ( bool isEnabled );
+	void setKeypadEnabled( bool isEnabled );
 
 	virtual ~KKScene();
 

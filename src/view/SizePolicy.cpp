@@ -13,9 +13,9 @@
 namespace KoalaGui
 {
 
-SizePolicy::SizePolicy ( const Policy& type, const float& value )
+SizePolicy::SizePolicy( const Policy& type, const float& value )
 {
-	init ( type, value );
+	init( type, value );
 }
 
 SizePolicy::~SizePolicy()
@@ -27,25 +27,25 @@ float SizePolicy::getValue() const
 	return m_value;
 }
 
-SizePolicy::SizePolicy ( const Const& value )
+SizePolicy::SizePolicy( const Const& value )
 {
-	init ( Policy::SP, value );
+	init( Policy::SP, value );
 }
 
-void SizePolicy::setValue ( const float value )
+void SizePolicy::setValue( const float value )
 {
-	m_value = convert ( m_type, value );
+	m_value = convert( m_type, value );
 }
 
-bool SizePolicy::init ( const Policy& type, const float& value )
+bool SizePolicy::init( const Policy& type, const float& value )
 {
-	assert ( value >= 0 || value == MATCH_PARENT || value == WRAP_CONTENT );
+	assert( value >= 0 || value == MATCH_PARENT || value == WRAP_CONTENT );
 
 	// When we want to set MATCH_PARENT or WRAP_CONTENT
 	// we must set type for SP because we don't want to
 	// transform value when LinearLayout or other
 	// Layout transform such const
-	if ( value == MATCH_PARENT || value == WRAP_CONTENT )
+	if( value == MATCH_PARENT || value == WRAP_CONTENT )
 	{
 		m_type = Policy::SP;
 	}
@@ -54,7 +54,7 @@ bool SizePolicy::init ( const Policy& type, const float& value )
 		m_type = type;
 	}
 
-	setValue ( value );
+	setValue( value );
 	return true;
 }
 
@@ -63,9 +63,9 @@ SizePolicy::Policy SizePolicy::getType() const
 	return m_type;
 }
 
-float SizePolicy::convert ( const Policy& type, const float& value )
+float SizePolicy::convert( const Policy& type, const float& value )
 {
-	switch ( type )
+	switch( type )
 	{
 		case PP:
 		case SP:
@@ -84,7 +84,7 @@ float SizePolicy::convert ( const Policy& type, const float& value )
 		}
 
 		default:
-			CCAssert ( false, "Unknown policy" );
+			CCAssert( false, "Unknown policy" );
 	}
 
 	return value;

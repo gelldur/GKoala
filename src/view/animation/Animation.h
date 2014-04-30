@@ -26,18 +26,18 @@ public:
 
 	virtual ~Animation();
 
-	void addSpriteFrame ( CCSpriteFrame* pFrame, float duration );
-	void addSpriteFrameWithFileName ( const char* pFileName, float duration );
+	void addSpriteFrame( CCSpriteFrame* pFrame, float duration );
+	void addSpriteFrameWithFileName( const char* pFileName, float duration );
 
-	void addAnimationFrame ( AnimationFrame* pFrame );
-	void addAnimationFrames ( vector<AnimationFrame*>& frames );
+	void addAnimationFrame( AnimationFrame* pFrame );
+	void addAnimationFrames( vector<AnimationFrame*>& frames );
 
 	bool init();
 
 	float getDuration();
 
 	vector<AnimationFrame*> getFrames();
-	AnimationFrame* getFrame ( unsigned int index );
+	AnimationFrame* getFrame( unsigned int index );
 
 	unsigned int getFramesAmount();
 
@@ -51,7 +51,7 @@ private:
 	{
 		Animation* pRet = new Animation();
 
-		if ( pRet && pRet->init() )
+		if( pRet && pRet->init() )
 		{
 			pRet->autorelease();
 			return pRet;

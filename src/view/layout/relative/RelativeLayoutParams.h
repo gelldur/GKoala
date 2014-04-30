@@ -67,19 +67,19 @@ public:
 		unsigned short m_align;
 		int m_tag;
 	public:
-		Align ( const unsigned short align, const int tag );
-		void addAlignType ( const unsigned short align );
+		Align( const unsigned short align, const int tag );
+		void addAlignType( const unsigned short align );
 		const unsigned short getAlignType() const;
 		const int getTag() const;
 	};
 
-	explicit RelativeLayoutParams ( const SizePolicy& width,
-									const SizePolicy& height );
-	RelativeLayoutParams ( const LayoutParams& params );
+	explicit RelativeLayoutParams( const SizePolicy& width,
+								   const SizePolicy& height );
+	RelativeLayoutParams( const LayoutParams& params );
 
 	virtual ~RelativeLayoutParams();
 
-	void addRule (
+	void addRule(
 		const unsigned short alignType = RelativeLayoutParams::PARENT_TOP
 										 | RelativeLayoutParams::PARENT_LEFT, const int tag
 		= kCCNodeTagInvalid );
@@ -88,7 +88,7 @@ public:
 
 private:
 	vector<RelativeLayoutParams::Align> m_params;
-	vector<RelativeLayoutParams::Align>::iterator getIteratorByTag (
+	vector<RelativeLayoutParams::Align>::iterator getIteratorByTag(
 		const int tag );
 };
 

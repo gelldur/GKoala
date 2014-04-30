@@ -18,34 +18,34 @@ ListAdapter::~ListAdapter()
 {
 }
 
-View* ListAdapter::getRow ( const unsigned index, View* pConvertView )
+View* ListAdapter::getRow( const unsigned index, View* pConvertView )
 {
-	assert ( index < getItemsCount() );
+	assert( index < getItemsCount() );
 
 	CCObject* pHolder = nullptr;
 
-	if ( pConvertView == nullptr
+	if( pConvertView == nullptr
 			|| pConvertView->getNode()->getUserObject() == nullptr )
 	{
-		pConvertView = getNewRow ( index );
-		assert ( pConvertView );
+		pConvertView = getNewRow( index );
+		assert( pConvertView );
 
-		pHolder = getNewHolder ( index, pConvertView );
-		assert ( pHolder );
-		assert ( pHolder->retainCount() >
-				 pHolder->autoreleaseCount() ); //Please do not release holders
-		pConvertView->getNode()->setUserObject ( pHolder );
-		assert ( pHolder->retainCount() == 2 );
+		pHolder = getNewHolder( index, pConvertView );
+		assert( pHolder );
+		assert( pHolder->retainCount() >
+				pHolder->autoreleaseCount() ); //Please do not release holders
+		pConvertView->getNode()->setUserObject( pHolder );
+		assert( pHolder->retainCount() == 2 );
 		//Now when row will be released Holder will be released too
 		pHolder->release();
 	}
 	else
 	{
-		assert ( pConvertView );
+		assert( pConvertView );
 		pHolder = pConvertView->getNode()->getUserObject();
 	}
 
-	initializeHolder ( index, pHolder );
+	initializeHolder( index, pHolder );
 	return pConvertView;
 }
 

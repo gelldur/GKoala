@@ -19,14 +19,14 @@ namespace KoalaLib
 class ClickCounterComponent : public CCObject
 {
 public:
-	virtual bool init ( const std::string& key, int threshold );
+	virtual bool init( const std::string& key, int threshold );
 
 	virtual CCAction* getAction() = 0;
 
 	void onEnter();
 	void onExit();
 
-	void setTarget ( CCNode* pNode )
+	void setTarget( CCNode* pNode )
 	{
 		m_pTarget = pNode;
 	}
@@ -46,12 +46,12 @@ private:
 class BumpClickCounterComponent : public ClickCounterComponent
 {
 public:
-	static BumpClickCounterComponent* create ( const std::string& key,
+	static BumpClickCounterComponent* create( const std::string& key,
 			int threshold )
 	{
 		BumpClickCounterComponent* pRet = new BumpClickCounterComponent();
 
-		if ( pRet && pRet->init ( key, threshold ) )
+		if( pRet && pRet->init( key, threshold ) )
 		{
 			pRet->autorelease();
 			return pRet;

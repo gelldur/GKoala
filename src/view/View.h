@@ -23,7 +23,7 @@ public:
 
 	CCNode* getNode() const;
 	LayoutParams* getLayoutParams() const;
-	void updateLayoutParams ( LayoutParams* pLayoutParams );
+	void updateLayoutParams( LayoutParams* pLayoutParams );
 
 	CCSize getFullSize() const;
 
@@ -34,17 +34,17 @@ public:
 
 	CCPoint getMarginCenterPoint() const;
 
-	static View* create ( CCNode* pNode, LayoutParams* pLayoutParams )
+	static View* create( CCNode* pNode, LayoutParams* pLayoutParams )
 	{
-		View* pRet = new View ( pNode, pLayoutParams );
+		View* pRet = new View( pNode, pLayoutParams );
 
-		if ( pRet )
+		if( pRet )
 		{
 			pRet->autorelease();
 			return pRet;
 		}
 
-		CC_SAFE_DELETE ( pRet );
+		CC_SAFE_DELETE( pRet );
 		return pRet = nullptr;
 	}
 
@@ -61,55 +61,55 @@ public:
 		return m_pTouchReleaseInsideCallback;
 	}
 
-	void setClickCallback ( Utils::CallbackOld* const pClickCallback )
+	void setClickCallback( Utils::CallbackOld* const pClickCallback )
 	{
-		CC_SAFE_RELEASE_NULL ( m_pClickCallback );
+		CC_SAFE_RELEASE_NULL( m_pClickCallback );
 		m_pClickCallback = pClickCallback;
 
-		if ( m_pClickCallback )
+		if( m_pClickCallback )
 		{
-			assert ( m_pClickCallback->methodCCNode );
+			assert( m_pClickCallback->methodCCNode );
 		}
 
-		CC_SAFE_RETAIN ( pClickCallback );
+		CC_SAFE_RETAIN( pClickCallback );
 	}
-	void setTouchCallback ( Utils::CallbackOld* const pTouchCallback )
+	void setTouchCallback( Utils::CallbackOld* const pTouchCallback )
 	{
-		CC_SAFE_RELEASE_NULL ( m_pTouchCallback );
+		CC_SAFE_RELEASE_NULL( m_pTouchCallback );
 		m_pTouchCallback = pTouchCallback;
 
-		if ( m_pTouchCallback )
+		if( m_pTouchCallback )
 		{
-			assert ( m_pTouchCallback->methodCCNode );
+			assert( m_pTouchCallback->methodCCNode );
 		}
 
-		CC_SAFE_RETAIN ( pTouchCallback );
+		CC_SAFE_RETAIN( pTouchCallback );
 	}
-	void setTouchReleaseInsideCallback ( Utils::CallbackOld* const
-										 pTouchReleaseInsideCallback )
+	void setTouchReleaseInsideCallback( Utils::CallbackOld* const
+										pTouchReleaseInsideCallback )
 	{
-		CC_SAFE_RELEASE_NULL ( m_pTouchReleaseInsideCallback );
+		CC_SAFE_RELEASE_NULL( m_pTouchReleaseInsideCallback );
 		m_pTouchReleaseInsideCallback = pTouchReleaseInsideCallback;
 
-		if ( m_pTouchCallback )
+		if( m_pTouchCallback )
 		{
-			assert ( m_pTouchCallback->methodCCNode );
+			assert( m_pTouchCallback->methodCCNode );
 		}
 
-		CC_SAFE_RETAIN ( m_pTouchReleaseInsideCallback );
+		CC_SAFE_RETAIN( m_pTouchReleaseInsideCallback );
 	}
 
 	bool isTouched() const
 	{
 		return m_touched;
 	}
-	void setTouched ( bool value )
+	void setTouched( bool value )
 	{
 		m_touched = value;
 	}
 
 protected:
-	View ( CCNode* pNode, LayoutParams* pLayoutParams );
+	View( CCNode* pNode, LayoutParams* pLayoutParams );
 
 private:
 	CCNode* m_pNode;
@@ -120,7 +120,7 @@ private:
 	Utils::CallbackOld* m_pTouchCallback;
 	Utils::CallbackOld* m_pTouchReleaseInsideCallback;
 
-	BLOCK_COPY_OBJECT ( View );
+	BLOCK_COPY_OBJECT( View );
 };
 
 } /* namespace KoalaGui */

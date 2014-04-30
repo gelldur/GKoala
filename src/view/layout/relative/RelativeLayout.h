@@ -18,38 +18,38 @@ namespace KoalaGui
 class RelativeLayout: public AbstractLayout
 {
 public:
-	static RelativeLayout* create ( const int tag = kViewTagUnusedLayout );
+	static RelativeLayout* create( const int tag = kViewTagUnusedLayout );
 	virtual bool init();
 	virtual ~RelativeLayout();
 
-	View* addView ( CCNode* pNode, const RelativeLayoutParams& params );
+	View* addView( CCNode* pNode, const RelativeLayoutParams& params );
 	bool measureSelf();
 
 protected:
-	explicit RelativeLayout ( int tag = kViewTagUnusedLayout );
+	explicit RelativeLayout( int tag = kViewTagUnusedLayout );
 
-	virtual bool updateView ( View* pView );
+	virtual bool updateView( View* pView );
 
-	virtual CCSize getLeftSpaceForView ( CCNode* pNode,
-										 const LayoutParams& params );
+	virtual CCSize getLeftSpaceForView( CCNode* pNode,
+										const LayoutParams& params );
 
 	virtual bool onLayout();
-	virtual CCSize onMeasure ( float CCSize::* pValue, const bool withBackground );
+	virtual CCSize onMeasure( float CCSize::* pValue, const bool withBackground );
 
 private:
-	bool applyPositionRule ( View* pView );
+	bool applyPositionRule( View* pView );
 
-	void applyXPosition ( View* pView, const View* pRelativeTo,
-						  const short align );
-	void applyYPosition ( View* pView, const View* pRelativeTo,
-						  const short align );
+	void applyXPosition( View* pView, const View* pRelativeTo,
+						 const short align );
+	void applyYPosition( View* pView, const View* pRelativeTo,
+						 const short align );
 
 	/**
 	 * Should be called after onLayout
 	 * @param pView
 	 * @return size for related views
 	 */
-	CCSize getRelatedSizeForView ( View* pView );
+	CCSize getRelatedSizeForView( View* pView );
 };
 
 } /* namespace KoalaGui */

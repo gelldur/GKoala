@@ -11,17 +11,17 @@ namespace KoalaLib
 {
 
 AnimationFrame::AnimationFrame() :
-	m_pSpriteFrame ( nullptr ),
-	m_duration ( 0 )
+	m_pSpriteFrame( nullptr ),
+	m_duration( 0 )
 {
 }
 
 AnimationFrame::~AnimationFrame()
 {
-	CC_SAFE_RELEASE ( m_pSpriteFrame );
+	CC_SAFE_RELEASE( m_pSpriteFrame );
 }
 
-bool AnimationFrame::init ( CCSpriteFrame* pSpriteFrame, float duration )
+bool AnimationFrame::init( CCSpriteFrame* pSpriteFrame, float duration )
 {
 	m_pSpriteFrame = pSpriteFrame;
 	m_duration = duration;

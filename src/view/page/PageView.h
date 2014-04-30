@@ -23,26 +23,26 @@ class PageView: public ListView
 {
 public:
 
-	static PageView* create ( const Orientation& orientation =
-								  Orientation::HORIZONTAL,
-							  int tag = kViewTagUnusedLayout );
+	static PageView* create( const Orientation& orientation =
+								 Orientation::HORIZONTAL,
+							 int tag = kViewTagUnusedLayout );
 
-	virtual bool init ( const Orientation& orientation );
+	virtual bool init( const Orientation& orientation );
 
 	virtual ~PageView();
 
-	void setPage ( unsigned index );
-	virtual void setAdapter ( ListAdapter* pAdapter );
+	void setPage( unsigned index );
+	virtual void setAdapter( ListAdapter* pAdapter );
 
-	void setPageIndicator ( PageIndicatorController* pPageIndicator );
+	void setPageIndicator( PageIndicatorController* pPageIndicator );
 
 	virtual void registerWithTouchDispatcher();
 
-	virtual void update ( float delta );
+	virtual void update( float delta );
 
-	virtual bool ccTouchBegan ( CCTouch* pTouch, CCEvent* pEvent );
-	virtual void ccTouchMoved ( CCTouch* pTouch, CCEvent* pEvent );
-	virtual void ccTouchEnded ( CCTouch* pTouch, CCEvent* pEvent );
+	virtual bool ccTouchBegan( CCTouch* pTouch, CCEvent* pEvent );
+	virtual void ccTouchMoved( CCTouch* pTouch, CCEvent* pEvent );
+	virtual void ccTouchEnded( CCTouch* pTouch, CCEvent* pEvent );
 
 	unsigned getCurrentPage();
 	string getCurrentPageTitle();
@@ -50,12 +50,12 @@ public:
 	void onFinishPageMoveCallback();
 
 protected:
-	virtual CCAction* getMovingAction ( const CCPoint& moveTo,
-										float duration = 0.3f );
+	virtual CCAction* getMovingAction( const CCPoint& moveTo,
+									   float duration = 0.3f );
 
 private:
 
-	PageView ( const int tag );
+	PageView( const int tag );
 	PageIndicatorController* m_pPageIndicator;
 
 	bool m_isIgnoring;
@@ -64,9 +64,9 @@ private:
 	unsigned m_currentPage;
 
 	unsigned calculatePage();
-	void movePageTo ( const CCPoint& point );
+	void movePageTo( const CCPoint& point );
 
-	void setCurrentPage ( unsigned page )
+	void setCurrentPage( unsigned page )
 	{
 		m_currentPage = page;
 	}

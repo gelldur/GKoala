@@ -19,17 +19,17 @@ public:
 
 	virtual ~AnimationBuilder();
 
-	static AnimationBuilder build ();
+	static AnimationBuilder build();
 	Animation* finish();
 
-	AnimationBuilder& addSpriteFrame ( CCSpriteFrame* pFrame, float duration );
-	AnimationBuilder& addSpriteFrameWithFileName ( const char* pFileName,
+	AnimationBuilder& addSpriteFrame( CCSpriteFrame* pFrame, float duration );
+	AnimationBuilder& addSpriteFrameWithFileName( const char* pFileName,
 			float duration );
-	AnimationBuilder& addAnimationFrame ( AnimationFrame* pFrame );
-	AnimationBuilder& addAnimationFrames ( vector<AnimationFrame*>& frames );
+	AnimationBuilder& addAnimationFrame( AnimationFrame* pFrame );
+	AnimationBuilder& addAnimationFrames( vector<AnimationFrame*>& frames );
 
 private:
-	AnimationBuilder ();
+	AnimationBuilder();
 	Animation* m_pAnimation;
 };
 

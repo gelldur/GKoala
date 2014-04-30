@@ -32,26 +32,26 @@ struct StarsBatchParams
 	string halfStarName;
 	int maxStarsCount;
 
-	StarsBatchParams ( string batchFilename, string plistFilename,
-					   string offStarName,
-					   string onStarName, string halfStarName, int starsCount ) :
-		batchFilename ( batchFilename ),
-		plistFilename ( plistFilename ),
-		offStarName ( offStarName ),
-		onStarName ( onStarName ),
-		halfStarName ( halfStarName ),
-		maxStarsCount ( starsCount )
+	StarsBatchParams( string batchFilename, string plistFilename,
+					  string offStarName,
+					  string onStarName, string halfStarName, int starsCount ) :
+		batchFilename( batchFilename ),
+		plistFilename( plistFilename ),
+		offStarName( offStarName ),
+		onStarName( onStarName ),
+		halfStarName( halfStarName ),
+		maxStarsCount( starsCount )
 	{
-		assert ( batchFilename.empty() == false );
-		assert ( plistFilename.empty() == false );
-		assert ( offStarName.empty() == false );
-		assert ( onStarName.empty() == false );
-		assert ( halfStarName.empty() == false );
-		assert ( starsCount >= 0 );
+		assert( batchFilename.empty() == false );
+		assert( plistFilename.empty() == false );
+		assert( offStarName.empty() == false );
+		assert( onStarName.empty() == false );
+		assert( halfStarName.empty() == false );
+		assert( starsCount >= 0 );
 	}
 
 	StarsBatchParams() :
-		maxStarsCount ( 0 )
+		maxStarsCount( 0 )
 	{
 	}
 };
@@ -62,13 +62,13 @@ class StarsBatch: public CCSpriteBatchNode
 public:
 
 	virtual ~StarsBatch();
-	virtual bool init ( StarsBatchParams starsParams, float starsCount );
+	virtual bool init( StarsBatchParams starsParams, float starsCount );
 
-	static StarsBatch* create ( StarsBatchParams starsParams, float starsCount )
+	static StarsBatch* create( StarsBatchParams starsParams, float starsCount )
 	{
 		StarsBatch* pRet = new StarsBatch();
 
-		if ( pRet && pRet->init ( starsParams, starsCount ) )
+		if( pRet && pRet->init( starsParams, starsCount ) )
 		{
 			pRet->autorelease();
 			return pRet;
@@ -81,7 +81,7 @@ public:
 		}
 	}
 
-	void updateStarsCount ( float starsCount );
+	void updateStarsCount( float starsCount );
 
 	float getStarsCount() const
 	{
@@ -98,7 +98,7 @@ private:
 		NO_STAR, HALF_STAR, FULL_STAR
 	};
 
-	string getStarFrameForIndex ( int index );
+	string getStarFrameForIndex( int index );
 
 	float m_starsCount;
 	StarsBatchParams m_starsParams;

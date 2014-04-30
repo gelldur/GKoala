@@ -8,8 +8,8 @@
 #include "view/KKScaleSprite.h"
 #include "utils/Utils.h"
 
-KKScaleSprite::KKScaleSprite ( Scale::Type scaleType ) :
-	m_scaleType ( scaleType )
+KKScaleSprite::KKScaleSprite( Scale::Type scaleType ) :
+	m_scaleType( scaleType )
 {
 }
 
@@ -17,32 +17,32 @@ KKScaleSprite::~KKScaleSprite()
 {
 }
 
-KKScaleSprite* KKScaleSprite::create ( const char* pFileName,
-									   Scale::Type scaleType )
+KKScaleSprite* KKScaleSprite::create( const char* pFileName,
+									  Scale::Type scaleType )
 {
-	KKScaleSprite* pSprite = new KKScaleSprite ( scaleType );
+	KKScaleSprite* pSprite = new KKScaleSprite( scaleType );
 
-	if ( pSprite && pSprite->initWithFile ( pFileName ) )
+	if( pSprite && pSprite->initWithFile( pFileName ) )
 	{
 		pSprite->autorelease();
 		return pSprite;
 	}
 
-	CC_SAFE_DELETE ( pSprite );
+	CC_SAFE_DELETE( pSprite );
 	return nullptr;
 }
 
-void KKScaleSprite::setContentSize ( const CCSize& contentSize )
+void KKScaleSprite::setContentSize( const CCSize& contentSize )
 {
-	if ( getContentSize().equals ( CCSizeZero ) )
+	if( getContentSize().equals( CCSizeZero ) )
 	{
 		//Init of content size
-		CCSprite::setContentSize ( contentSize );
+		CCSprite::setContentSize( contentSize );
 	}
 
-	CCSize oryginalSize ( getContentSize() );
+	CCSize oryginalSize( getContentSize() );
 
-	if ( contentSize.width == oryginalSize.width )
+	if( contentSize.width == oryginalSize.width )
 	{
 		oryginalSize.width *= getScaleX();
 	}
@@ -51,7 +51,7 @@ void KKScaleSprite::setContentSize ( const CCSize& contentSize )
 		oryginalSize.width = contentSize.width;
 	}
 
-	if ( contentSize.height == oryginalSize.height )
+	if( contentSize.height == oryginalSize.height )
 	{
 		oryginalSize.height *= getScaleY();
 	}
@@ -60,5 +60,5 @@ void KKScaleSprite::setContentSize ( const CCSize& contentSize )
 		oryginalSize.height = contentSize.height;
 	}
 
-	Scale::scale ( this, m_scaleType, getContentSize(), oryginalSize );
+	Scale::scale( this, m_scaleType, getContentSize(), oryginalSize );
 }

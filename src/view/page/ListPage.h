@@ -17,16 +17,16 @@ class ListPage: public Page
 public:
 	virtual ~ListPage();
 	virtual void inflateContent();
-	virtual void setContentSize ( const CCSize& size );
+	virtual void setContentSize( const CCSize& size );
 
 protected:
-	ListPage ( const string& title );
+	ListPage( const string& title );
 
 	/**
 	 * @copydoc CCListView::setAdapter(CCListViewAdapter*)
 	 * @param pAdapter
 	 */
-	void setAdapter ( ListAdapter* pAdapter );
+	void setAdapter( ListAdapter* pAdapter );
 	ListView* getListView() const;
 
 	void reloadAllData();

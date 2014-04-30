@@ -30,19 +30,19 @@ public:
 
 	virtual ~RadioButtonGroup();
 	virtual void onExit();
-	virtual bool ccTouchBegan ( CCTouch* pTouch, CCEvent* pEvent );
-	virtual void ccTouchEnded ( CCTouch* pTouch, CCEvent* pEvent );
-	virtual bool init ( const vector<string>& textRows, int selectedIndex );
-	void initLabels ( const string& fontName, float fontSize = 18.0f );
+	virtual bool ccTouchBegan( CCTouch* pTouch, CCEvent* pEvent );
+	virtual void ccTouchEnded( CCTouch* pTouch, CCEvent* pEvent );
+	virtual bool init( const vector<string>& textRows, int selectedIndex );
+	void initLabels( const string& fontName, float fontSize = 18.0f );
 
-	static RadioButtonGroup* create ( const vector<string>& textRows,
-									  const string& activeFilename, const string& inactiveFilename )
+	static RadioButtonGroup* create( const vector<string>& textRows,
+									 const string& activeFilename, const string& inactiveFilename )
 	{
-		RadioButtonGroup* pRet = new RadioButtonGroup ( activeFilename,
+		RadioButtonGroup* pRet = new RadioButtonGroup( activeFilename,
 				inactiveFilename );
 
-		if ( pRet &&
-				pRet->init ( textRows, -1 ) )
+		if( pRet &&
+				pRet->init( textRows, -1 ) )
 		{
 			pRet->autorelease();
 			return pRet;
@@ -56,13 +56,13 @@ public:
 	}
 
 	int getSelectedIndex();
-	void setSelectedIndex ( int index, bool forceUpdate = false );
+	void setSelectedIndex( int index, bool forceUpdate = false );
 	unsigned getItemsCount();
 	vector<CCLabelTTF*> getLabels();
 
 protected:
-	RadioButtonGroup ( const string& activeFilename,
-					   const string& inactiveFilename );
+	RadioButtonGroup( const string& activeFilename,
+					  const string& inactiveFilename );
 
 private:
 
@@ -72,10 +72,10 @@ private:
 		LABEL
 	};
 
-	bool detectTouchOnLayout ( LinearLayout* pLayout,
-							   const CCTouch* const pTouch );
-	LinearLayout* getRowForTouch ( const CCTouch* const pTouch );
-	void setSelectedRow ( LinearLayout* pSelectedRow, bool forceUpdate = false );
+	bool detectTouchOnLayout( LinearLayout* pLayout,
+							  const CCTouch* const pTouch );
+	LinearLayout* getRowForTouch( const CCTouch* const pTouch );
+	void setSelectedRow( LinearLayout* pSelectedRow, bool forceUpdate = false );
 
 	const string m_activeFilename;
 	const string m_inactiveFilename;

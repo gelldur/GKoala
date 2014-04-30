@@ -18,52 +18,52 @@ KKImageButton::~KKImageButton()
 {
 }
 
-bool KoalaGui::KKImageButton::initWithLabelAndBackground ( const string& text,
+bool KoalaGui::KKImageButton::initWithLabelAndBackground( const string& text,
 		const char* pSpriteName, bool is9Patch /*=true*/ )
 {
 	CCNode* pSprite;
 
-	if ( is9Patch )
+	if( is9Patch )
 	{
-		pSprite = CCScale9Sprite::create ( pSpriteName );
+		pSprite = CCScale9Sprite::create( pSpriteName );
 	}
 	else
 	{
-		pSprite = CCSprite::create ( pSpriteName );
+		pSprite = CCSprite::create( pSpriteName );
 	}
 
-	CCLabelTTF* pLabel =  CCLabelTTF::create ( "", "Arial", 18 );
+	CCLabelTTF* pLabel =  CCLabelTTF::create( "", "Arial", 18 );
 
-	return initWithLabelAndBackgroundSprite ( pLabel, pSprite );
+	return initWithLabelAndBackgroundSprite( pLabel, pSprite );
 }
 
-bool KKImageButton::initWithLabelAndBackgroundSprite ( CCNode* pNodeLabel,
+bool KKImageButton::initWithLabelAndBackgroundSprite( CCNode* pNodeLabel,
 		CCNode* pNodeBackground )
 {
-	if ( CCControlButton::initWithLabelAndBackgroundSprite ( pNodeLabel,
+	if( CCControlButton::initWithLabelAndBackgroundSprite( pNodeLabel,
 			pNodeBackground )
 			== false )
 	{
-		assert ( false );
+		assert( false );
 		return false;
 	}
 
-	setZoomOnTouchDown ( false );
-	setTouchPriority ( INT16_MIN );
+	setZoomOnTouchDown( false );
+	setTouchPriority( INT16_MIN );
 
 	return true;
 }
 
-bool KKImageButton::initWithBackgroundSprite ( CCNode* pNodeBackground )
+bool KKImageButton::initWithBackgroundSprite( CCNode* pNodeBackground )
 {
-	return initWithLabelAndBackgroundSprite (
-			   CCLabelTTF::create ( "", "Arial", 18 ) , pNodeBackground );
+	return initWithLabelAndBackgroundSprite(
+			   CCLabelTTF::create( "", "Arial", 18 ) , pNodeBackground );
 }
 
-bool KKImageButton::initWithBackgroundSprite ( const char* pSpriteName,
+bool KKImageButton::initWithBackgroundSprite( const char* pSpriteName,
 		bool is9Patch )
 {
-	if ( initWithLabelAndBackground ( "", pSpriteName, is9Patch ) == false )
+	if( initWithLabelAndBackground( "", pSpriteName, is9Patch ) == false )
 	{
 		return false;
 	}
@@ -71,42 +71,42 @@ bool KKImageButton::initWithBackgroundSprite ( const char* pSpriteName,
 	return true;
 }
 
-KKImageButton* KKImageButton::setTarget ( CCObject* pTarget,
+KKImageButton* KKImageButton::setTarget( CCObject* pTarget,
 		SEL_CCControlHandler callback,
 		CCControlEvent controlEvent /*= CCControlEventTouchUpInside*/ )
 {
 	//Remove all events on controlEvent
-	removeTargetWithActionForControlEvent ( nullptr, nullptr, controlEvent );
-	addTargetWithActionForControlEvent ( pTarget, callback, controlEvent );
+	removeTargetWithActionForControlEvent( nullptr, nullptr, controlEvent );
+	addTargetWithActionForControlEvent( pTarget, callback, controlEvent );
 	return this;
 }
 
-void KKImageButton::setContentSize ( const CCSize& contentSize )
+void KKImageButton::setContentSize( const CCSize& contentSize )
 {
-	CCControlButton::setContentSize ( contentSize );
-	setPreferredSize ( contentSize );
+	CCControlButton::setContentSize( contentSize );
+	setPreferredSize( contentSize );
 }
 
-void KKImageButton::setText ( const string& text )
+void KKImageButton::setText( const string& text )
 {
-	CCString* pString = CCString::create ( text );
-	setTitleForState ( pString, CCControlStateSelected );
-	setTitleForState ( pString, CCControlStateNormal );
-	setTitleForState ( pString, CCControlStateHighlighted );
-	setTitleForState ( pString, CCControlStateDisabled );
+	CCString* pString = CCString::create( text );
+	setTitleForState( pString, CCControlStateSelected );
+	setTitleForState( pString, CCControlStateNormal );
+	setTitleForState( pString, CCControlStateHighlighted );
+	setTitleForState( pString, CCControlStateDisabled );
 }
 
-bool KKImageButton::ccTouchBegan ( CCTouch* pTouch, CCEvent* pEvent )
+bool KKImageButton::ccTouchBegan( CCTouch* pTouch, CCEvent* pEvent )
 {
-	if ( CCControlButton::ccTouchBegan ( pTouch, pEvent ) )
+	if( CCControlButton::ccTouchBegan( pTouch, pEvent ) )
 	{
-		CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*> ( getBackgroundSprite() );
+		CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>( getBackgroundSprite() );
 
-		if ( pNode )
+		if( pNode )
 		{
-			if ( ccc3BEqual ( pNode->getColor(), ccWHITE ) )
+			if( ccc3BEqual( pNode->getColor(), ccWHITE ) )
 			{
-				pNode->setColor ( ccc3 ( 0x8c, 0x8c, 0x8c ) );
+				pNode->setColor( ccc3( 0x8c, 0x8c, 0x8c ) );
 			}
 		}
 
@@ -118,23 +118,23 @@ bool KKImageButton::ccTouchBegan ( CCTouch* pTouch, CCEvent* pEvent )
 	}
 }
 
-void KKImageButton::ccTouchEnded ( CCTouch* pTouch, CCEvent* pEvent )
+void KKImageButton::ccTouchEnded( CCTouch* pTouch, CCEvent* pEvent )
 {
-	CCControlButton::ccTouchEnded ( pTouch, pEvent );
-	CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*> ( getBackgroundSprite() );
+	CCControlButton::ccTouchEnded( pTouch, pEvent );
+	CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>( getBackgroundSprite() );
 
-	if ( pNode )
+	if( pNode )
 	{
-		if ( ccc3BEqual ( pNode->getColor(), ccc3 ( 0x8c, 0x8c, 0x8c ) ) )
+		if( ccc3BEqual( pNode->getColor(), ccc3( 0x8c, 0x8c, 0x8c ) ) )
 		{
-			pNode->setColor ( ccWHITE );
+			pNode->setColor( ccWHITE );
 		}
 	}
 }
 
-void KKImageButton::ccTouchCancelled ( CCTouch* pTouch, CCEvent* pEvent )
+void KKImageButton::ccTouchCancelled( CCTouch* pTouch, CCEvent* pEvent )
 {
-	ccTouchEnded ( pTouch, pEvent );
+	ccTouchEnded( pTouch, pEvent );
 }
 
 } /* namespace KoalaGui */

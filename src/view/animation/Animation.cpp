@@ -16,7 +16,7 @@ Animation::Animation()
 
 Animation::~Animation()
 {
-	KK_RELEASE_VECTOR ( m_frames );
+	KK_RELEASE_VECTOR( m_frames );
 }
 
 bool Animation::init()
@@ -28,7 +28,7 @@ float Animation::getDuration()
 {
 	float duration = 0;
 
-	for ( AnimationFrame* pFrame : m_frames )
+	for( AnimationFrame* pFrame : m_frames )
 	{
 		duration += pFrame->getDuration();
 	}
@@ -41,41 +41,41 @@ vector<AnimationFrame*> Animation::getFrames()
 	return m_frames;
 }
 
-AnimationFrame* Animation::getFrame ( unsigned int index )
+AnimationFrame* Animation::getFrame( unsigned int index )
 {
-	assert ( index < m_frames.size() && index >= 0 );
+	assert( index < m_frames.size() && index >= 0 );
 	return m_frames[index];
 }
 
-void Animation::addSpriteFrame ( CCSpriteFrame* pFrame, float duration )
+void Animation::addSpriteFrame( CCSpriteFrame* pFrame, float duration )
 {
-	AnimationFrame* pAnimationFrame = AnimationFrame::create ( pFrame, duration );
-	m_frames.push_back ( pAnimationFrame );
+	AnimationFrame* pAnimationFrame = AnimationFrame::create( pFrame, duration );
+	m_frames.push_back( pAnimationFrame );
 	pAnimationFrame->retain();
 }
 
-void Animation::addSpriteFrameWithFileName ( const char* pFileName,
+void Animation::addSpriteFrameWithFileName( const char* pFileName,
 		float duration )
 {
-	CCTexture2D* pTexture = CCTextureCache::sharedTextureCache()->addImage (
+	CCTexture2D* pTexture = CCTextureCache::sharedTextureCache()->addImage(
 								pFileName );
 	CCRect rect = CCRectZero;
 	rect.size = pTexture->getContentSize();
-	CCSpriteFrame* pFrame = CCSpriteFrame::createWithTexture ( pTexture, rect );
-	addSpriteFrame ( pFrame, duration );
+	CCSpriteFrame* pFrame = CCSpriteFrame::createWithTexture( pTexture, rect );
+	addSpriteFrame( pFrame, duration );
 }
 
-void Animation::addAnimationFrame ( AnimationFrame* pFrame )
+void Animation::addAnimationFrame( AnimationFrame* pFrame )
 {
-	m_frames.push_back ( pFrame );
+	m_frames.push_back( pFrame );
 	pFrame->retain();
 }
 
-void Animation::addAnimationFrames ( vector<AnimationFrame*>& frames )
+void Animation::addAnimationFrames( vector<AnimationFrame*>& frames )
 {
-	m_frames.insert ( m_frames.end(), frames.begin(), frames.end() );
+	m_frames.insert( m_frames.end(), frames.begin(), frames.end() );
 
-	for ( AnimationFrame* pFrame : frames )
+	for( AnimationFrame* pFrame : frames )
 	{
 		pFrame->retain();
 	}

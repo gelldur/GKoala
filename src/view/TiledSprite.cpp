@@ -11,7 +11,7 @@ namespace KoalaGui
 {
 
 TiledSprite::TiledSprite() :
-	m_fill ( XY )
+	m_fill( XY )
 {
 
 }
@@ -20,30 +20,30 @@ TiledSprite::~TiledSprite()
 {
 }
 
-bool TiledSprite::initWithSprite ( CCSprite* pSprite, const Fill fill )
+bool TiledSprite::initWithSprite( CCSprite* pSprite, const Fill fill )
 {
-	if ( CCSpriteBatchNode::initWithTexture ( pSprite->getTexture(), 32 ) == false )
+	if( CCSpriteBatchNode::initWithTexture( pSprite->getTexture(), 32 ) == false )
 	{
 		return false;
 	}
 
 	m_fill = fill;
 	m_textureRect = pSprite->getTextureRect();
-	setContentSize ( pSprite->getContentSize() );
+	setContentSize( pSprite->getContentSize() );
 
 	return true;
 }
 
-bool TiledSprite::initWithTextureName ( const char* pTextureName,
-										const Fill fill )
+bool TiledSprite::initWithTextureName( const char* pTextureName,
+									   const Fill fill )
 {
-	if ( CCSpriteBatchNode::initWithFile ( pTextureName, 32 ) == false )
+	if( CCSpriteBatchNode::initWithFile( pTextureName, 32 ) == false )
 	{
 		return false;
 	}
 
 	m_textureRect.size = getTexture()->getContentSize();
-	setContentSize ( m_textureRect.size );
+	setContentSize( m_textureRect.size );
 
 	return true;
 }
@@ -52,7 +52,7 @@ void TiledSprite::visit()
 {
 	kmGLPushMatrix();
 
-	beforeDraw ( getViewRect ( this ) );
+	beforeDraw( getViewRect( this ) );
 
 	CCSpriteBatchNode::visit();
 
@@ -61,13 +61,13 @@ void TiledSprite::visit()
 	kmGLPopMatrix();
 }
 
-void TiledSprite::setContentSize ( const CCSize& contentSize )
+void TiledSprite::setContentSize( const CCSize& contentSize )
 {
-	CCSpriteBatchNode::setContentSize ( contentSize );
+	CCSpriteBatchNode::setContentSize( contentSize );
 
 	removeAllChildren();
 
-	switch ( m_fill )
+	switch( m_fill )
 	{
 		case Fill::X:
 			fillX();
@@ -82,50 +82,50 @@ void TiledSprite::setContentSize ( const CCSize& contentSize )
 			break;
 
 		default:
-			CCAssert ( false, "Wrong Fill Value" );
+			CCAssert( false, "Wrong Fill Value" );
 			break;
 	}
 }
 
-void TiledSprite::fillX ( const float yPosition /*= 0*/ )
+void TiledSprite::fillX( const float yPosition /*= 0*/ )
 {
 	float translationX = 0;
 
-	while ( translationX <= getContentSize().width )
+	while( translationX <= getContentSize().width )
 	{
-		CCSprite* pSprite = CCSprite::createWithTexture ( getTexture(), m_textureRect );
-		addChild ( pSprite );
-		pSprite->setAnchorPoint ( CCPointZero );
-		pSprite->setPosition ( ccp ( translationX, yPosition ) );
+		CCSprite* pSprite = CCSprite::createWithTexture( getTexture(), m_textureRect );
+		addChild( pSprite );
+		pSprite->setAnchorPoint( CCPointZero );
+		pSprite->setPosition( ccp( translationX, yPosition ) );
 
 		translationX += m_textureRect.size.width;
 	}
 }
 
-void TiledSprite::fillY ( const float xPosition /*= 0*/ )
+void TiledSprite::fillY( const float xPosition /*= 0*/ )
 {
 	float translationY = getContentSize().height - m_textureRect.size.height;
 
-	while ( translationY > -m_textureRect.size.height )
+	while( translationY > -m_textureRect.size.height )
 	{
-		CCSprite* pSprite = CCSprite::createWithTexture ( getTexture(), m_textureRect );
-		addChild ( pSprite );
-		pSprite->setAnchorPoint ( CCPointZero );
-		pSprite->setPosition ( ccp ( xPosition, translationY ) );
+		CCSprite* pSprite = CCSprite::createWithTexture( getTexture(), m_textureRect );
+		addChild( pSprite );
+		pSprite->setAnchorPoint( CCPointZero );
+		pSprite->setPosition( ccp( xPosition, translationY ) );
 
 		translationY -= m_textureRect.size.height;
 	}
 }
 
-void TiledSprite::fillXY ( const float dummyVariable/*= 0*/ )
+void TiledSprite::fillXY( const float dummyVariable/*= 0*/ )
 {
-	CC_UNUSED_PARAM ( dummyVariable );
+	CC_UNUSED_PARAM( dummyVariable );
 
 	float translationY = getContentSize().height - m_textureRect.size.height;
 
-	while ( translationY > -m_textureRect.size.height )
+	while( translationY > -m_textureRect.size.height )
 	{
-		fillX ( translationY );
+		fillX( translationY );
 		translationY -= m_textureRect.size.height;
 	}
 }

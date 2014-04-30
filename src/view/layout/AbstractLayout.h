@@ -33,14 +33,14 @@ public:
 	virtual bool init();
 	virtual ~AbstractLayout();
 
-	bool applySizeRule ( CCNode* pNode, const LayoutParams& params,
-						 float CCSize::* pValue );
-	bool applySizeRuleForBackground ( float CCSize::*pValue, CCNode* pNode,
-									  const LayoutParams& params );
-	bool applySizeRuleForLayout ( float CCSize::*pValue, AbstractLayout* pLayout,
-								  const LayoutParams& params );
-	bool applyPaddingRule ( CCNode* pNode, const LayoutParams& params );
-	bool applyVisibilityRule ( CCNode* pNode, LayoutParams& params );
+	bool applySizeRule( CCNode* pNode, const LayoutParams& params,
+						float CCSize::* pValue );
+	bool applySizeRuleForBackground( float CCSize::*pValue, CCNode* pNode,
+									 const LayoutParams& params );
+	bool applySizeRuleForLayout( float CCSize::*pValue, AbstractLayout* pLayout,
+								 const LayoutParams& params );
+	bool applyPaddingRule( CCNode* pNode, const LayoutParams& params );
+	bool applyVisibilityRule( CCNode* pNode, LayoutParams& params );
 
 	/**
 	 * Update a structure of sub layouts this method should be called on most top parent
@@ -55,24 +55,24 @@ public:
 	/**
 	 * We block this method
 	 */
-	virtual void addChild ( CCNode* child, int zOrder, int tag );
+	virtual void addChild( CCNode* child, int zOrder, int tag );
 
-	void setBackground ( View* pBackground );
+	void setBackground( View* pBackground );
 	View* getBackground() const;
 
-	virtual void removeChild ( CCNode* pChild, bool cleanup );
+	virtual void removeChild( CCNode* pChild, bool cleanup );
 	virtual void removeAllChildren();
-	virtual void removeAllChildrenWithCleanup ( bool cleanup );
+	virtual void removeAllChildrenWithCleanup( bool cleanup );
 
-	void measureRecursive ( float CCSize::* pValue, bool isWrapContenSet = false );
+	void measureRecursive( float CCSize::* pValue, bool isWrapContenSet = false );
 
-	virtual bool ccTouchBegan ( CCTouch* pTouch, CCEvent* pEvent );
-	virtual void ccTouchEnded ( CCTouch* pTouch, CCEvent* pEvent );
-	virtual void setOnClickCallback ( Utils::CallbackOld* pCallback );
-	virtual void setOnTouchCallback ( Utils::CallbackOld* pCallback );
-	virtual void setOnTouchReleaseInsideCallback ( Utils::CallbackOld* pCallback );
+	virtual bool ccTouchBegan( CCTouch* pTouch, CCEvent* pEvent );
+	virtual void ccTouchEnded( CCTouch* pTouch, CCEvent* pEvent );
+	virtual void setOnClickCallback( Utils::CallbackOld* pCallback );
+	virtual void setOnTouchCallback( Utils::CallbackOld* pCallback );
+	virtual void setOnTouchReleaseInsideCallback( Utils::CallbackOld* pCallback );
 
-	void setEnabled ( bool value )
+	void setEnabled( bool value )
 	{
 		m_isTouchEnabled = value;
 	}
@@ -87,12 +87,12 @@ protected:
 	/**
 	 * Tag should be < 0
 	 */
-	AbstractLayout ( int tag );
+	AbstractLayout( int tag );
 
 	virtual bool onLayout();
-	virtual CCSize onMeasure ( float CCSize::* pValue,
-							   const bool withBackground ) = 0;
-	virtual bool updateView ( View* pView );
+	virtual CCSize onMeasure( float CCSize::* pValue,
+							  const bool withBackground ) = 0;
+	virtual bool updateView( View* pView );
 
 	/**
 	 *
@@ -100,10 +100,10 @@ protected:
 	 * @param pParams
 	 * @return created View that was added
 	 */
-	View* addViewWithParams ( CCNode* pNodeView, LayoutParams* pParams );
-	View* addViewWithParams ( View* pView );
-	bool insertViewParams ( unsigned index, CCNode* pNodeView,
-							LayoutParams* pParams );
+	View* addViewWithParams( CCNode* pNodeView, LayoutParams* pParams );
+	View* addViewWithParams( View* pView );
+	bool insertViewParams( unsigned index, CCNode* pNodeView,
+						   LayoutParams* pParams );
 
 	vector<View*>& getViews()
 	{
@@ -115,20 +115,20 @@ protected:
 		return m_views;
 	}
 
-	bool removeViewFromLayout ( CCNode* pNode );
-	bool removeViewFromLayout ( int tag );
+	bool removeViewFromLayout( CCNode* pNode );
+	bool removeViewFromLayout( int tag );
 
-	vector<View*>::iterator getViewIterator ( const CCNode* pNode );
-	vector<View*>::iterator getViewIterator ( const View* pView );
+	vector<View*>::iterator getViewIterator( const CCNode* pNode );
+	vector<View*>::iterator getViewIterator( const View* pView );
 
 	/**
 	 * @return NULL if no such View
 	 */
-	View* getViewByTag ( int tag ) const;
+	View* getViewByTag( int tag ) const;
 
-	bool isChildView ( const CCNode* pNode );
+	bool isChildView( const CCNode* pNode );
 
-	void measureBackground ( CCSize& parentSize ) const;
+	void measureBackground( CCSize& parentSize ) const;
 
 	/**
 	 *
@@ -136,21 +136,21 @@ protected:
 	 * @param params
 	 * @return maximum size for match parent
 	 */
-	virtual CCSize getLeftSpaceForView ( CCNode* pNode,
-										 const LayoutParams& params ) = 0;
+	virtual CCSize getLeftSpaceForView( CCNode* pNode,
+										const LayoutParams& params ) = 0;
 
-	bool isLayout ( CCNode* pNode )
+	bool isLayout( CCNode* pNode )
 	{
-		if ( pNode->getTag() < 0 )
+		if( pNode->getTag() < 0 )
 		{
-			CCAssert ( dynamic_cast<AbstractLayout*> ( pNode ),
-					   "Fuckup with tags layout only should have tag < 0" );
+			CCAssert( dynamic_cast<AbstractLayout*>( pNode ),
+					  "Fuckup with tags layout only should have tag < 0" );
 			return true;
 		}
 		else
 		{
-			CCAssert ( dynamic_cast<AbstractLayout*> ( pNode ) == nullptr,
-					   "Fuckup with tags layout should have tag < 0" );
+			CCAssert( dynamic_cast<AbstractLayout*>( pNode ) == nullptr,
+					  "Fuckup with tags layout should have tag < 0" );
 			return false;
 		}
 	}
@@ -166,16 +166,16 @@ private:
 	Utils::CallbackOld* m_pTouchCallback;
 	Utils::CallbackOld* m_pTouchReleaseInsideCallback;
 
-	BLOCK_COPY_OBJECT ( AbstractLayout );
+	BLOCK_COPY_OBJECT( AbstractLayout );
 
-	bool isTagUnique ( int tag );
+	bool isTagUnique( int tag );
 
 	/**
 	 * We block and hide this method
 	 */
-	virtual void setTag ( int tag );
+	virtual void setTag( int tag );
 
-	void prepareView ( CCNode* pNodeView, LayoutParams* pParams );
+	void prepareView( CCNode* pNodeView, LayoutParams* pParams );
 };
 }
 #endif /* CCABSTRACTLAYOUT_H */

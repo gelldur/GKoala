@@ -20,17 +20,17 @@ class PageView;
 class PageViewAdapter: public ListAdapter
 {
 public:
-	KK_CREATE_METHOD ( PageViewAdapter )
+	KK_CREATE_METHOD( PageViewAdapter )
 	virtual ~PageViewAdapter();
 
 	virtual unsigned getItemsCount() const;
-	virtual View* getNewRow ( const unsigned index );
-	virtual CCObject* getNewHolder ( const unsigned index, View* pConvertView );
-	virtual void initializeHolder ( const unsigned index, CCObject* pHolderObject );
+	virtual View* getNewRow( const unsigned index );
+	virtual CCObject* getNewHolder( const unsigned index, View* pConvertView );
+	virtual void initializeHolder( const unsigned index, CCObject* pHolderObject );
 
-	Page* getPage ( unsigned index ) const
+	Page* getPage( unsigned index ) const
 	{
-		assert ( index < m_pages.size() );
+		assert( index < m_pages.size() );
 		return m_pages[index];
 	}
 
@@ -39,13 +39,13 @@ public:
 		return m_pages.size();
 	}
 
-	unsigned addPage ( Page* pPage );
-	void insertPage ( const unsigned index, Page* pPage );
-	void removePage ( const unsigned index );
+	unsigned addPage( Page* pPage );
+	void insertPage( const unsigned index, Page* pPage );
+	void removePage( const unsigned index );
 
 	void updatePages()
 	{
-		for ( Page* page : m_pages )
+		for( Page* page : m_pages )
 		{
 			page->updatePage();
 		}

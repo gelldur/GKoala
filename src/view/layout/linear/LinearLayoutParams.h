@@ -16,9 +16,9 @@ namespace KoalaGui
 class LinearLayoutParams: public LayoutParams
 {
 public:
-	explicit LinearLayoutParams ( const SizePolicy& width,
-								  const SizePolicy& height );
-	LinearLayoutParams ( const LayoutParams& params );
+	explicit LinearLayoutParams( const SizePolicy& width,
+								 const SizePolicy& height );
+	LinearLayoutParams( const LayoutParams& params );
 	virtual ~LinearLayoutParams();
 
 	enum Gravity
@@ -34,7 +34,7 @@ public:
 	/**
 	 * Bit mask of gravity eg. TOP | LEFT
 	 */
-	void setGravity ( int gravity );
+	void setGravity( int gravity );
 	int getGravity() const;
 
 private:

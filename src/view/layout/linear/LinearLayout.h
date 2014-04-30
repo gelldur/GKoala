@@ -30,55 +30,55 @@ private:
 	void updateViewsOrder();
 
 protected:
-	LinearLayout ( int tag = kViewTagUnusedLayout );
+	LinearLayout( int tag = kViewTagUnusedLayout );
 
 	//TODO refactor them copy&paste
 	View* getMaxWidthView();
 	View* getMaxHeightView();
 
-	virtual bool updateView ( View* pView );
+	virtual bool updateView( View* pView );
 
-	virtual CCSize getLeftSpaceForView ( CCNode* pNode,
-										 const LayoutParams& params );
+	virtual CCSize getLeftSpaceForView( CCNode* pNode,
+										const LayoutParams& params );
 
 	virtual bool onLayout();
-	virtual CCSize onMeasure ( float CCSize::* pValue, const bool withBackground );
+	virtual CCSize onMeasure( float CCSize::* pValue, const bool withBackground );
 
 public:
-	static LinearLayout* create ( const Orientation& orientation, int tag =
-									  kViewTagUnusedLayout );
+	static LinearLayout* create( const Orientation& orientation, int tag =
+									 kViewTagUnusedLayout );
 
-	virtual bool init ( const Orientation& orientation );
+	virtual bool init( const Orientation& orientation );
 	virtual ~LinearLayout();
 
-	View* addView ( CCNode* pNode, const LinearLayoutParams& params );
-	View* addView ( CCNode* pNode, const LayoutParams& params );
-	View* addView ( View* pView );
-	View* addView ( CCNode* pNode );
-	bool insertView ( unsigned index, CCNode* pNode,
-					  const LinearLayoutParams& params );
+	View* addView( CCNode* pNode, const LinearLayoutParams& params );
+	View* addView( CCNode* pNode, const LayoutParams& params );
+	View* addView( View* pView );
+	View* addView( CCNode* pNode );
+	bool insertView( unsigned index, CCNode* pNode,
+					 const LinearLayoutParams& params );
 
 	const Orientation getOrientation() const;
-	void setOrientation ( const Orientation& orientation );
+	void setOrientation( const Orientation& orientation );
 
-	virtual void setGravity ( const unsigned short gravity );
+	virtual void setGravity( const unsigned short gravity );
 	bool measureSelf();
 
-	void setReverseViews ( bool isReverse )
+	void setReverseViews( bool isReverse )
 	{
 		m_isReversed = isReverse;
 	}
 
 private:
 	///Rules////////////////////////////////////////////////////////////////////////
-	bool applyGravityRule ( View* pView );
-	bool applyVerticalGravity ( View* pView );
-	bool applyHorizontalGravity ( View* pView );
-	View* addView ( CCNode* pNode, const RelativeLayoutParams& params );
+	bool applyGravityRule( View* pView );
+	bool applyVerticalGravity( View* pView );
+	bool applyHorizontalGravity( View* pView );
+	View* addView( CCNode* pNode, const RelativeLayoutParams& params );
 
-	bool applyPositionRule ( View* pView );
-	bool applyVerticalPosition ( View* pPreviousView, View* pView );
-	bool applyHorizontalPosition ( View* pPreviousView, View* pView );
+	bool applyPositionRule( View* pView );
+	bool applyVerticalPosition( View* pPreviousView, View* pView );
+	bool applyHorizontalPosition( View* pPreviousView, View* pView );
 
 	///Rules////////////////////////////////////////////////////////////////////////
 };

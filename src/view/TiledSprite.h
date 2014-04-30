@@ -26,41 +26,41 @@ public:
 		X, Y, XY
 	};
 
-	static TiledSprite* createWithSprite ( CCSprite* pSprite, const Fill fill )
+	static TiledSprite* createWithSprite( CCSprite* pSprite, const Fill fill )
 	{
 		TiledSprite* pRet = new TiledSprite();
 
-		if ( pRet && pRet->initWithSprite ( pSprite, fill ) )
+		if( pRet && pRet->initWithSprite( pSprite, fill ) )
 		{
 			pRet->autorelease();
 			return pRet;
 		}
 
-		CC_SAFE_DELETE ( pRet );
+		CC_SAFE_DELETE( pRet );
 		return pRet = nullptr;
 	}
 
-	static TiledSprite* create ( const char* pTextureName, const Fill fill )
+	static TiledSprite* create( const char* pTextureName, const Fill fill )
 	{
 		TiledSprite* pRet = new TiledSprite();
 
-		if ( pRet && pRet->initWithTextureName ( pTextureName, fill ) )
+		if( pRet && pRet->initWithTextureName( pTextureName, fill ) )
 		{
 			pRet->autorelease();
 			return pRet;
 		}
 
-		CC_SAFE_DELETE ( pRet );
+		CC_SAFE_DELETE( pRet );
 		return pRet = nullptr;
 	}
 
 	virtual ~TiledSprite();
 	virtual void visit();
 
-	bool initWithSprite ( CCSprite* pSprite, const Fill fill );
-	bool initWithTextureName ( const char* pTextureName, const Fill fill );
+	bool initWithSprite( CCSprite* pSprite, const Fill fill );
+	bool initWithTextureName( const char* pTextureName, const Fill fill );
 
-	virtual void setContentSize ( const CCSize& contentSize );
+	virtual void setContentSize( const CCSize& contentSize );
 
 protected:
 	TiledSprite();
@@ -69,9 +69,9 @@ private:
 	CCRect m_textureRect;
 	Fill m_fill;
 
-	void fillX ( const float yPosition = 0 );
-	void fillY ( const float xPosition = 0 );
-	void fillXY ( const float dummyVariable = 0 );
+	void fillX( const float yPosition = 0 );
+	void fillY( const float xPosition = 0 );
+	void fillXY( const float dummyVariable = 0 );
 };
 
 } /* namespace KoalaGui */

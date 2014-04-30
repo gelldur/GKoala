@@ -21,12 +21,12 @@ namespace KoalaGui
 class MarqueeLabel: public CCNode, public CCLabelProtocol, private ScissorHelper
 {
 public:
-	static MarqueeLabel* create ( const string& text, const string& fontName,
-								  float fontSize )
+	static MarqueeLabel* create( const string& text, const string& fontName,
+								 float fontSize )
 	{
 		MarqueeLabel* pRet = new MarqueeLabel();
 
-		if ( pRet && pRet->initWithString ( text, fontName, fontSize ) )
+		if( pRet && pRet->initWithString( text, fontName, fontSize ) )
 		{
 			pRet->autorelease();
 			return pRet;
@@ -38,8 +38,8 @@ public:
 		}
 	}
 
-	virtual bool initWithString ( const string& text, const string& fontName,
-								  float fontSize );
+	virtual bool initWithString( const string& text, const string& fontName,
+								 float fontSize );
 
 	virtual ~MarqueeLabel();
 
@@ -48,7 +48,7 @@ public:
 
 	virtual void visit();
 
-	virtual void setString ( const char* pText );
+	virtual void setString( const char* pText );
 	virtual const char* getString();
 
 	/**
@@ -56,9 +56,9 @@ public:
 	 * @param delay
 	 * @param repeats -1 repeat for ever
 	 */
-	void applyMovingActionOnText ( const float frequency = 1,
-								   const float delay = 1.5F,
-								   const int repeats = -1 );
+	void applyMovingActionOnText( const float frequency = 1,
+								  const float delay = 1.5F,
+								  const int repeats = -1 );
 
 	void restartMovingActionOnText();
 
@@ -68,9 +68,9 @@ public:
 	}
 
 	//Its only virtual for feature
-	virtual void setColor ( const ccColor3B& color );
+	virtual void setColor( const ccColor3B& color );
 
-	void runActionOnText ( CCAction* pAction );
+	void runActionOnText( CCAction* pAction );
 	void stopActionOnText();
 
 	enum ID
@@ -78,9 +78,9 @@ public:
 		MAIN_ANIMATION = 678
 	};
 
-	void setTextAlignment ( CCTextAlignment alignment );
+	void setTextAlignment( CCTextAlignment alignment );
 
-	virtual void setContentSize ( const CCSize& contentSize );
+	virtual void setContentSize( const CCSize& contentSize );
 
 protected:
 	MarqueeLabel();
@@ -99,15 +99,15 @@ private:
 		int repeats;
 
 		Parameters() :
-			frequency ( 1 ),
-			time ( 0 ),
-			delay ( 1 ),
-			repeats ( -1 )
+			frequency( 1 ),
+			time( 0 ),
+			delay( 1 ),
+			repeats( -1 )
 		{
 		}
 	} m_parameters;
 
-	CCAction* getDefaultMovingAction ( float time, float delay, int repeats );
+	CCAction* getDefaultMovingAction( float time, float delay, int repeats );
 };
 
 } // namespace KoalaGui

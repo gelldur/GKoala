@@ -18,10 +18,10 @@ namespace KoalaLib
 
 namespace Puzzle
 {
-CCSprite* parseFile ( const string& jsonFileName, const string& plistFileName,
-					  const string& textureFileName );
-CCSprite* parseFile ( const string& jsonFileName, const string& plistFileName,
-					  CCTexture2D* pTexture );
+CCSprite* parseFile( const string& jsonFileName, const string& plistFileName,
+					 const string& textureFileName );
+CCSprite* parseFile( const string& jsonFileName, const string& plistFileName,
+					 CCTexture2D* pTexture );
 }
 
 } /* namespace KoalaLib */
