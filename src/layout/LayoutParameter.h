@@ -40,6 +40,11 @@ public:
 	LayoutParameter ( const LayoutParameter& params ) = delete;
 	LayoutParameter& operator= ( LayoutParameter& params ) = delete;
 
+	const SizePolicy& getWidth(){return m_width;}
+	const SizePolicy& getHeight(){return m_height;}
+
+	cocos2d::CCSize getFullSize()const;
+
 protected:
 	LayoutParameter();
 

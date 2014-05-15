@@ -75,4 +75,25 @@ float SizePolicy::convert ( Policy type, const float& value )
 	return value;
 }
 
+bool SizePolicy::isConst()const
+{
+	if(m_type == Policy::MATCH_PARENT || m_type == Policy::WRAP_CONTENT)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool SizePolicy::isWrapContent() const
+{
+	return m_type == Policy::WRAP_CONTENT;
+}
+
+bool SizePolicy::isMatchParent() const
+{
+	return m_type == Policy::MATCH_PARENT;
+}
+
 } /* namespace GKoala */
+

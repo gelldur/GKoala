@@ -28,6 +28,7 @@ bool Layout::initWithConfiguration ( LayoutConfiguration* pConfiguration )
 	}
 
 	m_pLayoutConfiguration = pConfiguration;
+	pConfiguration->setWorkingLayout(this);
 
 	if ( pConfiguration == nullptr )
 	{
@@ -44,17 +45,11 @@ bool Layout::initWithConfiguration ( LayoutConfiguration* pConfiguration )
 void Layout::onEnter()
 {
 	inherited::onEnter();
-
-	cocos2d::CCNotificationCenter::sharedNotificationCenter()->addObserver ( this,
-			static_cast<cocos2d::SEL_CallFuncO> ( &Layout::onUpdateStructureCallback ),
-			getNotificationUpdateStructure(), nullptr );
 }
 
 void Layout::onExit()
 {
 	inherited::onExit();
-	cocos2d::CCNotificationCenter::sharedNotificationCenter()->removeObserver (
-		this, getNotificationUpdateStructure() );
 }
 
 void Layout::addChild ( cocos2d::CCNode* pChild, int zOrder, int tag )
@@ -68,8 +63,7 @@ void Layout::addChild ( cocos2d::CCNode* pChild, int zOrder, int tag )
 	addChildWith ( pChild, m_pLayoutConfiguration->getDefaultLayoutParameter() );
 }
 
-void Layout::addChildWith ( cocos2d::CCNode* pChild,
-							LayoutParameter* pLayoutParameter )
+void Layout::addChildWith ( cocos2d::CCNode* pChild,LayoutParameter* pLayoutParameter )
 {
 	GKoala_assert ( pChild != nullptr, "pChild can't be null" );
 	GKoala_assert ( pLayoutParameter != nullptr, "pLayoutParameter can't be null" );
@@ -91,11 +85,8 @@ void Layout::removeChild ( CCNode* pChild, bool cleanup )
 
 void Layout::updateStructure()
 {
-	if ( isRunning() )
-	{
-		GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
-		m_pLayoutConfiguration->updateStructure();
-	}
+	GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
+	m_pLayoutConfiguration->updateStructure();
 }
 
 void Layout::onUpdateStructureCallback ( CCObject* pCaller )

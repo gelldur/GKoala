@@ -60,6 +60,14 @@ public:
 
 	static float convert ( Policy type, const float& value );
 
+	/**
+	 * This method will return true if size can change during measuring of layout.
+	 * @return
+	 */
+	bool isConst()const;
+	bool isWrapContent()const;
+	bool isMatchParent()const;
+
 private:
 	float m_value;
 	Policy m_type;

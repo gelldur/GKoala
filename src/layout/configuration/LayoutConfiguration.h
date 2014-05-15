@@ -14,14 +14,12 @@
 namespace GKoala
 {
 
-class LayoutConfiguration : public cocos2d::CCObject
+class LayoutConfiguration
 {
 public:
-	LayoutConfiguration();
-	virtual ~LayoutConfiguration();
+	virtual ~LayoutConfiguration(){}
 
-	virtual void addView ( cocos2d::CCNode* pChild,
-						   LayoutParameter* pLayoutParameter ) = 0;
+	virtual void addView ( cocos2d::CCNode* pChild,LayoutParameter* pLayoutParameter ) = 0;
 	virtual void removeChild ( cocos2d::CCNode* pChild ) = 0;
 
 	//Abstract method factory
@@ -29,9 +27,15 @@ public:
 
 	virtual void updateStructure() = 0;
 
-protected:
+	void setWorkingLayout(cocos2d::CCNode* pLayout)
+	{
+		m_pWorkingLayout = pLayout;
+	}
 
-	virtual void onMeasure() = 0;
+protected:
+	cocos2d::CCNode* m_pWorkingLayout = nullptr;
+
+	virtual cocos2d::CCSize onMeasure() = 0;
 	virtual void onLayout() = 0;
 };
 
