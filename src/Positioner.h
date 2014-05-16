@@ -5,13 +5,12 @@
  *      Author: Dawid Drozd
  */
 
-#ifndef CCPOSITIONER_H_
-#define CCPOSITIONER_H_
+#pragma once
 
 #include "cocos2d.h"
 USING_NS_CC;
 
-namespace KoalaGui
+namespace GKoala
 {
 
 namespace Positioner
@@ -52,5 +51,4 @@ void toCenterOf( CCNode* pToCenter, CCNode* pOf );
 
 }
 
-} /* namespace KoalaGui */
-#endif /* CCPOSITIONER_H_ */
+} /* namespace GKoala */

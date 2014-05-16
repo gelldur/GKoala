@@ -7,7 +7,7 @@
 
 #include "Positioner.h"
 
-namespace KoalaGui
+namespace GKoala
 {
 //TODO Change getScaledHeight to beoundingbox
 CCRect Positioner::getLeftBottomCorner( CCNode* pNode )
