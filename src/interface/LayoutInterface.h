@@ -21,6 +21,7 @@ public:
 	virtual ~LayoutInterface() {};
 	virtual void addChildWith ( cocos2d::CCNode* pNode,LayoutParameter* pLayoutParameter ) = 0;
 	virtual void updateStructure(LayoutParameter* pLayoutParameter) = 0;
+	virtual void setOptions(int options) = 0;
 };
 
 } /* namespace GKoala */

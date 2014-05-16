@@ -33,12 +33,41 @@ bool HelloWorld::init()
 	auto pLayout = factory.createLinearLayout();
 	addChild(pLayout);
 
+	pLayout->setOptions(LinearLayoutParameter::Gravity::TOP | LinearConfiguration::Orientation::VERTICAL);
+
 	pLayout->setContentSize(getContentSize());
 
-	pLayout->addChild(CCSprite::create("test1.png"));
-	//pLayout->addChild(CCSprite::create("test2.png"));
+	auto pParameter = LinearLayoutParameter::createWrapWrap();
+	pParameter->setMarginLeft(SP::sp(10));
+	pParameter->setMarginTop(SP::sp(20));
+	pParameter->setMarginBottom(SP::sp(50));
+	pParameter->setMarginRight(SP::sp(30));
+	pParameter->setGravity(LinearLayoutParameter::Gravity::TOP |  LinearLayoutParameter::Gravity::CENTER_HORIZONTAL);
+	pLayout->addChildWith(CCSprite::create("test1.png"),pParameter);
 
+	pParameter = LinearLayoutParameter::createWrapWrap();
+	pParameter->setGravity(LinearLayoutParameter::Gravity::TOP | LinearLayoutParameter::Gravity::CENTER_HORIZONTAL );
 
+	pLayout->addChildWith(CCSprite::create("test2.png"),pParameter);
+
+	pParameter = LinearLayoutParameter::createWrapWrap();
+	pParameter->setGravity(LinearLayoutParameter::Gravity::TOP| LinearLayoutParameter::Gravity::CENTER_HORIZONTAL );
+
+	pLayout->addChildWith(CCSprite::create("test3.png"),pParameter);
+
+	pParameter = LinearLayoutParameter::createWrapWrap();
+	pParameter->setMarginLeft(SP::sp(20));
+	pParameter->setMarginTop(SP::sp(30));
+	pParameter->setMarginBottom(SP::sp(10));
+	pParameter->setMarginRight(SP::sp(10));
+	pParameter->setGravity(LinearLayoutParameter::Gravity::TOP | LinearLayoutParameter::Gravity::CENTER_HORIZONTAL );
+
+	pLayout->addChildWith(CCSprite::create("test4.png"),pParameter);
+
+	pParameter = LinearLayoutParameter::createWrapWrap();
+	pParameter->setGravity(LinearLayoutParameter::Gravity::TOP | LinearLayoutParameter::Gravity::CENTER_HORIZONTAL );
+
+	pLayout->addChildWith(CCSprite::create("test5.png"),pParameter);
 
 	return true;
 }

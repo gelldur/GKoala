@@ -50,7 +50,9 @@ public:
 	virtual void addChildWith ( cocos2d::CCNode* pChild,LayoutParameter* pLayoutParameter ) override;
 
 	virtual void removeChild ( CCNode* pChild, bool cleanup ) override;
-	virtual void updateStructure() override;
+	virtual void updateStructure(LayoutParameter* pLayoutParameter) override;
+
+	virtual void setOptions(int options) override;
 
 protected:
 	Layout();

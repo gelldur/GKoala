@@ -10,8 +10,7 @@
 namespace GKoala
 {
 
-LinearLayoutParameter::LinearLayoutParameter() :
-	m_gravity ( LEFT )
+LinearLayoutParameter::LinearLayoutParameter()
 {
 }
 
@@ -64,7 +63,6 @@ LinearLayoutParameter* LinearLayoutParameter::create ( const SizePolicy& width,
 void LinearLayoutParameter::setGravity ( int gravity )
 {
 	m_gravity = gravity;
-	notifyLayout();
 }
 
 

@@ -27,21 +27,18 @@ LayoutParameter::~LayoutParameter()
 LayoutParameter* LayoutParameter::setVisibility ( Visibility visibility )
 {
 	m_visibility = visibility;
-	notifyLayout();
 	return this;
 }
 
 LayoutParameter* LayoutParameter::setWidth ( const SizePolicy& width )
 {
 	m_width = width;
-	notifyLayout();
 	return this;
 }
 
 LayoutParameter* LayoutParameter::setHeight ( const SizePolicy& height )
 {
 	m_height = height;
-	notifyLayout();
 	return this;
 }
 
@@ -49,7 +46,6 @@ LayoutParameter* LayoutParameter::setMarginLeft ( const SizePolicy& margin )
 {
 	GKoala_assert(margin.isConst(),"Margins must be const!. You can't use MATCH_PARENT or WRAP_CONTENT");
 	m_margins[LEFT] = margin;
-	notifyLayout();
 	return this;
 }
 
@@ -57,7 +53,6 @@ LayoutParameter* LayoutParameter::setMarginRight ( const SizePolicy& margin )
 {
 	GKoala_assert(margin.isConst(),"Margins must be const!. You can't use MATCH_PARENT or WRAP_CONTENT");
 	m_margins[RIGHT] = margin;
-	notifyLayout();
 	return this;
 }
 
@@ -65,7 +60,6 @@ LayoutParameter* LayoutParameter::setMarginTop ( const SizePolicy& margin )
 {
 	GKoala_assert(margin.isConst(),"Margins must be const!. You can't use MATCH_PARENT or WRAP_CONTENT");
 	m_margins[TOP] = margin;
-	notifyLayout();
 	return this;
 }
 
@@ -73,7 +67,6 @@ LayoutParameter* LayoutParameter::setMarginBottom ( const SizePolicy& margin )
 {
 	GKoala_assert(margin.isConst(),"Margins must be const!. You can't use MATCH_PARENT or WRAP_CONTENT");
 	m_margins[BOTTOM] = margin;
-	notifyLayout();
 	return this;
 }
 

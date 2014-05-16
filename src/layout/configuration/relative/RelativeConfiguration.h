@@ -26,11 +26,13 @@ public:
 	//Abstract method factory
 	virtual LayoutParameter* getDefaultLayoutParameter() override;
 
-	virtual void updateStructure() override;
+	virtual void updateStructure(LayoutParameter* pLayoutParameter) override;
+
+	virtual void setOptions(int options) override;
 
 protected:
 
-	virtual void onMeasure() override;
+	virtual cocos2d::CCSize onMeasure(LayoutParameter* pLayoutParameter) override;
 	virtual void onLayout() override;
 
 private:

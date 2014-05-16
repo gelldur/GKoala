@@ -72,7 +72,7 @@ void Layout::addChildWith ( cocos2d::CCNode* pChild,LayoutParameter* pLayoutPara
 	inherited::addChild ( pChild, pChild->getZOrder(), pChild->getTag() );
 	m_pLayoutConfiguration->addView ( pChild, pLayoutParameter );
 
-	updateStructure();
+	updateStructure(nullptr);
 }
 
 void Layout::removeChild ( CCNode* pChild, bool cleanup )
@@ -80,18 +80,23 @@ void Layout::removeChild ( CCNode* pChild, bool cleanup )
 	GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
 	inherited::removeChild ( pChild, cleanup );
 
-	updateStructure();
+	updateStructure(nullptr);
 }
 
-void Layout::updateStructure()
+void Layout::updateStructure(LayoutParameter* pLayoutParameter)
 {
 	GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
-	m_pLayoutConfiguration->updateStructure();
+	m_pLayoutConfiguration->updateStructure(pLayoutParameter);
+}
+
+void Layout::setOptions(int options)
+{
+	m_pLayoutConfiguration->setOptions(options);
 }
 
 void Layout::onUpdateStructureCallback ( CCObject* pCaller )
 {
-	updateStructure();
+	updateStructure(nullptr);
 }
 
 
