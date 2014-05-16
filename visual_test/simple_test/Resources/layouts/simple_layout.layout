@@ -1,0 +1,15 @@
+{ 
+"id":"topLinearLayout",
+"object":"LinearLayout",
+"orientation":"horizontal",
+"width":200,
+"height":300,
+"views":
+	[
+		{
+			"id":"1Sprite",
+			"object":"CCSprite",
+			"source":"test1.png"
+		}
+	]
+}
