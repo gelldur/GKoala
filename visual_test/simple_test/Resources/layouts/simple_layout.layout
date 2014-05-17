@@ -10,6 +10,11 @@
 			"id":"1Sprite",
 			"object":"CCSprite",
 			"source":"test1.png"
+		},
+		{
+			"id":"2Sprite",
+			"object":"CCSprite",
+			"source":"test2.png"
 		}
 	]
 }
