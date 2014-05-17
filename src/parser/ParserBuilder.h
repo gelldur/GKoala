@@ -23,6 +23,7 @@ public:
 private:
 	void addStandardRules(ParserInterface* pParser);
 
+	void addRulesGlobal(ParserInterface* pParser);
 	void addRulesLinearLayout(ParserInterface* pParser);
 	void addRulesCCSprite(ParserInterface* pParser);
 };
