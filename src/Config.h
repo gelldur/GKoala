@@ -29,6 +29,8 @@
 #define GKoala_assert( condition,message ) // ignore
 #endif
 
+#define GLOG(format, ...) CCLOG(format,##__VA_ARGS__)
+
 
 #define GK_CREATE(Clazz) \
 	static Clazz* create()\

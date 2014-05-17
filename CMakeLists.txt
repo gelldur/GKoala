@@ -71,6 +71,13 @@ file(GLOB_RECURSE SOURCES_GKOALA ${SOURCES_DIR}/*.cpp)
 
 add_library( GKoala STATIC ${SOURCES_GKOALA})
 
+add_subdirectory(${KOALA_GAMES_ROOT}/libs/jsoncpp-src-0.5.0 ${CMAKE_CURRENT_BINARY_DIR}/JsonCpp )
+
+target_link_libraries(GKoala
+JsonCpp
+)
+
+
 target_include_directories( GKoala
 PUBLIC ${SOURCES_DIR}
 PUBLIC ${KOALA_GAMES_ROOT}/KoalaComponent/src 
