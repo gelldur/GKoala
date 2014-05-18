@@ -36,6 +36,7 @@ bool HelloWorld::init()
 	auto pLayout = pParser->parseLayout("layouts/simple_layout.layout");
 
 	addChild(pLayout);
+	pLayout->setPosition(100,100);
 
 	delete pParser;
 

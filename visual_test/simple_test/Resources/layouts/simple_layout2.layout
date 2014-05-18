@@ -1,0 +1,17 @@
+{ 
+"field1":100, //int
+"field2":100.0, //float
+"field3":5, //char
+"field4":51, //int*
+"field5":5.1, //double
+"field6":"asdf", //string
+"field7":"asdf2", //string&
+"field8":"asdf3", //string*
+"field9":[1,2,3,4],//vector<int>
+"field10":[1.1,2.2,3.3,4.4],//vector<float>
+"field11":["a","b","c"], //vector<string>
+"field12":[1,2,3,4],//vector<int>&
+"field13":{"object":"TestObject"},//CCNode*
+"field14":[{"object":"TestObject"},{"object":"TestObject"},{"object":"TestObject"}],//vector<CCNode*>
+"object":"TestObject"
+}

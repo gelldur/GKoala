@@ -26,6 +26,7 @@ ParsingEngine::ParsingEngine()
 
 ParsingEngine::~ParsingEngine()
 {
+	//TODO cleanup!
 }
 
 void ParsingEngine::addInitRule(const RegEx& objectName,const InitRule& initRule)
@@ -35,7 +36,7 @@ void ParsingEngine::addInitRule(const RegEx& objectName,const InitRule& initRule
 }
 
 
-void ParsingEngine::addRule(const RegEx& objectName,const RegEx& propertyName, const Rule& ruleFunction)
+void ParsingEngine::addRule(const RegEx& objectName,const RegEx& propertyName, const RuleBase* ruleFunction)
 {
 	GKoala_assert(m_rules.find(objectName) == m_rules.end() ||
 			m_rules.find(objectName)->second.find(propertyName) == m_rules.find(objectName)->second.end(),
@@ -74,11 +75,11 @@ cocos2d::CCNode* GKoala::ParsingEngine::parseLayout(
 		throw ParsingException(std::string("Invalid JSON\n") + reader.getFormatedErrorMessages());
 	}
 
-	return parseObject(root);
+	return static_cast<CCNode*>(parseObject(root,nullptr));
 }
 
 
-const ParserInterface::InitRule& ParsingEngine::findInitRule(const std::string& objectField)const
+const InitRule& ParsingEngine::findInitRule(const std::string& objectField)const
 {
 	std::smatch matcher;
 
@@ -97,11 +98,11 @@ const ParserInterface::InitRule& ParsingEngine::findInitRule(const std::string& 
 }
 
 
-const ParserInterface::Rule& ParsingEngine::findFieldRule(const std::string& objectField,const std::string& fieldName)const
+const RuleBase* ParsingEngine::findFieldRule(const std::string& objectField,const std::string& fieldName)const
 {
 	std::smatch matcher;
 
-	const Rule* pRule = nullptr;
+	const RuleBase* pRule = nullptr;
 	std::string matched;
 
 	for(auto&& elementObject : m_rules)
@@ -125,7 +126,7 @@ const ParserInterface::Rule& ParsingEngine::findFieldRule(const std::string& obj
 				throw ParsingException("You have multiple matching rules for this field:" + fieldName + "\nPrevious matched:" + matched + "\nCurrent:" + elementRule.first.stringRepresentation);
 			}
 
-			pRule = &elementRule.second;
+			pRule = elementRule.second;
 			matched = elementRule.first.stringRepresentation;
 		}
 	}
@@ -135,10 +136,10 @@ const ParserInterface::Rule& ParsingEngine::findFieldRule(const std::string& obj
 		throw ParsingException("I don't have any matching parsing rules for object:" + objectField + "\nI don't know how to parse:" + fieldName);
 	}
 
-	return *pRule;
+	return pRule;
 }
 
-cocos2d::CCNode* ParsingEngine::parseObject(const Json::Value& value) const
+BaseClass* ParsingEngine::parseObject(const Json::Value& value,BaseClass* pContext) const
 {
 	if(value.isNull() || value.isObject() == false)
 	{
@@ -154,14 +155,14 @@ cocos2d::CCNode* ParsingEngine::parseObject(const Json::Value& value) const
 	auto& buildRule = findInitRule(objectField);
 
 	//First we need to construct object so we look up for init rule
-	CCNode* pNodeOut = buildRule();
+	BaseClass* pCreated = buildRule();
 
-	if(pNodeOut == nullptr)
+	if(pCreated == nullptr)
 	{
 		throw ParsingException("init rule should return new object but you return nullptr");
 	}
 
-	Parameter parameterObject(pNodeOut);
+	//Parameter parameterObject(pNodeOut);
 
 	auto members = value.getMemberNames();
 	members.erase(std::find(members.begin(),members.end(),FIELD_OBJECT));
@@ -169,7 +170,7 @@ cocos2d::CCNode* ParsingEngine::parseObject(const Json::Value& value) const
 	//If we don't have fields we can skip
 	if(members.empty())
 	{
-		return pNodeOut;
+		return pCreated;
 	}
 
 	for(auto&& element : members)
@@ -179,74 +180,167 @@ cocos2d::CCNode* ParsingEngine::parseObject(const Json::Value& value) const
 
 		auto fieldRule = findFieldRule(objectField,element);
 
-		if(elementValue.isIntegral())
+		if(fieldRule->type == RuleBase::Type::INT)
 		{
-			parameterObject._int = elementValue.asInt();
-		}
-		else if(elementValue.isDouble())
-		{
-			parameterObject._float = elementValue.asDouble();
-		}
-		else if(elementValue.isString())
-		{
-			parameterObject._string = elementValue.asString();
-		}
-		else if(elementValue.isArray())
-		{
-			parameterObject.parameters = parseArray(elementValue);
-		}
-		else if(elementValue.isObject())
-		{
-			parameterObject.pNode = parseObject(elementValue);
-		}
+			if(elementValue.isConvertibleTo(Json::ValueType::intValue) == false)
+			{
+				throw ParsingException("Can't convert " + element + " to int in " + value.toStyledString());
+			}
 
-		fieldRule(parameterObject);
+			int value = elementValue.asInt();
+			fieldRule->call(pCreated,pContext,value);
+		}
+		else if(fieldRule->type == RuleBase::Type::FLOAT)
+		{
+			if(elementValue.isConvertibleTo(Json::ValueType::realValue) == false)
+			{
+				throw ParsingException("Can't convert " + element + " to float in " + value.toStyledString());
+			}
+
+			float value = elementValue.asDouble();
+			fieldRule->call(pCreated,pContext,value);
+		}
+		else if(fieldRule->type == RuleBase::Type::STRING)
+		{
+			if(elementValue.isConvertibleTo(Json::ValueType::stringValue) == false)
+			{
+				throw ParsingException("Can't convert " + element + " to std::string in " + value.toStyledString());
+			}
+
+			std::string value = elementValue.asString();
+			fieldRule->call(pCreated,pContext,value);
+		}
+		else if(fieldRule->type == RuleBase::Type::OBJECT)
+		{
+			if(elementValue.isObject() == false)
+			{
+				throw ParsingException("This field:" + element + " is'n a JSON object." + value.toStyledString());
+			}
+
+			BaseClass* pValue = parseObject(elementValue,pCreated);
+			fieldRule->call(pCreated,pContext,pValue);
+		}
+		else if((fieldRule->type & RuleBase::Type::VECTOR) == RuleBase::Type::VECTOR)
+		{
+			if(elementValue.isArray() == false)
+			{
+				throw ParsingException("This field:" + element + " is'n a JSON array." + value.toStyledString());
+			}
+
+			if((fieldRule->type & RuleBase::Type::INT) == RuleBase::Type::INT)
+			{
+				vector<int> values = parseArrayInt(elementValue);
+				fieldRule->call(pCreated,pContext,values);
+			}
+			else if((fieldRule->type & RuleBase::Type::FLOAT) == RuleBase::Type::FLOAT)
+			{
+				vector<float> values = parseArrayFloat(elementValue);
+				fieldRule->call(pCreated,pContext,values);
+			}
+			else if((fieldRule->type & RuleBase::Type::STRING) == RuleBase::Type::STRING)
+			{
+				vector<std::string> values = parseArrayString(elementValue);
+				fieldRule->call(pCreated,pContext,values);
+			}
+			else if((fieldRule->type & RuleBase::Type::OBJECT) == RuleBase::Type::OBJECT)
+			{
+				vector<BaseClass*> values = parseArrayObject(elementValue,pCreated);
+				fieldRule->call(pCreated,pContext,values);
+			}
+			else
+			{
+				throw ParsingException("Something isn't ok please check this! I shloud have vector of?");
+			}
+		}
+		else
+		{
+			throw ParsingException("Something isn't ok please check this!");
+		}
 	}
 
-
-	return pNodeOut;
+	return pCreated;
 }
 
-std::vector<Parameter> ParsingEngine::parseArray(const Json::Value& value) const
+std::vector<int> ParsingEngine::parseArrayInt(const Json::Value& value) const
 {
 	if(value.isNull() || value.isArray() == false)
 	{
 		throw ParsingException("This isn't JSON array\n"+ value.toStyledString());
 	}
 
-	std::vector<Parameter> parameters;
+	std::vector<int> parameters;
 	for(auto&& element : value )
 	{
-		if(element.isIntegral())
+		if(element.isConvertibleTo(Json::ValueType::intValue) == false)
 		{
-			Parameter parameter(nullptr);
-			parameter._int = element.asInt();
-			parameters.emplace_back(parameter);
+			throw ParsingException("Can't convert to int in " + value.toStyledString());
 		}
-		else if(element.isDouble())
+
+		parameters.emplace_back(element.asInt());
+	}
+
+	return parameters;
+}
+
+std::vector<float> ParsingEngine::parseArrayFloat(const Json::Value& value) const
+{
+	if(value.isNull() || value.isArray() == false)
+	{
+		throw ParsingException("This isn't JSON array\n"+ value.toStyledString());
+	}
+
+	std::vector<float> parameters;
+	for(auto&& element : value )
+	{
+		if(element.isConvertibleTo(Json::ValueType::realValue) == false)
 		{
-			Parameter parameter(nullptr);
-			parameter._float = element.asDouble();
-			parameters.emplace_back(parameter);
+			throw ParsingException("Can't convert to float in " + value.toStyledString());
 		}
-		else if(element.isString())
+
+		parameters.emplace_back(element.asDouble());
+	}
+
+	return parameters;
+}
+
+std::vector<std::string> ParsingEngine::parseArrayString(const Json::Value& value) const
+{
+	if(value.isNull() || value.isArray() == false)
+	{
+		throw ParsingException("This isn't JSON array\n"+ value.toStyledString());
+	}
+
+	std::vector<std::string> parameters;
+	for(auto&& element : value )
+	{
+		if(element.isConvertibleTo(Json::ValueType::stringValue) == false)
 		{
-			Parameter parameter(nullptr);
-			parameter._string = element.asString();
-			parameters.emplace_back(parameter);
+			throw ParsingException("Can't convert to std::string in " + value.toStyledString());
 		}
-		else if(element.isArray())
+
+		parameters.emplace_back(element.asString());
+	}
+
+	return parameters;
+}
+
+std::vector<BaseClass*> ParsingEngine::parseArrayObject(const Json::Value& value,BaseClass* pContext) const
+{
+	if(value.isNull() || value.isArray() == false)
+	{
+		throw ParsingException("This isn't JSON array\n"+ value.toStyledString());
+	}
+
+	std::vector<BaseClass*> parameters;
+	for(auto&& element : value )
+	{
+		if(element.isObject() == false)
 		{
-			Parameter parameter(nullptr);
-			parameter.parameters = parseArray(element);
-			parameters.emplace_back(parameter);
+			throw ParsingException("This field isn't JSON Object. " + value.toStyledString());
 		}
-		else if(element.isObject())
-		{
-			Parameter parameter(nullptr);
-			parameter.pNode = parseObject(element);
-			parameters.emplace_back(parameter);
-		}
+
+		BaseClass* pValue = parseObject(element,pContext);
+		parameters.emplace_back(pValue);
 	}
 
 	return parameters;

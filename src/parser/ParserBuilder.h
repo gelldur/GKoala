@@ -9,8 +9,12 @@
 
 #include "interface/ParserInterface.h"
 
+#include "parser/engine/json/ParsingEngine.h"
+
 namespace GKoala
 {
+
+typedef ParserInterface<ParsingEngine> StandardParser;
 
 class ParserBuilder
 {
@@ -18,14 +22,18 @@ public:
 	ParserBuilder();
 	~ParserBuilder();
 
-	ParserInterface* buildStandardParser();
+	StandardParser* buildStandardParser();
 
 private:
-	void addStandardRules(ParserInterface* pParser);
+	void addStandardRules(StandardParser* pParser);
 
-	void addRulesGlobal(ParserInterface* pParser);
-	void addRulesLinearLayout(ParserInterface* pParser);
-	void addRulesCCSprite(ParserInterface* pParser);
+	void addRulesGlobal(StandardParser* pParser);
+	void addRulesLinearLayout(StandardParser* pParser);
+	void addRulesLinearLayoutParameters(StandardParser* pParser);
+	void addRulesSizePolicy(StandardParser* pParser);
+	void addRulesCCSprite(StandardParser* pParser);
+
+	void addRulesForTest(StandardParser* pParser);
 };
 
 }

@@ -1,15 +1,24 @@
-{ 
+{
+//Here we have context == nullptr 
 "id":"topLinearLayout",
 "object":"LinearLayout",
-"orientation":"horizontal",
 "width":200,
 "height":300,
+"magic_object":
+	{
+		//Here we should have context == LinearLayout
+	},
 "views":
 	[
 		{
+			//Here we should have context == LinearLayout
 			"id":"1Sprite",
 			"object":"CCSprite",
-			"source":"test1.png"
+			"source":"test1.png",
+			"margin_left_sp":0,
+			"margin_right_sp":0,
+			"margin_top_sp":0,
+			"margin_bottom_sp":0
 		},
 		{
 			"id":"2Sprite",
@@ -18,3 +27,139 @@
 		}
 	]
 }
+
+
+	
+
+	template <typename T>
+	typename std::enable_if<
+	    std::is_same<typename std::vector<typename T::value_type>, T>::value
+	    && std::is_integral<typename T::value_type>::value, void>::type
+	setType ()
+	{
+	    type = Type::VECTOR | Type::INT;
+	}
+
+	template <typename T>
+	typename std::enable_if<
+	    std::is_same<typename std::vector<typename T::value_type>, T>::value
+	    && std::is_floating_point<typename T::value_type>::value, void>::type
+	setType ()
+	{
+	    type = Type::VECTOR | Type::FLOAT;
+	}
+
+	template <typename T>
+	typename std::enable_if<
+	    std::is_same<typename std::vector<typename T::value_type>, T>::value
+	    && std::is_same<typename T::value_type,std::string>::value, void>::type
+	setType ()
+	{
+	    type = Type::VECTOR | Type::STRING;
+	}
+
+	template <typename T>
+	typename std::enable_if<
+		std::is_same<typename std::vector<typename T::value_type>, T>::value
+	    && !std::is_same<typename T::value_type,std::string>::value
+	    && std::is_pointer<typename T::value_type>::value
+	    , void>::type
+	setType ()
+	{
+	    type = Type::VECTOR | Type::OBJECT;
+	}
+
+	template <typename T>
+	typename std::enable_if<
+		std::is_integral<T>::value, void>::type
+	    setType ()
+	{
+	    type = Type::INT;
+	}
+
+	template <typename T>
+	typename std::enable_if<
+		std::is_floating_point<T>::value , void>::type
+	    setType ()
+	{
+	    type = Type::FLOAT;
+	}
+
+	template <typename T>
+	typename std::enable_if<
+	std::is_same<T,std::string>::value, void>::type
+	    setType ()
+	{
+	    type = Type::STRING;
+	}
+
+	template <typename T>
+	typename std::enable_if<
+		 !std::is_same<T,std::string>::value
+		 && std::is_class<T>::value
+		 && !is_vector<T>::value
+		, void>::type
+	    setType ()
+	{
+	    type = Type::OBJECT;
+	}
+	
+	
+	
+	
+	template<typename T>
+	struct ReferenceConverter
+	{
+		static inline T& cast(void* pValue){return *(static_cast<T*>(pValue));}
+	};
+
+	template<typename T>
+	struct PointerConverter
+	{
+		static inline T cast(void* pValue){return static_cast<T>(pValue);}
+	};
+
+	
+	
+	
+	virtual void call(void* pBase,void* pValue)const override
+	{
+		typedef typename std::remove_reference<Value>::type ValueType;
+		typedef typename std::conditional< std::is_pointer<ValueType>::value, PointerConverter<ValueType> ,ReferenceConverter<ValueType>  >::type converterForValue;
+
+		typedef typename std::remove_reference<Base>::type BaseType;
+		typedef typename std::conditional< std::is_pointer<BaseType>::value, PointerConverter<BaseType> ,ReferenceConverter<BaseType>  >::type converterForBase;
+
+		ruleFunction(converterForBase::cast(pBase),converterForValue::cast(pValue));
+	}
+	
+	
+	
+	
+			static_assert(!std::is_same<Value,const char*>::value,"Sorry we don't support CStrings use std::string");
+		static_assert(!std::is_same<Value,char*>::value,"Sorry we don't support CStrings use std::string");
+
+		typedef typename std::remove_pointer< Value >::type ValueNoPointe;
+		typedef typename std::remove_reference<ValueNoPointe>::type ValueNoReference;
+
+		static_assert(
+				std::is_integral<Value>::value 							//int etc.
+				|| std::is_floating_point<Value>::value 				//float etc.
+				|| std::is_same<Value,std::string>::value				//string
+				|| std::is_pointer< Value >::value 						//Pointer
+				|| std::is_reference<Value>::value 						//Ref
+				|| (is_vector<Value>::value 							//vector<int>
+						&& std::is_integral<MyType<Value>>::value)
+				|| (is_vector<Value>::value 							//vector<float>
+						&& std::is_floating_point<MyType<Value>>::value)
+				|| (is_vector<Value>::value 							//vector<std::string>
+						&& std::is_same<MyType<Value>,std::string>::value)
+				|| (is_vector<Value>::value 							//vector< pointer >
+						&& std::is_pointer<MyType<Value>>::value)
+				,"Can't be. Yu can only use basic types (int,float,long long etc.) + "
+						"std::string + pointers (int* ,CCNode* etc.) + vector< (previous types) >."
+						" You can't use classes .You must pass them by pointer");
+
+		setType<ValueNoReference>();
+		GLOG("I create with type %d",type);
+		GKoala_assert(type != UNKNOWN,"I don't know how to create it!");
