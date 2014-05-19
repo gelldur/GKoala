@@ -52,8 +52,8 @@ void ParserBuilder::addRulesGlobal(StandardParser* pParser)
 		pNode->setTag(tag[0]);
 	});
 
-	pParser->addRule<WorkingNode,float&>(object,"width",
-	[](WorkingNode pNode,BaseClass* pContext,float& width)
+	pParser->addRule<WorkingNode,float>(object,"width",
+	[](WorkingNode pNode,BaseClass* pContext,float width)
 	{
 		auto size = pNode->getContentSize();
 		size.width = width;
@@ -61,8 +61,8 @@ void ParserBuilder::addRulesGlobal(StandardParser* pParser)
 		pNode->setContentSize(size);
 	});
 
-	pParser->addRule<CCNode*,float&>(object,"height",
-	[](WorkingNode pNode,BaseClass* pContext,float& height)
+	pParser->addRule<CCNode*,float>(object,"height",
+	[](WorkingNode pNode,BaseClass* pContext,float height)
 	{
 		auto size = pNode->getContentSize();
 		size.height = height;
@@ -70,8 +70,8 @@ void ParserBuilder::addRulesGlobal(StandardParser* pParser)
 		pNode->setContentSize(size);
 	});
 
-	pParser->addRule<CCNode*,float&>(object,"parameters",
-	[](WorkingNode pNode,BaseClass* pContext,float& height)
+	pParser->addRule<CCNode*,float>(object,"parameters",
+	[](WorkingNode pNode,BaseClass* pContext,float height)
 	{
 		auto size = pNode->getContentSize();
 		size.height = height;
@@ -169,8 +169,8 @@ void ParserBuilder::addRulesForTest(StandardParser* pParser)
 		return CCNode::create();
 	});
 
-	pParser->addRule<CCNode*,int&>(object,"field1",
-	[](CCNode* pNode,BaseClass* pContext,int& integer)
+	pParser->addRule<CCNode*,int>(object,"field1",
+	[](CCNode* pNode,BaseClass* pContext,int integer)
 	{
 		GLOG("field1");
 		GLOG("value: %d",integer);
@@ -182,32 +182,6 @@ void ParserBuilder::addRulesForTest(StandardParser* pParser)
 		GLOG("value: %f",integer);
 	});
 
-
-	pParser->addRule<CCNode*,char>(object,"field3",
-	[](CCNode* pNode,BaseClass* pContext,char integer)
-	{
-		GLOG("field3");
-		GLOG("value: %c",integer);
-	});
-
-	pParser->addRule<CCNode*,int*>(object,"field4",
-	[](CCNode* pNode,BaseClass* pContext,int* integer)
-	{
-		GLOG("field4");
-		GLOG("value: %d",*integer);
-	});
-	pParser->addRule<CCNode*,double>(object,"field5",
-	[](CCNode* pNode,BaseClass* pContext,double integer)
-	{
-		GLOG("field5");
-		GLOG("value: %lf",integer);
-	});
-	pParser->addRule<CCNode*,std::string>(object,"field6",
-	[](CCNode* pNode,BaseClass* pContext,std::string integer)
-	{
-		GLOG("field6");
-		GLOG("value: %s",integer.c_str());
-	});
 	pParser->addRule<CCNode*,std::string&>(object,"field7",
 	[](CCNode* pNode,BaseClass* pContext,std::string& integer)
 	{
@@ -215,15 +189,8 @@ void ParserBuilder::addRulesForTest(StandardParser* pParser)
 		GLOG("value: %s",integer.c_str());
 	});
 
-	pParser->addRule<CCNode*,std::string*>(object,"field8",
-	[](CCNode* pNode,BaseClass* pContext,std::string* integer)
-	{
-		GLOG("field8");
-		GLOG("value: %s",integer->c_str());
-	});
-
-	pParser->addRule<CCNode*,std::vector<int> >(object,"field9",
-	[](CCNode* pNode,BaseClass* pContext,std::vector<int>  integer)
+	pParser->addRule<CCNode*,std::vector<int>& >(object,"field9",
+	[](CCNode* pNode,BaseClass* pContext,std::vector<int>&  integer)
 	{
 		GLOG("field9");
 		for(auto&& element : integer)
@@ -232,8 +199,8 @@ void ParserBuilder::addRulesForTest(StandardParser* pParser)
 		}
 	});
 
-	pParser->addRule<CCNode*,std::vector<float> >(object,"field10",
-	[](CCNode* pNode,BaseClass* pContext,std::vector<float>  integer)
+	pParser->addRule<CCNode*,std::vector<float>& >(object,"field10",
+	[](CCNode* pNode,BaseClass* pContext,std::vector<float>&  integer)
 	{
 		GLOG("field10");
 		for(auto&& element : integer)
@@ -242,8 +209,8 @@ void ParserBuilder::addRulesForTest(StandardParser* pParser)
 		}
 	});
 
-	pParser->addRule<CCNode*,std::vector<std::string> >(object,"field11",
-	[](CCNode* pNode,BaseClass* pContext,std::vector<std::string>  integer)
+	pParser->addRule<CCNode*,std::vector<std::string>& >(object,"field11",
+	[](CCNode* pNode,BaseClass* pContext,std::vector<std::string>&  integer)
 	{
 		GLOG("field11");
 		for(auto&& element : integer)
@@ -263,14 +230,14 @@ void ParserBuilder::addRulesForTest(StandardParser* pParser)
 	});
 
 	pParser->addRule<CCNode*,CCNode* >(object,"field13",
-	[](CCNode* pNode,BaseClass* pContext,CCNode*  integer)
+	[](CCNode* pNode,BaseClass* pContext,CCNode* integer)
 	{
 		GLOG("field13");
 		GLOG("value: %f %p",integer->getContentSize().width,integer);
 	});
 
-	pParser->addRule<CCNode*,vector<CCNode*> >(object,"field14",
-	[](CCNode* pNode,BaseClass* pContext,vector<CCNode*>  integer)
+	pParser->addRule<CCNode*,vector<CCNode*>& >(object,"field14",
+	[](CCNode* pNode,BaseClass* pContext,vector<CCNode*>&  integer)
 	{
 		GLOG("field14");
 		for(auto&& element : integer)

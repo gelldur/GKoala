@@ -55,15 +55,15 @@ public:
 
 	int type = UNKNOWN;
 
-	virtual void call(BaseClass* pBase,BaseClass* pContext,int& value )const = 0;
-	virtual void call(BaseClass* pBase,BaseClass* pContext,float& value )const = 0;
+	virtual void call(BaseClass* pBase,BaseClass* pContext,int value )const = 0;
+	virtual void call(BaseClass* pBase,BaseClass* pContext,float value )const = 0;
 	virtual void call(BaseClass* pBase,BaseClass* pContext,std::string& value )const = 0;
 	virtual void call(BaseClass* pBase,BaseClass* pContext,BaseClass* pValue )const = 0;
 
 	virtual void call(BaseClass* pBase,BaseClass* pContext,std::vector<int>& values )const = 0;
 	virtual void call(BaseClass* pBase,BaseClass* pContext,std::vector<float>& values )const = 0;
 	virtual void call(BaseClass* pBase,BaseClass* pContext,std::vector<std::string>& values )const = 0;
-	virtual void call(BaseClass* pBase,BaseClass* pContext,std::vector<BaseClass*>& pValues )const = 0;
+	virtual void call(BaseClass* pBase,BaseClass* pContext,std::vector<BaseClass*>& values )const = 0;
 };
 
 template<typename>
@@ -101,58 +101,142 @@ public:
 
 private:
 
-public:
-
-	template<typename Base2,typename Value2>
+	template<typename BaseForNormal,typename ValueForNormal>
 	struct Normal
 	{
-		static inline void execute(Base2* pBase,BaseClass* pContext,Value2 value,const std::function< void(Base2,BaseClass* ,Value2) >& ruleFunction)
+		static inline void execute(BaseForNormal pBase,BaseClass* pContext,ValueForNormal value,
+				const std::function< void(BaseForNormal,BaseClass* ,Value) >& ruleFunction)
 		{
 			ruleFunction(pBase,pContext,value);
 		}
 	};
-
-	template<typename Base2,typename Value2>
-	struct Dummy
+	template<typename BaseForNormal>
+	struct Normal<BaseForNormal,BaseClass*>
 	{
-		static inline void execute(Base2* pBase,BaseClass* pContext,Value2 value,const std::function< void(Base2,BaseClass* ,Value2) >& ruleFunction){}
+		static inline void execute(BaseForNormal pBase,BaseClass* pContext,BaseClass* pValue,
+				const std::function< void(BaseForNormal,BaseClass* ,Value) >& ruleFunction)
+		{
+
+			Value pCastedValue = dynamic_cast<Value>(pValue);
+			GKoala_assert(pCastedValue != nullptr,"Something isn't working");
+
+			ruleFunction(pBase,pContext,pCastedValue);
+		}
+	};
+	template<typename BaseForNormal>
+	struct Normal<BaseForNormal,std::vector<BaseClass*>&>
+	{
+		static inline void execute(BaseForNormal pBase,BaseClass* pContext,std::vector<BaseClass*>& values,
+				const std::function< void(BaseForNormal,BaseClass* ,Value) >& ruleFunction)
+		{
+			using ValueNoReference = typename std::remove_pointer<Value>::type;
+			using VectorType = MyType<ValueNoReference>;
+
+			std::vector<VectorType> castedValues;
+			castedValues.reserve(values.size());
+
+			for(auto&& pElement : values)
+			{
+				VectorType pCastedElement = dynamic_cast<VectorType>(pElement);
+				GKoala_assert(pCastedElement != nullptr,"Something isn't working");
+
+				castedValues.emplace_back(pCastedElement);
+			}
+
+			ruleFunction(pBase,pContext,castedValues);
+		}
 	};
 
-	virtual void call(BaseClass* pBase,BaseClass* pContext,int& value )const override
+	template<typename BaseForDummy,typename ValueForDummy>
+	struct Dummy
 	{
-		typedef typename std::conditional< std::is_same<Value,int&>::value, Normal<Base,Value> ,Dummy<Base,Value>  >::type Executor;
+		static inline void execute(BaseForDummy pBase,BaseClass* pContext,ValueForDummy value,
+				const std::function< void(BaseForDummy,BaseClass* ,Value) >& ruleFunction)
+		{
+			//Empty do notihing
+			GKoala_assert(false,"This method shouldn't be called");
+		}
+	};
 
-		Base* pCastedBase = dynamic_cast<Base*>(pBase);
+public:
+
+
+
+	virtual void call(BaseClass* pBase,BaseClass* pContext,int value )const override
+	{
+		typedef typename std::conditional< std::is_same<Value,int>::value, Normal<Base,Value> ,Dummy<Base,int>  >::type Executor;
+
+		Base pCastedBase = dynamic_cast<Base>(pBase);
 		GKoala_assert(pCastedBase != nullptr,"Something isn't working");
 
 		Executor::execute(pCastedBase,pContext,value,ruleFunction);
 	}
-	virtual void call(BaseClass* pBase,BaseClass* pContext,float& value )const override
+	virtual void call(BaseClass* pBase,BaseClass* pContext,float value )const override
 	{
+		typedef typename std::conditional< std::is_same<Value,float>::value, Normal<Base,Value> ,Dummy<Base,float>  >::type Executor;
+
+		Base pCastedBase = dynamic_cast<Base>(pBase);
+		GKoala_assert(pCastedBase != nullptr,"Something isn't working");
+
+		Executor::execute(pCastedBase,pContext,value,ruleFunction);
 	}
 	virtual void call(BaseClass* pBase,BaseClass* pContext,std::string& value )const override
 	{
+		typedef typename std::conditional< std::is_same<Value,std::string&>::value, Normal<Base,Value> ,Dummy<Base,std::string&>  >::type Executor;
+
+		Base pCastedBase = dynamic_cast<Base>(pBase);
+		GKoala_assert(pCastedBase != nullptr,"Something isn't working");
+
+		Executor::execute(pCastedBase,pContext,value,ruleFunction);
 	}
 	virtual void call(BaseClass* pBase,BaseClass* pContext,BaseClass* pValue )const override
 	{
+		using ValueNoPointer = typename std::remove_pointer<Value>::type;
+		using Executor = typename std::conditional< std::is_base_of<ValueNoPointer,BaseClass>::value, Normal<Base,BaseClass*> ,Dummy<Base,BaseClass*>  >::type;
 
+		Base pCastedBase = dynamic_cast<Base>(pBase);
+		GKoala_assert(pCastedBase != nullptr,"Something isn't working");
+
+		Executor::execute(pCastedBase,pContext,pValue,ruleFunction);
 	}
 
 	virtual void call(BaseClass* pBase,BaseClass* pContext,std::vector<int>& values )const override
 	{
+		typedef typename std::conditional< std::is_same<Value,std::vector<int>& >::value, Normal<Base,Value> ,Dummy<Base,std::vector<int>& >  >::type Executor;
 
+		Base pCastedBase = dynamic_cast<Base>(pBase);
+		GKoala_assert(pCastedBase != nullptr,"Something isn't working");
+
+		Executor::execute(pCastedBase,pContext,values,ruleFunction);
 	}
 	virtual void call(BaseClass* pBase,BaseClass* pContext,std::vector<float>& values )const override
 	{
+		typedef typename std::conditional< std::is_same<Value,std::vector<float>& >::value, Normal<Base,Value> ,Dummy<Base,std::vector<float>& >  >::type Executor;
 
+		Base pCastedBase = dynamic_cast<Base>(pBase);
+		GKoala_assert(pCastedBase != nullptr,"Something isn't working");
+
+		Executor::execute(pCastedBase,pContext,values,ruleFunction);
 	}
 	virtual void call(BaseClass* pBase,BaseClass* pContext,std::vector<std::string>& values )const override
 	{
+		typedef typename std::conditional< std::is_same<Value,std::vector<std::string>& >::value, Normal<Base,Value> ,Dummy<Base,std::vector<std::string>& >  >::type Executor;
 
+		Base pCastedBase = dynamic_cast<Base>(pBase);
+		GKoala_assert(pCastedBase != nullptr,"Something isn't working");
+
+		Executor::execute(pCastedBase,pContext,values,ruleFunction);
 	}
-	virtual void call(BaseClass* pBase,BaseClass* pContext,std::vector<BaseClass*>& pValues )const override
+	virtual void call(BaseClass* pBase,BaseClass* pContext,std::vector<BaseClass*>& values )const override
 	{
+		using ValueNoReference = typename std::remove_pointer<Value>::type;
+		using VectorType = MyType<ValueNoReference>;
+		using Executor = typename std::conditional< std::is_base_of<VectorType,BaseClass>::value, Normal<Base,std::vector<BaseClass*>& > ,Dummy<Base,std::vector<BaseClass*>& >  >::type;
 
+		Base pCastedBase = dynamic_cast<Base>(pBase);
+		GKoala_assert(pCastedBase != nullptr,"Something isn't working");
+
+		Executor::execute(pCastedBase,pContext,values,ruleFunction);
 	}
 };
 
@@ -172,21 +256,34 @@ public:
 	inline void addRule(const RegEx& objectName,const RegEx& propertyName,const std::function< void(Base,BaseClass* ,Value) >& ruleFunction)
 	{
 		using BaseNoPointer = typename std::remove_pointer<Base>::type;
+		using ValueNoPointer = typename std::remove_pointer<Value>::type;
+		using ValueNoReference = typename std::remove_reference<ValueNoPointer>::type;
 		static_assert(std::is_base_of<BaseClass,BaseNoPointer>::value,"Base must inherit from BaseClass");
+		static_assert(
+				!std::is_pointer<Value>::value
+				|| std::is_base_of<ValueNoPointer,BaseNoPointer>::value
+				,"Value must inherit from CCObject");
+		static_assert(
+				!std::is_reference<Value>::value
+				|| is_vector< ValueNoReference >::value
+				|| std::is_same<Value,std::string&>::value
+				,"You can only use references for vector or std::string");
 
 		static_assert
 		(
-				std::is_same<Value,int&>::value
-				|| std::is_same<Value,float&>::value
+				std::is_same<Value,int>::value
+				|| std::is_same<Value,float>::value
 				|| std::is_same<Value,std::string&>::value
-				|| std::is_base_of<Value,BaseClass*>::value
+				|| std::is_base_of<ValueNoPointer,BaseNoPointer>::value
 				|| std::is_same<Value,std::vector<int>& >::value
 				|| std::is_same<Value,std::vector<float>& >::value
 				|| std::is_same<Value,std::vector<std::string>& >::value
-				|| (std::is_reference<Value>::value
-						&& is_vector<Value>::value
-						&& std::is_base_of< MyType<Value>,BaseClass>::value)
-		,"Value can be only one of mentioned above. Look at call method in Rule class");
+				|| (is_vector< ValueNoReference >::value
+						&& std::is_base_of< typename std::remove_pointer< MyType< ValueNoReference > >::type,BaseNoPointer>::value
+						&& std::is_reference<Value>::value)
+		,"Value can be only one of mentioned above. Look at call method in Rule class."
+				" Example it must be int,float,std::string&,CCObject*,"
+				"vector<int>&,vector<float>&,vector<std::string>&,vector<CCObject*>&");
 
 		m_engine.addRule(objectName,propertyName,new Rule<Base,Value>(ruleFunction));
 	}
