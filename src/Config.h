@@ -5,10 +5,14 @@
  *      Author: dawid
  */
 
-#ifndef GKOALA_CONFIG_H_
-#define GKOALA_CONFIG_H_
+#pragma once
 
 #include "cocos2d.h"
+
+namespace GKoala
+{
+
+using BaseClass = cocos2d::CCObject;
 
 /**
  * 0 - don't use asserts
@@ -45,4 +49,4 @@
 		return pRet = nullptr;\
 	}
 
-#endif /* GKOALA_CONFIG_H_ */
+}

@@ -180,7 +180,7 @@ BaseClass* ParsingEngine::parseObject(const Json::Value& value,BaseClass* pConte
 
 		auto fieldRule = findFieldRule(objectField,element);
 
-		if(fieldRule->type == RuleBase::Type::INT)
+		if(fieldRule->type == Type::INT)
 		{
 			if(elementValue.isConvertibleTo(Json::ValueType::intValue) == false)
 			{
@@ -190,7 +190,7 @@ BaseClass* ParsingEngine::parseObject(const Json::Value& value,BaseClass* pConte
 			int value = elementValue.asInt();
 			fieldRule->call(pCreated,pContext,value);
 		}
-		else if(fieldRule->type == RuleBase::Type::FLOAT)
+		else if(fieldRule->type == Type::FLOAT)
 		{
 			if(elementValue.isConvertibleTo(Json::ValueType::realValue) == false)
 			{
@@ -200,7 +200,7 @@ BaseClass* ParsingEngine::parseObject(const Json::Value& value,BaseClass* pConte
 			float value = elementValue.asDouble();
 			fieldRule->call(pCreated,pContext,value);
 		}
-		else if(fieldRule->type == RuleBase::Type::STRING)
+		else if(fieldRule->type == Type::STRING)
 		{
 			if(elementValue.isConvertibleTo(Json::ValueType::stringValue) == false)
 			{
@@ -210,7 +210,7 @@ BaseClass* ParsingEngine::parseObject(const Json::Value& value,BaseClass* pConte
 			std::string value = elementValue.asString();
 			fieldRule->call(pCreated,pContext,value);
 		}
-		else if(fieldRule->type == RuleBase::Type::OBJECT)
+		else if(fieldRule->type == Type::OBJECT)
 		{
 			if(elementValue.isObject() == false)
 			{
@@ -220,29 +220,29 @@ BaseClass* ParsingEngine::parseObject(const Json::Value& value,BaseClass* pConte
 			BaseClass* pValue = parseObject(elementValue,pCreated);
 			fieldRule->call(pCreated,pContext,pValue);
 		}
-		else if((fieldRule->type & RuleBase::Type::VECTOR) == RuleBase::Type::VECTOR)
+		else if((fieldRule->type & Type::VECTOR) == Type::VECTOR)
 		{
 			if(elementValue.isArray() == false)
 			{
 				throw ParsingException("This field:" + element + " is'n a JSON array." + value.toStyledString());
 			}
 
-			if((fieldRule->type & RuleBase::Type::INT) == RuleBase::Type::INT)
+			if((fieldRule->type & Type::INT) == Type::INT)
 			{
 				vector<int> values = parseArrayInt(elementValue);
 				fieldRule->call(pCreated,pContext,values);
 			}
-			else if((fieldRule->type & RuleBase::Type::FLOAT) == RuleBase::Type::FLOAT)
+			else if((fieldRule->type & Type::FLOAT) == Type::FLOAT)
 			{
 				vector<float> values = parseArrayFloat(elementValue);
 				fieldRule->call(pCreated,pContext,values);
 			}
-			else if((fieldRule->type & RuleBase::Type::STRING) == RuleBase::Type::STRING)
+			else if((fieldRule->type & Type::STRING) == Type::STRING)
 			{
 				vector<std::string> values = parseArrayString(elementValue);
 				fieldRule->call(pCreated,pContext,values);
 			}
-			else if((fieldRule->type & RuleBase::Type::OBJECT) == RuleBase::Type::OBJECT)
+			else if((fieldRule->type & Type::OBJECT) == Type::OBJECT)
 			{
 				vector<BaseClass*> values = parseArrayObject(elementValue,pCreated);
 				fieldRule->call(pCreated,pContext,values);
