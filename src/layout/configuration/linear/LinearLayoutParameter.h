@@ -21,8 +21,8 @@ public:
 	static LinearLayoutParameter* createWrapMatch();
 	static LinearLayoutParameter* createMatchMatch();
 	static LinearLayoutParameter* createMatchWrap();
-	static LinearLayoutParameter* create ( const SizePolicy& width,
-										   const SizePolicy& height );
+	static LinearLayoutParameter* create ( const SizePolicy& width = SP::sp(0),
+										   const SizePolicy& height = SP::sp(0) );
 
 	virtual ~LinearLayoutParameter();
 
@@ -34,7 +34,8 @@ public:
 		TOP = 4,
 		BOTTOM = 8,
 		CENTER_VERTICAL = 12,
-		CENTER = 15
+		CENTER = 15,
+		MASK = 15
 	};
 
 	/**
@@ -47,7 +48,7 @@ public:
 	}
 
 private:
-	int m_gravity;
+	int m_gravity = Gravity::LEFT | Gravity::TOP;
 
 	LinearLayoutParameter();
 };

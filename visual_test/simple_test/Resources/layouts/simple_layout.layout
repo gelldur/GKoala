@@ -1,0 +1,29 @@
+{
+//Here we have context == nullptr 
+"id":"topLinearLayout",
+"object":"LinearLayout",
+"width":200,
+"height":300,
+"magic_object":
+	{
+		//Here we should have context == LinearLayout
+	},
+"views":
+	[
+		{
+			//Here we should have context == LinearLayout
+			"id":"1Sprite",
+			"object":"CCSprite",
+			"source":"test1.png",
+			"margin_left_sp":0,
+			"margin_right_sp":0,
+			"margin_top_sp":0,
+			"margin_bottom_sp":0
+		},
+		{
+			"id":"2Sprite",
+			"object":"CCSprite",
+			"source":"test2.png"
+		}
+	]
+}

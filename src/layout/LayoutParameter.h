@@ -40,16 +40,13 @@ public:
 	LayoutParameter ( const LayoutParameter& params ) = delete;
 	LayoutParameter& operator= ( LayoutParameter& params ) = delete;
 
+	const SizePolicy& getWidth()const {return m_width;}
+	const SizePolicy& getHeight()const {return m_height;}
+
+	cocos2d::CCSize getFullSize()const;
+
 protected:
 	LayoutParameter();
-
-	void notifyLayout()
-	{
-		if ( m_pPairedLayout != nullptr )
-		{
-			m_pPairedLayout->updateStructure();
-		}
-	}
 
 private:
 	Visibility m_visibility;
@@ -75,6 +72,13 @@ private:
 	 * m_margins[3] - bottom
 	 */
 	SizePolicy m_margins[4] = {SP::sp ( 0 ), SP::sp ( 0 ), SP::sp ( 0 ), SP::sp ( 0 ) };
+
+public:
+
+	const SizePolicy& getMarginLeft()const {return m_margins[Margin::LEFT];}
+	const SizePolicy& getMarginRight()const {return m_margins[Margin::RIGHT];}
+	const SizePolicy& getMarginTop()const {return m_margins[Margin::TOP];}
+	const SizePolicy& getMarginBottom()const {return m_margins[Margin::BOTTOM];}
 };
 
 } /* namespace GKoala */

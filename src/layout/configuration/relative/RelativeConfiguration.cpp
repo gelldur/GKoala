@@ -10,6 +10,10 @@
 namespace GKoala
 {
 
+void RelativeConfiguration::setOptions(int options)
+{
+}
+
 RelativeConfiguration::RelativeConfiguration()
 {
 }
@@ -32,12 +36,13 @@ LayoutParameter* RelativeConfiguration::getDefaultLayoutParameter()
 	return nullptr;
 }
 
-void RelativeConfiguration::updateStructure()
+void RelativeConfiguration::updateStructure(LayoutParameter* pLayoutParameter)
 {
 }
 
-void RelativeConfiguration::onMeasure()
+cocos2d::CCSize RelativeConfiguration::onMeasure(LayoutParameter* pLayoutParameter)
 {
+	return cocos2d::CCSizeZero;
 }
 
 void RelativeConfiguration::onLayout()

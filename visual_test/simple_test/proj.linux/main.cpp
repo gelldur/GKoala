@@ -20,14 +20,12 @@ int main ( int argc, char** argv )
 
 	std::string resourcePath = fullpath;
 	resourcePath = resourcePath.substr ( 0, resourcePath.find_last_of ( "/" ) );
-	string nextTo = resourcePath;
-	nextTo += "/Resources";
-	resourcePath += "/../../../Resources/";
+	resourcePath += "/../../../visual_test/simple_test/Resources/";
+
+	printf("Search path: %s\n\n",resourcePath.c_str());
 
 	CCFileUtils::sharedFileUtils()->setSearchPaths ( vector<string> ( 1,
 			resourcePath ) );
-	CCFileUtils::sharedFileUtils()->setSearchPaths ( vector<string> ( 1,
-			nextTo ) );
 	CCEGLView* pEglView = CCEGLView::sharedOpenGLView();
 
 	switch ( 3 )
