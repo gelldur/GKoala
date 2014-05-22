@@ -273,7 +273,7 @@ void LinearConfiguration::onLayoutVertical()
 	else if((m_gravity & Gravity::BOTTOM) == Gravity::BOTTOM)
 	{
 		View previousView;
-		for(auto&& it = m_views.rbegin() ; it != m_views.rend(); ++it)
+		for(auto& it = m_views.rbegin() ; it != m_views.rend(); ++it)
 		{
 			View& view = *it;
 			applyLayoutGravityVerticalBottom(view,previousView);
@@ -321,7 +321,7 @@ void LinearConfiguration::onLayoutHorizontal()
 	else if((m_gravity & Gravity::RIGHT) == Gravity::RIGHT)
 	{
 		View previousView;
-		for(auto&& it = m_views.rbegin() ; it != m_views.rend(); ++it)
+		for(auto& it = m_views.rbegin() ; it != m_views.rend(); ++it)
 		{
 			View& view = *it;
 			applyLayoutGravityHorizontalRight(view,previousView);
