@@ -90,7 +90,7 @@ private:
 	template<typename BaseForNormal,typename ValueForNormal>
 	struct Normal
 	{
-		static inline void execute(BaseForNormal pBase,BaseClass* pContext,ValueForNormal value,
+		static void execute(BaseForNormal pBase,BaseClass* pContext,ValueForNormal value,
 				const std::function< void(BaseForNormal,BaseClass* ,Value) >& ruleFunction)
 		{
 			ruleFunction(pBase,pContext,value);
@@ -99,7 +99,7 @@ private:
 	template<typename BaseForNormal>
 	struct Normal<BaseForNormal,BaseClass*>
 	{
-		static inline void execute(BaseForNormal pBase,BaseClass* pContext,BaseClass* pValue,
+		static void execute(BaseForNormal pBase,BaseClass* pContext,BaseClass* pValue,
 				const std::function< void(BaseForNormal,BaseClass* ,Value) >& ruleFunction)
 		{
 
@@ -112,7 +112,7 @@ private:
 	template<typename BaseForNormal>
 	struct Normal<BaseForNormal,std::vector<BaseClass*>&>
 	{
-		static inline void execute(BaseForNormal pBase,BaseClass* pContext,std::vector<BaseClass*>& values,
+		static void execute(BaseForNormal pBase,BaseClass* pContext,std::vector<BaseClass*>& values,
 				const std::function< void(BaseForNormal,BaseClass* ,Value) >& ruleFunction)
 		{
 			using ValueNoReference = typename std::remove_pointer<Value>::type;
@@ -136,7 +136,7 @@ private:
 	template<typename BaseForDummy,typename ValueForDummy>
 	struct Dummy
 	{
-		static inline void execute(BaseForDummy pBase,BaseClass* pContext,ValueForDummy value,
+		static void execute(BaseForDummy pBase,BaseClass* pContext,ValueForDummy value,
 				const std::function< void(BaseForDummy,BaseClass* ,Value) >& ruleFunction)
 		{
 			//Empty do notihing
