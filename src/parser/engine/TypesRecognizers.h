@@ -3,13 +3,16 @@
 namespace GKoala
 {
 	template<typename T>
+	struct is_vector;
+
+	template<typename T>
 	struct is_vector
 	{
 		static const bool value = false;
 		using type = T;
 	};
 
-	//Specialization
+	//Partial Specialization
 	template<typename T>
 	struct is_vector<std::vector<T>>
 	{
