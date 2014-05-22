@@ -4,10 +4,6 @@
 "object":"LinearLayout",
 "width":200,
 "height":300,
-"magic_object":
-	{
-		//Here we should have context == LinearLayout
-	},
 "views":
 	[
 		{
@@ -21,6 +17,7 @@
 			"margin_bottom_sp":0
 		},
 		{
+			//Here we should have context == LinearLayout
 			"id":"2Sprite",
 			"object":"CCSprite",
 			"source":"test2.png"

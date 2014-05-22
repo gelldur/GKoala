@@ -34,6 +34,8 @@ private:
 	void addRulesCCSprite(StandardParser* pParser);
 
 	void addRulesForTest(StandardParser* pParser);
+
+	void createLayoutParametersForContext(cocos2d::CCNode* pNode);
 };
 
 }

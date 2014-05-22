@@ -8,6 +8,7 @@
 #include "parser/ParserBuilder.h"
 
 #include "layout/configuration/linear/LinearLayoutParameter.h"
+#include "interface/LayoutInterface.h"
 
 using namespace std;
 USING_NS_CC;
@@ -78,11 +79,37 @@ void ParserBuilder::addRulesGlobal(StandardParser* pParser)
 
 		pNode->setContentSize(size);
 	});
+
+	pParser->addRule<WorkingNode,float >(object,"margin_left_sp",
+	[](WorkingNode pObject,BaseClass* pContext,float margin)
+	{
+		createLayoutParametersForContext(pObject);
+
+		auto pUserObject = pObject->getUserObject();
+		auto pLayoutParams = dynamic_cast<LayoutParameter*>(pUserObject);
+
+		pLayoutParams->setMarginLeft(SP::sp(margin));
+	});
+	pParser->addRule<WorkingNode,float >(object,"margin_right_sp",
+	[](WorkingNode pObject,BaseClass* pContext,float margin)
+	{
+		pObject->setMarginRight(SP::sp(margin));
+	});
+	pParser->addRule<RWorkingNode,float >(object,"margin_top_sp",
+	[](WorkingNode pObject,BaseClass* pContext,float margin)
+	{
+		pObject->setMarginTop(SP::sp(margin));
+	});
+	pParser->addRule<WorkingNode,float >(object,"margin_bottom_sp",
+	[](WorkingNode pObject,BaseClass* pContext,float margin)
+	{
+		pObject->setMarginBottom(SP::sp(margin));
+	});
 }
 
 void ParserBuilder::addRulesLinearLayout(StandardParser* pParser)
 {
-	using ReturnObject = CCNode;
+	using ReturnObject = LayoutInterface;
 
 	const std::string object = "LinearLayout";
 	pParser->addInitRule(object,[]()
@@ -94,9 +121,19 @@ void ParserBuilder::addRulesLinearLayout(StandardParser* pParser)
 	pParser->addRule<ReturnObject*,vector<CCNode*>& >(object,"views",
 	[](ReturnObject* pNode,BaseClass* pContext,vector<CCNode*>& views)
 	{
-		for(auto&& element : views)
+		for(auto&& pView : views)
 		{
-			pNode->addChild(element);
+			auto pObject = pView->getUserObject();
+			if(pObject == nullptr)
+			{
+				pNode->addChild(pView);
+			}
+			else
+			{
+				auto pParameter = dynamic_cast<LayoutParameter*>(pObject);
+				GKoala_assert(pParameter != nullptr,"Error");
+				pNode->addChildWith(pView,pParameter);
+			}
 		}
 	});
 }
@@ -125,35 +162,7 @@ void ParserBuilder::addRulesCCSprite(StandardParser* pParser)
 
 void ParserBuilder::addRulesLinearLayoutParameters(StandardParser* pParser)
 {
-	using ReturnObject = LinearLayoutParameter;
 
-	const std::string object = "LinearLayoutParameter";
-	pParser->addInitRule(object,[]()
-	{
-		return ReturnObject::createWrapWrap();
-	});
-	////////////////////////////////////////////////////////////////////////////////////////////////
-
-	pParser->addRule<ReturnObject*,float >(object,"margin_left_sp",
-	[](ReturnObject* pObject,BaseClass* pContext,float margin)
-	{
-		pObject->setMarginLeft(SP::sp(margin));
-	});
-	pParser->addRule<ReturnObject*,float >(object,"margin_right_sp",
-	[](ReturnObject* pObject,BaseClass* pContext,float margin)
-	{
-		pObject->setMarginRight(SP::sp(margin));
-	});
-	pParser->addRule<ReturnObject*,float >(object,"margin_top_sp",
-	[](ReturnObject* pObject,BaseClass* pContext,float margin)
-	{
-		pObject->setMarginTop(SP::sp(margin));
-	});
-	pParser->addRule<ReturnObject*,float >(object,"margin_bottom_sp",
-	[](ReturnObject* pObject,BaseClass* pContext,float margin)
-	{
-		pObject->setMarginBottom(SP::sp(margin));
-	});
 }
 
 void ParserBuilder::addRulesSizePolicy(StandardParser* pParser)
@@ -245,6 +254,25 @@ void ParserBuilder::addRulesForTest(StandardParser* pParser)
 			GLOG("value: %f %p",element->getContentSize().width,element);
 		}
 	});
+}
+
+void ParserBuilder::createLayoutParametersForContext(cocos2d::CCNode* pNode)
+{
+	if(pNode->getUserObject() != nullptr)
+	{
+		return;
+	}
+
+	auto pLayoutInterface = dynamic_cast<LayoutInterface*>(pNode->getUserObject());
+	if(pLayoutInterface == nullptr)
+	{
+		pNode->setUserObject(LayoutParameter::create());
+		GKoala_assert(false,"For now we don;t want this situation");
+	}
+	else
+	{
+		pLayoutInterface->is
+	}
 }
 
 }

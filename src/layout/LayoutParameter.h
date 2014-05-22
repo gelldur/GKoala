@@ -27,6 +27,7 @@ public:
 		VISIBLE, INVISIBLE, GONE
 	};
 
+	GK_CREATE(LayoutParameter);
 	virtual ~LayoutParameter();
 
 	LayoutParameter* setVisibility ( Visibility visibility );
