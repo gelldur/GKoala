@@ -32,13 +32,13 @@ public:
 	ParserInterface(){}
 	~ParserInterface(){}
 
-	inline void addInitRule(const RegEx& objectName,const InitRule& initRule)
+	void addInitRule(const RegEx& objectName,const InitRule& initRule)
 	{
 		m_engine.addInitRule(objectName,initRule);
 	}
 
 	template<typename Base,typename Value>
-	inline void addRule(const RegEx& objectName,const RegEx& propertyName,const std::function< void(Base,BaseClass* ,Value) >& ruleFunction)
+	void addRule(const RegEx& objectName,const RegEx& propertyName,const std::function< void(Base,BaseClass* ,Value) >& ruleFunction)
 	{
 		m_engine.addRule(objectName,propertyName,new Rule<Base,Value>(ruleFunction));
 	}
@@ -58,7 +58,7 @@ private:
  */
 struct RegEx
 {
-	RegEx(const std::string& regex):
+	RegEx(const std::string & regex):
 		stringRepresentation(regex)
 		,regex(regex)
 	{
