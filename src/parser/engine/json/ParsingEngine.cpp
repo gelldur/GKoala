@@ -58,7 +58,7 @@ cocos2d::CCNode* GKoala::ParsingEngine::parseLayout(
 	const string fileNameWithPath = CCFileUtils::sharedFileUtils()->fullPathForFilename( layoutFile.c_str() );
 
 	unsigned long fileDataSize = 0;
-	std::unique_ptr<char[]> pLayoutData( reinterpret_cast<char*>( pFileUtils->getFileData(fileNameWithPath.c_str(), "r", &fileDataSize ) ) );
+	const std::unique_ptr<char[]> pLayoutData( reinterpret_cast<char*>( pFileUtils->getFileData(fileNameWithPath.c_str(), "r", &fileDataSize ) ) );
 
 	if( pLayoutData.get() == nullptr || fileDataSize == 0 )
 	{
