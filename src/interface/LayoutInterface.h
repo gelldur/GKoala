@@ -15,7 +15,7 @@ namespace GKoala
 
 class LayoutParameter;
 
-class LayoutInterface : public cocos2d::CCNode
+class LayoutInterface
 {
 public:
 	virtual ~LayoutInterface() {};

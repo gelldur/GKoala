@@ -19,10 +19,11 @@
 namespace GKoala
 {
 
-class Layout : public LayoutInterface
+template < typename Base = cocos2d::CCNode >
+class Layout : public Base,  public LayoutInterface
 {
 private:
-	typedef LayoutInterface inherited;
+	typedef Base inherited;
 
 public:
 	static Layout* createWithConfiguration ( LayoutConfiguration* pConfiguration )
@@ -39,28 +40,86 @@ public:
 		return pRet = nullptr;
 	}
 
-	virtual ~Layout();
+	virtual ~Layout()
+	{
+		CC_SAFE_RELEASE_NULL ( m_pLayoutConfiguration );
+	}
 
-	virtual bool initWithConfiguration ( LayoutConfiguration* pConfiguration );
+	virtual bool initWithConfiguration ( LayoutConfiguration* pConfiguration )
+	{
+		if ( inherited::init() == false )
+		{
+			return false;
+		}
+
+		m_pLayoutConfiguration = pConfiguration;
+		pConfiguration->setWorkingLayout(this);
+
+		if ( pConfiguration == nullptr )
+		{
+			GKoala_assert ( pConfiguration != nullptr,
+							"You can't init Layout with null configuration" );
+			return false;
+		}
+
+		pConfiguration->retain();
+
+		return true;
+	}
 
 	virtual void onEnter() override;
 	virtual void onExit() override;
 
-	virtual void addChild ( cocos2d::CCNode* pChild, int zOrder, int tag ) override;
-	virtual void addChildWith ( cocos2d::CCNode* pChild,LayoutParameter* pLayoutParameter ) override;
+	virtual void addChild ( cocos2d::CCNode* pChild, int zOrder, int tag ) override
+	{
+		GKoala_assert ( pChild != nullptr, "pChild can't be null" );
+		GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
 
-	virtual void removeChild ( CCNode* pChild, bool cleanup ) override;
-	virtual void updateStructure(LayoutParameter* pLayoutParameter) override;
+		pChild->setZOrder ( zOrder );
+		pChild->setTag ( tag );
 
-	virtual void setOptions(int options) override;
+		addChildWith ( pChild, m_pLayoutConfiguration->getDefaultLayoutParameter() );
+	}
+	virtual void addChildWith ( cocos2d::CCNode* pChild,LayoutParameter* pLayoutParameter ) override
+	{
+		GKoala_assert ( pChild != nullptr, "pChild can't be null" );
+		GKoala_assert ( pLayoutParameter != nullptr, "pLayoutParameter can't be null" );
+		GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
+
+		inherited::addChild ( pChild, pChild->getZOrder(), pChild->getTag() );
+		m_pLayoutConfiguration->addView ( pChild, pLayoutParameter );
+
+		updateStructure(nullptr);
+	}
+
+	virtual void removeChild ( CCNode* pChild, bool cleanup ) override
+	{
+		GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
+		inherited::removeChild ( pChild, cleanup );
+
+		updateStructure(nullptr);
+	}
+	virtual void updateStructure(LayoutParameter* pLayoutParameter) override
+	{
+		GKoala_assert ( m_pLayoutConfiguration != nullptr, "Wrong initialization!" );
+		m_pLayoutConfiguration->updateStructure(pLayoutParameter);
+	}
+
+	virtual void setOptions(int options) override
+	{
+		m_pLayoutConfiguration->setOptions(options);
+	}
 
 protected:
 	Layout();
 
 private:
-	LayoutConfiguration* m_pLayoutConfiguration;
+	LayoutConfiguration* m_pLayoutConfiguration = nullptr;
 
-	void onUpdateStructureCallback ( CCObject* pCaller );
+	void onUpdateStructureCallback ( CCObject* pCaller )
+	{
+		updateStructure(nullptr);
+	}
 };
 
 } /* namespace GKoala */

@@ -81,7 +81,7 @@ void ParserBuilder::addRulesGlobal(StandardParser* pParser)
 	});
 
 	pParser->addRule<WorkingNode,float >(object,"margin_left_sp",
-	[](WorkingNode pObject,BaseClass* pContext,float margin)
+	[this](WorkingNode pObject,BaseClass* pContext,float margin)
 	{
 		createLayoutParametersForContext(pObject);
 
@@ -90,52 +90,52 @@ void ParserBuilder::addRulesGlobal(StandardParser* pParser)
 
 		pLayoutParams->setMarginLeft(SP::sp(margin));
 	});
-	pParser->addRule<WorkingNode,float >(object,"margin_right_sp",
-	[](WorkingNode pObject,BaseClass* pContext,float margin)
-	{
-		pObject->setMarginRight(SP::sp(margin));
-	});
-	pParser->addRule<RWorkingNode,float >(object,"margin_top_sp",
-	[](WorkingNode pObject,BaseClass* pContext,float margin)
-	{
-		pObject->setMarginTop(SP::sp(margin));
-	});
-	pParser->addRule<WorkingNode,float >(object,"margin_bottom_sp",
-	[](WorkingNode pObject,BaseClass* pContext,float margin)
-	{
-		pObject->setMarginBottom(SP::sp(margin));
-	});
+//	pParser->addRule<WorkingNode,float >(object,"margin_right_sp",
+//	[](WorkingNode pObject,BaseClass* pContext,float margin)
+//	{
+//		pObject->setMarginRight(SP::sp(margin));
+//	});
+//	pParser->addRule<RWorkingNode,float >(object,"margin_top_sp",
+//	[](WorkingNode pObject,BaseClass* pContext,float margin)
+//	{
+//		pObject->setMarginTop(SP::sp(margin));
+//	});
+//	pParser->addRule<WorkingNode,float >(object,"margin_bottom_sp",
+//	[](WorkingNode pObject,BaseClass* pContext,float margin)
+//	{
+//		pObject->setMarginBottom(SP::sp(margin));
+//	});
 }
 
 void ParserBuilder::addRulesLinearLayout(StandardParser* pParser)
 {
-	using ReturnObject = LayoutInterface;
+//	using ReturnObject = LayoutInterface;
 
-	const std::string object = "LinearLayout";
-	pParser->addInitRule(object,[]()
-	{
-		return ReturnObject::create();
-	});
+//	const std::string object = "LinearLayout";
+//	pParser->addInitRule(object,[]()
+//	{
+//		return ReturnObject::create();
+//	});
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
-	pParser->addRule<ReturnObject*,vector<CCNode*>& >(object,"views",
-	[](ReturnObject* pNode,BaseClass* pContext,vector<CCNode*>& views)
-	{
-		for(auto&& pView : views)
-		{
-			auto pObject = pView->getUserObject();
-			if(pObject == nullptr)
-			{
-				pNode->addChild(pView);
-			}
-			else
-			{
-				auto pParameter = dynamic_cast<LayoutParameter*>(pObject);
-				GKoala_assert(pParameter != nullptr,"Error");
-				pNode->addChildWith(pView,pParameter);
-			}
-		}
-	});
+//	pParser->addRule<ReturnObject*,vector<CCNode*>& >(object,"views",
+//	[](ReturnObject* pNode,BaseClass* pContext,vector<CCNode*>& views)
+//	{
+//		for(auto&& pView : views)
+//		{
+//			auto pObject = pView->getUserObject();
+//			if(pObject == nullptr)
+//			{
+//				pNode->addChild(pView);
+//			}
+//			else
+//			{
+//				auto pParameter = dynamic_cast<LayoutParameter*>(pObject);
+//				GKoala_assert(pParameter != nullptr,"Error");
+//				pNode->addChildWith(pView,pParameter);
+//			}
+//		}
+//	});
 }
 
 void ParserBuilder::addRulesCCSprite(StandardParser* pParser)
@@ -258,21 +258,21 @@ void ParserBuilder::addRulesForTest(StandardParser* pParser)
 
 void ParserBuilder::createLayoutParametersForContext(cocos2d::CCNode* pNode)
 {
-	if(pNode->getUserObject() != nullptr)
-	{
-		return;
-	}
-
-	auto pLayoutInterface = dynamic_cast<LayoutInterface*>(pNode->getUserObject());
-	if(pLayoutInterface == nullptr)
-	{
-		pNode->setUserObject(LayoutParameter::create());
-		GKoala_assert(false,"For now we don;t want this situation");
-	}
-	else
-	{
-		pLayoutInterface->is
-	}
+//	if(pNode->getUserObject() != nullptr)
+//	{
+//		return;
+//	}
+//
+//	auto pLayoutInterface = dynamic_cast<LayoutInterface*>(pNode->getUserObject());
+//	if(pLayoutInterface == nullptr)
+//	{
+//		pNode->setUserObject(LayoutParameter::create());
+//		GKoala_assert(false,"For now we don;t want this situation");
+//	}
+//	else
+//	{
+//		pLayoutInterface->is
+//	}
 }
 
 }

@@ -13,7 +13,6 @@
 #include "layout/Layout.h"
 
 #include "layout/configuration/linear/LinearConfiguration.h"
-#include "layout/configuration/relative/RelativeConfiguration.h"
 
 namespace GKoala
 {
@@ -28,11 +27,11 @@ public:
 
 	virtual LayoutInterface* createLinearLayout() override
 	{
-		return Layout::createWithConfiguration ( LinearConfiguration::create() );
+		return Layout<>::createWithConfiguration ( LinearConfiguration::create() );
 	}
 	virtual LayoutInterface* createRelativeLayout() override
 	{
-		return Layout::createWithConfiguration ( RelativeConfiguration::create() );
+		return nullptr;
 	}
 };
 
