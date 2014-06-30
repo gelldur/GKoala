@@ -298,6 +298,11 @@ void AbstractDialog::showAnimation( KKScene* pShowingScene )
 	getDialogBackground()->runAction( CCFadeTo::create( 0.3F, 160 ) );
 }
 
+void AbstractDialog::onDismiss( CCNode* pNode )
+{
+	dismiss();
+}
+
 }
 
 /* namespace KoalaGui */

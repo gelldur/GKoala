@@ -53,6 +53,8 @@ public:
 		return pScene;
 	}
 
+	void onDismiss( CCNode* pNode );
+
 	virtual void show( KKScene* pScene = getCurrentScene() );
 	virtual void dismiss( bool showAnimation = true );
 	bool isShown();

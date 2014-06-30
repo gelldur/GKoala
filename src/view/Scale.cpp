@@ -79,6 +79,16 @@ void scaleMatchHeight( CCNode* pNode, float height )
 	pNode->setScale( scaleFactor );
 }
 
+/**
+ * @param pNode content size must be oryginal
+ * @param desiredSize
+ * @return
+ */
+bool scaleToFit( CCNode* pNode, const CCSize& desiredSize )
+{
+	return scale( pNode, Scale::Type::FIT_X_Y, pNode->getContentSize(), desiredSize );
+}
+
 void scaleToFitParent( CCNode* pNode, Type scaleType /*= FIT_X_Y*/, float multiplier /*= 1.0f*/ )
 {
 	assert( pNode );
