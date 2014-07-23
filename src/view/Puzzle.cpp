@@ -17,6 +17,7 @@ CCSprite* parseFile( const string& jsonFileName, const string& plistFileName,
 					 const string& textureFileName )
 {
 	CCTexture2D* pTexture = CCTextureCache::sharedTextureCache()->addImage( textureFileName.c_str() );
+	assert( pTexture && "No such texture?" );
 	return parseFile( jsonFileName, plistFileName, pTexture );
 }
 
@@ -69,7 +70,7 @@ CCSprite* parseFile( const string& jsonFileName, const string& plistFileName,
 
 		if( pSprite == nullptr )
 		{
-			assert( false );
+			assert( false && "Can't create sprite can't find frame name" );
 			continue;
 		}
 
