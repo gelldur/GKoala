@@ -184,9 +184,8 @@ public:
 	{
 		CCSize size;
 		vector<View*>& views = getViews();
-		assert( rowsCount <= views.size() );
 
-		for( size_t i = 0; i < rowsCount; ++i )
+		for( size_t i = 0; i < rowsCount && i < views.size(); ++i )
 		{
 			size = size + views[i]->getFullSize();
 		}
