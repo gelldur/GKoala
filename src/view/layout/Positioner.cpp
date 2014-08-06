@@ -223,11 +223,11 @@ void Positioner::toRightOf( CCNode* pToRight, CCNode* pOf, const float margin )
 void Positioner::toAboveOf( CCNode* pToAbove, CCNode* pOf, const float margin )
 {
 	CCAssert( pToAbove != pOf, "Bad argument!" );
-	CCAssert( pToAbove->getParent() != pOf,
-			  "This doesn't work in parent. Different coordinate system" );
+	//	CCAssert( pToAbove->getParent() != pOf,
+	//			  "This doesn't work in parent. Different coordinate system" );
 	assert( pToAbove->getParent() != nullptr );
 	assert( pOf->getParent() != nullptr );
-	assert( pToAbove->getParent() == pOf->getParent() );
+	//	assert( pToAbove->getParent() == pOf->getParent() );
 
 	CCPoint corner = Positioner::getLeftBottomCorner( pToAbove ).origin;
 	Positioner::setCornerToPosition( pToAbove, corner,
@@ -237,11 +237,11 @@ void Positioner::toAboveOf( CCNode* pToAbove, CCNode* pOf, const float margin )
 void Positioner::toBelowOf( CCNode* pToBelow, CCNode* pOf, const float margin )
 {
 	CCAssert( pToBelow != pOf, "Bad argument!" );
-	CCAssert( pToBelow->getParent() != pOf,
-			  "This doesn't work in parent. Different coordinate system" );
+	//	CCAssert( pToBelow->getParent() != pOf,
+	//			  "This doesn't work in parent. Different coordinate system" );
 	assert( pToBelow->getParent() != nullptr );
 	assert( pOf->getParent() != nullptr );
-	assert( pToBelow->getParent() == pOf->getParent() );
+	//	assert( pToBelow->getParent() == pOf->getParent() );
 
 	CCPoint corner = Positioner::getLeftTopCorner( pToBelow ).origin;
 	Positioner::setCornerToPosition( pToBelow, corner,
@@ -253,11 +253,11 @@ void Positioner::toCenterHorizontalOf( CCNode* pToCenterHorizontal,
 									   const float margin )
 {
 	CCAssert( pToCenterHorizontal != pOf, "Bad argument!" );
-	CCAssert( pToCenterHorizontal->getParent() != pOf,
-			  "This doesn't work in parent. Different coordinate system" );
+	//	CCAssert( pToCenterHorizontal->getParent() != pOf,
+	//			  "This doesn't work in parent. Different coordinate system" );
 	assert( pToCenterHorizontal->getParent() != nullptr );
 	assert( pOf->getParent() != nullptr );
-	assert( pToCenterHorizontal->getParent() == pOf->getParent() );
+	//	assert( pToCenterHorizontal->getParent() == pOf->getParent() );
 
 	CCPoint corner = Positioner::getCenterPoint( pToCenterHorizontal ).origin;
 	Positioner::setCornerToPosition( pToCenterHorizontal, corner,
@@ -268,11 +268,11 @@ void Positioner::toCenterVerticalOf( CCNode* pToCenterVertical, CCNode* pOf,
 									 const float margin )
 {
 	CCAssert( pToCenterVertical != pOf, "Bad argument!" );
-	CCAssert( pToCenterVertical->getParent() != pOf,
-			  "This doesn't work in parent. Different coordinate system" );
+	//	CCAssert( pToCenterVertical->getParent() != pOf,
+	//			  "This doesn't work in parent. Different coordinate system" );
 	assert( pToCenterVertical->getParent() != nullptr );
 	assert( pOf->getParent() != nullptr );
-	assert( pToCenterVertical->getParent() == pOf->getParent() );
+	//	assert( pToCenterVertical->getParent() == pOf->getParent() );
 
 	CCPoint corner = Positioner::getCenterPoint( pToCenterVertical ).origin;
 	Positioner::setCornerToPosition( pToCenterVertical, corner,
